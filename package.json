@@ -1,0 +1,29 @@
+{
+  "name": "agnostic-bookmarks",
+  "version": "0.0.1",
+  "description": "Keep your favourite sites across all your devices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks/issues"
+  },
+  "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks"
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "express": "^4.13.1",
+    "method-override": "^2.3.4",
+    "mongoose": "^4.0.7",
+    "morgan": "^1.6.1",
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+  }
+}
