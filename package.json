@@ -15,15 +15,15 @@
   "bugs": {
     "url": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks/issues"
   },
-  "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks"
+  "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks",
   "dependencies": {
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "method-override": "^2.3.4",
     "mongoose": "^4.0.7",
-    "morgan": "^1.6.1",
+    "morgan": "^1.6.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.0"
   }
 }
