@@ -7,18 +7,19 @@
 var express  = require('express');
 var override = require('method-override');
 var parser   = require('body-parser');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
 var morgan   = require('morgan');
 //var passport = require('passport');
 //Internal dependencies
 var routes = require("./app/routes");
+var config = require("./app/config");
 
 
 /* SERVER CONFIG */
 var app  = express();                //Inicializar express
 var port = process.env.PORT || 3000; //Si se ha definido el puerto, leerlo. En caso contrario, usar el puerto 3000
 //Middleware setup (order does matter)
-app.use(express.static(__dirname + '/public')); //Indicar dÛnde est·n los ficheros publicos
+app.use(express.static(__dirname + '/public')); //Indicar d√≥nde est√°n los ficheros publicos
 app.use(morgan('dev')); //Establecer nivel de log 'dev'
 app.use(parser.json());
 app.use(parser.urlencoded({'extended': 'false'}));
@@ -29,5 +30,6 @@ app.use(override());
 app.use(routes);
 
 /* SERVER START */
+mongoose.connect(config.database);
 app.listen(port);
 console.log("Something beautiful is happening on port " + port);
