@@ -4,11 +4,11 @@
 
 /* DEPENDENCIES */
 //External packages
-var express  = require('express');
-var override = require('method-override');
-var parser   = require('body-parser');
-var mongoose = require('mongoose');
-var morgan   = require('morgan');
+var express  = require('express');          // Route management framework
+var override = require('method-override');  // PUT, PATCH and DELETE methods
+var parser   = require('body-parser');      // Parser for requests' body
+var mongoose = require('mongoose');         // MongoDB driver for node
+var morgan   = require('morgan');           // Request logger
 //var passport = require('passport');
 //Internal dependencies
 var routes = require("./app/routes");
@@ -16,11 +16,11 @@ var config = require("./app/config");
 
 
 /* SERVER CONFIG */
-var app  = express();                //Inicializar express
-var port = process.env.PORT || 3000; //Si se ha definido el puerto, leerlo. En caso contrario, usar el puerto 3000
+var app  = express();                 // Initialise express application
+var port = process.env.PORT || 3000;  // Read PORT from environment or use 3000
 //Middleware setup (order does matter)
-app.use(express.static(__dirname + '/public')); //Indicar dónde están los ficheros publicos
-app.use(morgan('dev')); //Establecer nivel de log 'dev'
+app.use(express.static(__dirname + '/public')); // Set frontend files' path
+app.use(morgan('dev')); // Set log level to 'dev'
 app.use(parser.json());
 app.use(parser.urlencoded({'extended': 'false'}));
 app.use(parser.json({ type: 'application/vnd.api+json' }));
@@ -30,6 +30,6 @@ app.use(override());
 app.use(routes);
 
 /* SERVER START */
-mongoose.connect(config.database);
-app.listen(port);
+mongoose.connect(config.database);  // Connect to database through mongoose
+app.listen(port);                   // Start server activity
 console.log("Something beautiful is happening on port " + port);
