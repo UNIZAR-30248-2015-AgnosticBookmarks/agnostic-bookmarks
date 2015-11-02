@@ -13,6 +13,8 @@ module.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('access', {
             url: '/access',
+            controller: 'LoginController',
+            controllerAs: 'ctrl',
             templateUrl: 'components/views/access.html'
         })
 
