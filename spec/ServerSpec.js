@@ -27,7 +27,7 @@ xdescribe("Web server", function() {
     });
 });
 
-descreibe("Demo test", function() {
+describe("Demo test", function() {
   it("should always pass", function() {
     expect(true).toBe(true);
   });
