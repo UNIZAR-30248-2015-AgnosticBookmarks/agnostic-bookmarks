@@ -39,7 +39,8 @@ apiRoutes.route('/users')
 var routes = express.Router();
 routes.use('/api', apiRoutes);
 routes.get('*', function(req, res) {
-    res.sendFile(__dirname + '../public/index.html');
+    console.log(__dirname);
+    res.sendFile('index.html', {'root': 'public/dist'});
 });
 
 module.exports = routes;
