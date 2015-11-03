@@ -8,5 +8,6 @@ after_success:
   - eval "$(ssh-agent -s)"  # Start ssh agent
   - chmod 600 .travis/travis_rsa
   - ssh-add .travis/travis_rsa
+  - ssh-keyscan adriemsworkshop.noip.me >> .ssh/known_hosts
   - git remote add deploy agnosbook@adriemsworkshop.noip.me:agnostic-bookmarks.git
   - git push deploy master
