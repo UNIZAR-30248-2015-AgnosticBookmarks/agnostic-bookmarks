@@ -36,3 +36,6 @@ public/dist
 
 # Private deploy key
 .travis/travis_rsa
+
+# Properties file
+app/config.js

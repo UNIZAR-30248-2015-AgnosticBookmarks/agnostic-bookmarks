@@ -19,7 +19,7 @@ var config = require("./app/config");
 var app  = express();                 // Initialise express application
 var port = process.env.PORT || 3000;  // Read PORT from environment or use 3000
 //Middleware setup (order does matter)
-app.use(express.static(__dirname + '/public')); // Set frontend files' path
+app.use(express.static(__dirname + '/public/dist')); // Set frontend files' path
 app.use(morgan('dev')); // Set log level to 'dev'
 app.use(parser.json());
 app.use(parser.urlencoded({'extended': 'false'}));
