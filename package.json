@@ -4,7 +4,7 @@
   "description": "Keep your favourite sites across all your devices",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/jasmine"
   },
   "repository": {
     "type": "git",
@@ -15,15 +15,17 @@
   "bugs": {
     "url": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks/issues"
   },
-  "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks"
+  "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks",
   "dependencies": {
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "method-override": "^2.3.4",
-    "mongoose": "^4.0.7",
-    "morgan": "^1.6.1",
+    "mongoose": "^4.2.3",
+    "morgan": "^1.6.1"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
+    "jasmine": "^2.3.2",
+    "request": "^2.65.0"
   }
 }

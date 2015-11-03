@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agnostic Bookmarks</title>
+    <meta name="description" content="Keep your favourite sites across all your devices">
+
+    <!-- FIX VIEWPORT FOR MOBILE DEVICES -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- LIBRARY STYLES -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/paper/bootstrap.min.css">-->
+
+    <!-- OWN STYLES -->
+    <!-- inject:css -->
+    <!-- endinject -->
+
+    <!-- LIBRARY SCRIPTS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body ng-app="AgnosticBookmarks">
+
+    <div class="container">
+        <h1>Agnostic Bookmarks!</h1>
+        <ui-view></ui-view>
+    </div>
+
+    <!-- OWN SCRIPTS -->
+    <script src="app.js"></script>
+    <!-- inject:js -->
+    <!-- endinject -->
+</body>
+</html>
