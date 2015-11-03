@@ -2,3 +2,29 @@
     Welcome to the access section!
     <a ui-sref="home">Go home!</a></li>
 </p>
+
+<div ng-app="myApp" ng-controller="formCtrl">
+    <form novalidate>
+        User:<br>
+        <input type="text" ng-model="user.name"><br>
+        Pass:<br>
+        <input type="text" ng-model="user.password">
+        <br><br>
+        <button ng-click="enter()">Enter</button>
+    </form>
+    <p>{{ user }}</p>
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('formCtrl', function($scope) {
+        $scope.enter = function() {
+            /*if (true) {
+
+            } else {
+                window.location.assign("localhost:3000/#/access");
+            }*/
+            $scope.user = {name:pepe, password:"locolo"};
+        };
+    });
+</script>
