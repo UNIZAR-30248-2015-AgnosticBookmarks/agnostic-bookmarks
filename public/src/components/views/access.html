@@ -19,11 +19,11 @@
     var app = angular.module('myApp', []);
     app.controller('formCtrl', function($scope) {
         $scope.enter = function() {
-            /*if (true) {
-
+            if (true) {
+             window.location.assign("www.google.es");
             } else {
-                window.location.assign("localhost:3000/#/access");
-            }*/
+                window.location.assign("www.google.es");
+            }
             $scope.user = {name:pepe, password:"locolo"};
         };
     });
