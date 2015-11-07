@@ -10,6 +10,7 @@
 //          running in background.
 // =============================================================================
 
+process.env.NODE_ENV = 'test';  // Set environment to testing
 var request = require('request');
 var baseURL = 'http://localhost:3000/';
 
@@ -19,8 +20,13 @@ var server;
 
 describe("Web server", function() {
 
-    // Before all server related tests, start the server
+    // Before all server related tests...
     beforeEach(function() {
+        // Replace console.log with a mock that won't do anything, so our
+        // test will look clean and pretty
+        spyOn(console, "log");
+        // Start the server, either requiring its module or calling
+        // server.start() if it had ben required before
         if (server == null) server = require('../index.js');
         else server.start();
     });
@@ -75,6 +81,7 @@ describe("Web server", function() {
 describe("RESTful API", function() {
 
     beforeEach(function() {
+        spyOn(console, "log");
         if (server == null) server = require('../index.js');
         else server.start();
     });

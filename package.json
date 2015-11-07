@@ -4,7 +4,7 @@
   "description": "Keep your favourite sites across all your devices",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul --include-all-sources cover jasmine-node test --captureExceptions",
+    "test": "./node_modules/.bin/gulp && istanbul --include-all-sources cover jasmine-node test --captureExceptions",
     "test-backend": "node_modules/.bin/jasmine-node test",
     "build": "node_modules/.bin/gulp"
   },

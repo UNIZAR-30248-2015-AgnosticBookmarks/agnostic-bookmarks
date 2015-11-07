@@ -20,7 +20,8 @@ var app  = express();                 // Initialise express application
 var port = process.env.PORT || 3000;  // Read PORT from environment or use 3000
 //Middleware setup (order does matter)
 app.use(express.static(__dirname + '/public/dist')); // Set frontend files' path
-app.use(morgan('dev')); // Set log level to 'dev'
+//If we are not testing, set log level to 'dev'
+if (process.env.NODE_ENV != 'test') { app.use(morgan('dev')); }
 app.use(parser.json());
 app.use(parser.urlencoded({'extended': 'false'}));
 app.use(parser.json({ type: 'application/vnd.api+json' }));
