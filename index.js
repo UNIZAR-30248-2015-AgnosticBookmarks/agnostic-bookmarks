@@ -29,7 +29,27 @@ app.use(override());
 //Routes setup (order does matter)
 app.use(routes);
 
+/* DEFINE STARTUP AND SHOTDOWN FUNCTIONS */
+var server;
+function start() {
+    mongoose.connect(config.database);  // Connect to database through mongoose
+    server = app.listen(port, function() {  // Start server activity
+        console.log("Something beautiful is happening on port " + port);
+    });
+}
+
+function close() {
+    mongoose.connection.close(function() {
+        console.log('Terminating mongoose connection');
+    });
+    console.log('Shutting down the server');
+    server.close();
+};
+
+module.exports = {
+    start: start,
+    close: close
+}
+
 /* SERVER START */
-mongoose.connect(config.database);  // Connect to database through mongoose
-app.listen(port);                   // Start server activity
-console.log("Something beautiful is happening on port " + port);
+start();
