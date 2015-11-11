@@ -3,7 +3,7 @@
     <a ui-sref="home">Go home!</a>
 </p>
 
-<div ng-controller="formCtrl">
+<div>
     <form novalidate>
         User:<br>
         <input type="text" ng-model="user.name"><br>
@@ -12,7 +12,7 @@
         <br><br>
         <button ng-click="enter()">Enter</button>
     </form>
-    <p>{{ user }}</p>
+    <p ng-if="showError">{{ user }}</p>
 </div>
 
 

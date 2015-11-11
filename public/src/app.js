@@ -17,7 +17,8 @@ module.config(function($stateProvider, $urlRouterProvider) {
         })
         .state('access', {
             url: '/access',
-            templateUrl: 'components/views/access.html'
+            templateUrl: 'components/views/access.html',
+            controller: 'accessCtrl'
         })
 
     $urlRouterProvider.otherwise('/access');

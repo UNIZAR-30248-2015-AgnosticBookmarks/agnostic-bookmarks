@@ -9,6 +9,13 @@ var User    = require('./user-model');
 /* API ROUTES */
 var apiRoutes = express.Router();
 
+//Enable Cross Origin Requests
+apiRoutes.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 // API entry point
 apiRoutes.get('/', function(req, res) {
     res.json('Welcome to the coolest API this side of the Mississippi :D');
