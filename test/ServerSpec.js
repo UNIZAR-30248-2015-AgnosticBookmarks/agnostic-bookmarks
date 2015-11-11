@@ -28,7 +28,7 @@ describe("Web server", function() {
         // Start the server, either requiring its module or calling
         // server.start() if it had ben required before
         if (server == null) server = require('../index.js');
-        else server.start();
+        server.start();
     });
     // After all server related tests, close the server
     afterEach(function() {
