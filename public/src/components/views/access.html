@@ -3,7 +3,7 @@
     <a ui-sref="home">Go home!</a>
 </p>
 
-<div ng-app="myApp" ng-controller="formCtrl">
+<div ng-controller="formCtrl">
     <form novalidate>
         User:<br>
         <input type="text" ng-model="user.name"><br>
@@ -15,16 +15,4 @@
     <p>{{ user }}</p>
 </div>
 
-<script>
-    var app = angular.module('myApp', []);
-    app.controller('formCtrl', function($scope) {
-        $scope.enter = function() {
-            if (true) {
-             window.location.assign("www.google.es");
-            } else {
-                window.location.assign("www.google.es");
-            }
-            $scope.user = {name:pepe, password:"locolo"};
-        };
-    });
-</script>
+
