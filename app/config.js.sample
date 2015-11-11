@@ -1,0 +1,11 @@
+// =============================================================================
+//  This file contains configuration parameters that will be used by the app.
+//  This file is a demo, since this file contains sensible data that must not
+//  be uploaded to the public repository.
+//  When setting up the application, you must replace this file with a file
+//  called 'config.js' that has actual values for the properties listed here.
+// =============================================================================
+
+module.exports = {
+    database: 'mongodb://localhost/agnostic-bookmarks' // Database location
+}
