@@ -7,6 +7,19 @@ var express        = require('express');
 var authMiddleware = require('./auth-middleware').basicMiddleware;
 var User           = require('./user-model');
 
+/* AUTH HANDLER MIDDLEWARE */
+function authRouter(req, res, next) {
+    if (req.params.internalError) {
+        res.status(500).send(req.params.internalError);
+    }
+    else if (req.params.user == null) {
+        res.status(401).send({"message": "Invalid username or password"});
+    }
+    else {
+        next();
+    }
+}
+
 /* API ROUTES */
 var apiRoutes = express.Router();
 
@@ -44,16 +57,8 @@ apiRoutes.route('/users')
 
 // Auth endpoint
 apiRoutes.route('/auth')
-    .get(authMiddleware, function(req, res){
-        if (req.params.internalError) {
-            res.status(500).send(req.params.internalError);
-        }
-        else if (req.params.user == null) {
-            res.status(401).send({"message": "Invalid username or password"});
-        }
-        else {
-            res.json(req.params.user); 
-        }
+    .get(authMiddleware, authRouter, function(req, res){
+        res.json(req.params.user); 
     });
 
 /* GLOBAL ROUTES */
