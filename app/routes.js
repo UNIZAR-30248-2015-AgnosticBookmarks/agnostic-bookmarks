@@ -3,19 +3,29 @@
 //  application.
 // =============================================================================
 
+
 var express = require('express');
 var User    = require('./user-model');
 var BookMarks = require('./bookmark-model.js');
+var authMiddleware = require('./auth-middleware').basicMiddleware;
 
 /* API ROUTES */
 var apiRoutes = express.Router();
+
+//Enable Cross Origin Requests
+apiRoutes.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // API entry point
 apiRoutes.get('/', function(req, res) {
     res.json('Welcome to the coolest API this side of the Mississippi :D');
 });
 
-//Users endpoint
+// Users endpoint
 apiRoutes.route('/users')
     // Get a list with all the users
     .get(function(req, res){
@@ -33,6 +43,7 @@ apiRoutes.route('/users')
             else res.json(data);
         });
     });
+
 
 //BookMarks endpoint
 apiRoutes.route('/bookmarks')
@@ -63,14 +74,20 @@ apiRoutes.route('/bookmarkSearch').post(function(req, res){
     });
 });
 
+// Auth endpoint
+apiRoutes.route('/auth')
+    .get(authMiddleware, function(req, res){
+        if (req.params.internalError) {
+            res.status(500).send(req.params.internalError);
+        }
+        else if (req.params.user == null) {
+            res.status(401).send({"message": "Invalid username or password"});
+        }
+        else {
+            res.json(req.params.user); 
+        }
 
-apiRoutes.route('/auth').post(function(req, res){
-    User.findOne({username: req.body.username, password: req.body.password},null,function(err, data){
-       if (err) res.status(500).send(err);
-       else if (data == null) res.status(401).send({"message": "Invalid username or password"});
-       else res.json(data); 
     });
-});
 
 /* GLOBAL ROUTES */
 // API endpoints go under '/api' route. Other routes are redirected to

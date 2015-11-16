@@ -1,5 +1,5 @@
 // =============================================================================
-//  This TODO
+//  TODO DESCRIPTION
 // =============================================================================
 
 process.env.NODE_ENV = 'test';  // Set environment to testing
@@ -7,6 +7,7 @@ var request = require('request');
 var baseURL = 'http://localhost:3000/';
 
 describe("Auth API", function(){
+
     var server;
     beforeEach(function() {
         spyOn(console, "log");
@@ -17,7 +18,7 @@ describe("Auth API", function(){
         server.close();  // After all server related tests, close the server
     });
 
-    it("should return 401 when username doesn't match password", function() {
+    xit("should return 401 when username doesn't match password", function() {
         var result = {};
         var timeout = 750;
         var done = false;
@@ -38,4 +39,13 @@ describe("Auth API", function(){
             expect(result.response.statusCode).toBe(401);
         });
     });
-})
+
+    //it("should return 200 when username exists and matches password", function() {
+        //var result = {};
+        //var timeout = 750;
+        //var done = false;
+        //runs(function() {
+            //request.post
+        //})
+    //})
+});
