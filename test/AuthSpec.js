@@ -23,12 +23,12 @@ describe("Auth API", function(){
         var done = false;
         runs(function() {
             request.post({url:baseURL + "api/auth", body:"{username: nouser, password:nopass}"},
-                    function(error, response, body) {
-                result.err = error;
-                result.response = response;
-                result.body = body;
-                done = true;
-            })
+                function(error, response, body) {
+                    result.err = error;
+                    result.response = response;
+                    result.body = body;
+                    done = true;
+                })
         });
         waitsFor(function() {
             return done;
