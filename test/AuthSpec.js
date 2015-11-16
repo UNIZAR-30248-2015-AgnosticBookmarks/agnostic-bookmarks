@@ -7,6 +7,7 @@ var request = require('request');
 var baseURL = 'http://localhost:3000/';
 
 describe("Auth API", function(){
+
     var server;
     beforeEach(function() {
         spyOn(console, "log");
@@ -38,4 +39,13 @@ describe("Auth API", function(){
             expect(result.response.statusCode).toBe(401);
         });
     });
-})
+
+    //it("should return 200 when username exists and matches password", function() {
+        //var result = {};
+        //var timeout = 750;
+        //var done = false;
+        //runs(function() {
+            //request.post
+        //})
+    //})
+});
