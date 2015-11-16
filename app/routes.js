@@ -6,7 +6,7 @@
 
 var express = require('express');
 var User    = require('./user-model');
-var BookMarks = require('./bookmark-model.js');
+var BookMarks = require('./bookmark-model');
 var authMiddleware = require('./auth-middleware').basicMiddleware;
 
 /* API ROUTES */
@@ -44,35 +44,60 @@ apiRoutes.route('/users')
         });
     });
 
-
-//BookMarks endpoint
-apiRoutes.route('/bookmarks')
-    // Get a list with all the bookmarks
+apiRoutes.route('/bm')
+    // Get a list with all the users
     .get(function(req, res){
-        BookMarks.find({}, function(err, bookmarks){
-            res.json(bookmarks);
+        BookMarks.find({}, function(err, users){
+            res.json(users);
         });
-    })
-    // Add a new bookmark
-    .post(function(req, res){
-        new BookMarks({
-            name: req.body.name,
-            username:req.body.username ,
-            link: req.body.link
-        }).save(function(err, data){
-                if (err) res.status(500).send(err);
-                else res.json(data);
-            });
     });
 
-//BookMark SearchbyUserName
-apiRoutes.route('/bookmarkSearch').post(function(req, res){
-    BookMarks.find({username: req.body.username},null,function(err, data){
-        if (err) res.status(500).send(err);
-        else if (data == []) res.status(403).send({"message": "User does not exist or has not bookmarks"});
-        else res.json(data);
+
+//BookMarks endpoint addBookmark
+apiRoutes.route('/addBookmark')
+    .post(authMiddleware, function(req, res){
+        if (req.params.internalError) {
+            res.status(500).send(req.params.internalError);
+        }
+        else if (req.params.user == null) {
+            res.status(401).send({"message": "Invalid username or password"});
+        }
+        else {
+            new BookMarks({
+                name: req.body.name,
+                username: req.params.user.username,
+                link: req.body.link
+            }).save(function (err, data) {
+                    if (err){
+                        res.status(400).send({"message": "Bookmark name already exists"});
+                    }
+                    else res.json(data);
+                });
+        }
     });
-});
+
+//Bookmarks endpoint deleteBookmark
+apiRoutes.route('/deleteBookmark')
+
+
+//BookMark endpoint SearchbyUserName
+apiRoutes.route('/userBookmarks')
+    .get(authMiddleware, function(req, res){
+        if (req.params.internalError) {
+            res.status(500).send(req.params.internalError);
+        }
+        else if (req.params.user == null) {
+            res.status(401).send({"message": "Invalid username or password"});
+        }
+        else {
+            BookMarks.find({username: req.params.user.username},null,function(errFind, dataFind){
+                res.json(dataFind);
+            });
+
+        }
+
+    });
+
 
 // Auth endpoint
 apiRoutes.route('/auth')
