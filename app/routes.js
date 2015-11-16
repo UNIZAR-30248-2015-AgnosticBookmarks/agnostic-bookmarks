@@ -33,6 +33,14 @@ apiRoutes.route('/users')
         });
     });
 
+apiRoutes.route('/auth').post(function(req, res){
+    User.findOne({username: req.body.username, password: req.body.password},null,function(err, data){
+       if (err) res.status(500).send(err);
+       else if (data == null) res.status(401).send({"message": "Invalid username or password"});
+       else res.json(data); 
+    });
+});
+
 /* GLOBAL ROUTES */
 // API endpoints go under '/api' route. Other routes are redirected to
 // index.html where AngularJS will handle frontend routes.
