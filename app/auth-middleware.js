@@ -40,5 +40,5 @@ var basicAuthMiddleware = function(req, res, next) {
 /* MODULE EXPORTS */
 // -----------------------------------------------------------------------------
 module.exports = {
-    basic: basicAuthMiddleware
+    basicMiddleware: basicAuthMiddleware
 }

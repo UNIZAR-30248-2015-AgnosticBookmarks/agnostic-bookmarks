@@ -55,7 +55,7 @@ describe("Auth middleware", function() {
             var done = false;
             var timeout = 5000;
             runs(function() {
-                middleware.basic(req, res, function(){
+                middleware.basicMiddleware(req, res, function(){
                     done = true;
                 })
             })
@@ -70,7 +70,7 @@ describe("Auth middleware", function() {
             var done = false;
             var timeout = 5000;
             runs(function() {
-                middleware.basic(req, res, function(){
+                middleware.basicMiddleware(req, res, function(){
                     done = true;
                 })
             })
@@ -88,7 +88,7 @@ describe("Auth middleware", function() {
             var done = false;
             var timeout = 5000;
             runs(function() {
-                middleware.basic(req, res, function(){
+                middleware.basicMiddleware(req, res, function(){
                     done = true;
                 })
             })
@@ -106,7 +106,7 @@ describe("Auth middleware", function() {
             var done = false;
             var timeout = 5000;
             runs(function() {
-                middleware.basic(req, res, function(){
+                middleware.basicMiddleware(req, res, function(){
                     done = true;
                 })
             })
@@ -125,7 +125,7 @@ describe("Auth middleware", function() {
             var done = false;
             var timeout = 5000;
             runs(function() {
-                middleware.basic(req, res, function(){
+                middleware.basicMiddleware(req, res, function(){
                     done = true;
                 })
             })
