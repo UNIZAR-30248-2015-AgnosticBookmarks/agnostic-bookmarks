@@ -37,8 +37,29 @@ var basicAuthMiddleware = function(req, res, next) {
     });
 };
 
+/* AUTH HANDLER MIDDLEWARE */
+/* This function redirects the user to a non authorized status (401) when no
+ * valid credentials are provided. Use only on the endpoints where the user MUST
+ * be authenticated. This middleware DOES NOT read user credentials, so it
+ * depends on another middleware that actually does it. That middleware must
+ * be executed before this one.
+ */
+function routesHandler(req, res, next) {
+    if (req.params.internalError) {
+        res.status(500).send(req.params.internalError);
+    }
+    else if (req.params.user == null) {
+        res.status(401).send({"message": "Invalid username or password"});
+    }
+    else {
+        next();
+    }
+}
+
+
 /* MODULE EXPORTS */
 // -----------------------------------------------------------------------------
 module.exports = {
-    basicMiddleware: basicAuthMiddleware
+    basicMiddleware: basicAuthMiddleware,
+    routesHandler: routesHandler
 }

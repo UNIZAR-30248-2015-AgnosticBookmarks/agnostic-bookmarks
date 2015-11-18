@@ -3,27 +3,18 @@
 //  application.
 // =============================================================================
 
-var express        = require('express');
-var authMiddleware = require('./auth-middleware').basicMiddleware;
-var User           = require('./user-model');
+var express = require('express');
+var auth    = require('./auth-middleware');
+var User    = require('./user-model');
 
-/* AUTH HANDLER MIDDLEWARE */
-function authRouter(req, res, next) {
-    if (req.params.internalError) {
-        res.status(500).send(req.params.internalError);
-    }
-    else if (req.params.user == null) {
-        res.status(401).send({"message": "Invalid username or password"});
-    }
-    else {
-        next();
-    }
-}
+var authMiddleware = auth.basicMiddleware;
+var authRouter     = auth.basicMiddleware;
 
 /* API ROUTES */
+// -----------------------------------------------------------------------------
 var apiRoutes = express.Router();
 
-//Enable Cross Origin Requests
+//Enable Cross Origin Requests (only for the API)
 apiRoutes.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header("Access-Control-Allow-Headers",
@@ -39,11 +30,11 @@ apiRoutes.get('/', function(req, res) {
 // Users endpoint
 apiRoutes.route('/users')
     // Get a list with all the users
-    .get(function(req, res){
-        User.find({}, function(err, users){
-            res.json(users);
-        });
-    })
+    //.get(function(req, res){
+        //User.find({}, function(err, users){
+            //res.json(users);
+        //});
+    //})
     // Add a new user
     .post(function(req, res){
         new User({
@@ -58,10 +49,11 @@ apiRoutes.route('/users')
 // Auth endpoint
 apiRoutes.route('/auth')
     .get(authMiddleware, authRouter, function(req, res){
-        res.json(req.params.user); 
+        res.json(req.params.user);
     });
 
 /* GLOBAL ROUTES */
+// -----------------------------------------------------------------------------
 // API endpoints go under '/api' route. Other routes are redirected to
 // index.html where AngularJS will handle frontend routes.
 var routes = express.Router();
