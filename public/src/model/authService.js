@@ -1,5 +1,5 @@
 var module = angular.module('AgnosticBookmarks');
-module.service('UserService', function($http, $location) {
+module.service('UserService', function ($http, $location) {
     return {
         authenticate: authenticate,
         register: register
@@ -12,13 +12,22 @@ module.service('UserService', function($http, $location) {
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
-            callback(true);
-        }, function onError(response) {
-            callback(false);
-        });
+                callback(true);
+            }, function onError(response) {
+                callback(false);
+            });
     }
 
     function register(user, pass, callback) {
-        
+        var userdata = {username: user, password: pass};
+        $http.post(
+            "http://192.168.1.4:3000/api/reg/",
+            JSON.stringify(userdata),
+            {headers: {'Content-Type': 'application/json'}}
+        ).then(function onSuccess(response) {
+                callback(true);
+            }, function onError(response) {
+                callback(false);
+            });
     }
 });
