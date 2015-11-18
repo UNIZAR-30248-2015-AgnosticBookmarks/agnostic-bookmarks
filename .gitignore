@@ -28,5 +28,14 @@ build/Release
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
 
-#IDE Intellij
+# Public build directory
+public/dist
+
+# IDE Intellij
 .idea/
+
+# Private deploy key
+.travis/travis_rsa
+
+# Properties file
+app/config.js

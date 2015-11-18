@@ -1,0 +1,21 @@
+language: node_js
+node_js:
+  #- "5.0"
+  - "0.12"
+services: 
+  - mongodb
+before_script:
+  - echo -e "Host adriemsworkshop.noip.me\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+before_install:
+  - openssl aes-256-cbc -K $encrypted_fef02f1cc61a_key -iv $encrypted_fef02f1cc61a_iv
+    -in .travis/travis_rsa.enc -out .travis/travis_rsa -d
+  - mv .travis/config.js app/config.js
+after_success:
+  # Sync with codecov
+  - cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js
+  # Deploy on production
+  - eval "$(ssh-agent -s)"  # Start ssh agent
+  - chmod 600 .travis/travis_rsa
+  - ssh-add .travis/travis_rsa
+  - git remote add deploy agnosbook@adriemsworkshop.noip.me:agnostic-bookmarks.git
+  - git push deploy master

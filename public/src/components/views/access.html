@@ -1,0 +1,18 @@
+<p>
+    Welcome to the access section!
+    <a ui-sref="home">Go home!</a>
+</p>
+
+<div>
+    <form novalidate>
+        User:<br>
+        <input type="text" ng-model="user.name"><br>
+        Pass:<br>
+        <input type="text" ng-model="user.password">
+        <br><br>
+        <button ng-click="enter()">Enter</button>
+    </form>
+    <p ng-if="showError">{{ user }}</p>
+</div>
+
+

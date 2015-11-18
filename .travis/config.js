@@ -1,7 +1,7 @@
 // =============================================================================
-//  This file contains configuration parameters that will be used by the app.
+//  This configuration file will be used by Travis CI to make its tests
 // =============================================================================
 
 module.exports = {
-    database: 'mongodb://localhost/agnostic-bookmarks' // Database location
+    database: 'mongodb://localhost/agnostic-bookmarks-test' // Database location
 }

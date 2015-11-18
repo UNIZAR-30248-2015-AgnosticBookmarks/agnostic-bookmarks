@@ -1,6 +1,3 @@
-/**
- * Created by ramon on 31/10/2015.
- */
 var mongoose = require('mongoose');
 
 // DEFINE SCHEMA
@@ -10,7 +7,7 @@ UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.verifyPassword = function(password, callback) {
-    callback(this.password === password);
+    callback(null, this.password === password);
 }
 
 module.exports = mongoose.model('User', UserSchema);
