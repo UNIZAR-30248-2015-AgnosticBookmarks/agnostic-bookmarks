@@ -8,7 +8,7 @@ app.controller('accessCtrl', function($scope, $state, UserService) {
     };
     $scope.register = function() {
         UserService.register($scope.user.name, $scope.user.password, onRegisterResponse);
-    }
+    };
 
     var onEnterResponse = function (result) {
         if (result) $state.go('home');

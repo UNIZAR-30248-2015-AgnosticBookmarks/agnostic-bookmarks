@@ -20,6 +20,10 @@ module.config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'components/views/access.html',
             controller: 'accessCtrl'
         })
+        .state('register', {
+            url: '/register',
+            templateUrl: 'components/views/register.html'
+        })
 
     $urlRouterProvider.otherwise('/access');
 })
