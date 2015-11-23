@@ -21,7 +21,7 @@ module.service('UserService', function ($http, $location) {
     function register(user, pass, callback) {
         var userdata = {username: user, password: pass};
         $http.post(
-            "http://192.168.1.4:3000/api/reg/",
+            "http://192.168.1.4:3000/api/users/",
             JSON.stringify(userdata),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
