@@ -1,7 +1,9 @@
 
 var app = angular.module('AgnosticBookmarks');
 app.controller('accessCtrl', function($scope, $state, UserService) {
-    $scope.showError = false;
+    $scope.loginError = false;
+    $scope.regError = false;
+    $scope.regOK = false;
     $scope.enter = function() {
         UserService.authenticate($scope.user.name, $scope.user.password, onEnterResponse);
         //$scope.user = {name:pepe, password:"locolo"};
@@ -12,12 +14,16 @@ app.controller('accessCtrl', function($scope, $state, UserService) {
 
     var onEnterResponse = function (result) {
         if (result) $state.go('home');
-        else $scope.showError = true;
+        else $scope.loginError = true;
+    }
+    var onRegisterResponse = function (result) {
+        if (result) {
+            $scope.regOK = true;
+            $state.go('home');
+        }
+        else $scope.regError = true;
     }
 
-    var onRegisterResponse = function (result) {
-        if (result) $scope.registerOK = true;
-        else $scope.registerError = true;
-    }
+
 
 });

@@ -17,12 +17,12 @@ module.service('UserService', function ($http, $location) {
                 callback(false);
             });
     }
-
     function register(user, pass, callback) {
-        var userdata = {username: user, password: pass};
+        //callback(true);
+        var credentials = {username: user, password: pass};
         $http.post(
-            "http://192.168.1.4:3000/api/reg/",
-            JSON.stringify(userdata),
+            "http://192.168.1.4:3000/api/users/",
+            JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
                 callback(true);
@@ -30,4 +30,7 @@ module.service('UserService', function ($http, $location) {
                 callback(false);
             });
     }
+
+
+
 });

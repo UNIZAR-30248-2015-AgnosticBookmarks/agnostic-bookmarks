@@ -13,16 +13,14 @@ module.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('home', {
             url: '/home',
-            templateUrl: 'components/views/home.html'
+            templateUrl: 'components/views/home.html',
+            controller: 'accessCtrl'
+
         })
         .state('access', {
             url: '/access',
             templateUrl: 'components/views/access.html',
             controller: 'accessCtrl'
-        })
-        .state('register', {
-            url: '/register',
-            templateUrl: 'components/views/register.html'
         })
 
     $urlRouterProvider.otherwise('/access');

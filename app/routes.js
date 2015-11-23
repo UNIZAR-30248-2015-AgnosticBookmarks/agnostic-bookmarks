@@ -46,12 +46,6 @@ apiRoutes.route('/users')
         });
     });
 
-// Auth endpoint
-apiRoutes.route('/auth')
-    .get(authMiddleware, authRouter, function(req, res){
-        res.json(req.params.user);
-    });
-
 /* GLOBAL ROUTES */
 // -----------------------------------------------------------------------------
 // API endpoints go under '/api' route. Other routes are redirected to
