@@ -1,4 +1,7 @@
 <p>
     Welcome home!
     <a ui-sref="access">Log out</a>
+    <button ng-click="getList()">getList</button>
+
+    <p ng-if="showList">{{ user }}</p>
 </p>
