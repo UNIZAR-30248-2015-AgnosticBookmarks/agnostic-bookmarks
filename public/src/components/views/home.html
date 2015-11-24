@@ -1,5 +1,26 @@
 <p>
-    Welcome home! {{ user }}<
+    Welcome home! {{ yomamen }}
     <a ui-sref="access">Log out</a>
 
 </p>
+
+<form role="form">
+    <p ng-if="createBookmarkError">Sorry but it has a problem</p><br>
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input ng-model="bm.title" type="text" class="form-control" id="title">
+    </div>
+    <div class="form-group">
+        <label for="link">Link:</label>
+        <input ng-model="bm.link" type="text" class="form-control" id="link">
+    </div>
+    <!--<div class="form-group">
+        <label for="tags">Tags:</label>
+        <input ng-model="bm.tags" type="text" class="form-control" id="tags">
+    </div>-->
+    <button ng-click="createBookmark()" type="submit" class="btn btn-default">Create new bookmark</button>
+</form>
+
+
+
+
