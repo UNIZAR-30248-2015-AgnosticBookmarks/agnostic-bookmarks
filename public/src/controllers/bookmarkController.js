@@ -20,7 +20,10 @@ app.controller('bookmarkCtrl', function($scope, $state, BookMarkService) {
 
 
     var onAddResponse = function (result) {
-        $scope.addError = result;
+        if(result) {
+            $scope.addError = false;
+        } else $scope.addError = true;
+
     }
     var onListResponse = function (result) {
         $scope.bookmarkList = result;
