@@ -14,7 +14,7 @@ module.config(function($stateProvider, $urlRouterProvider) {
         .state('home', {
             url: '/home',
             templateUrl: 'components/views/home.html',
-            controller: 'accesCtrl'
+            controller: 'accessCtrl'
 
         })
         .state('access', {

@@ -32,8 +32,7 @@ app.controller('accessCtrl', function($scope, $state, UserService) {
         else $scope.regError = true;
     }
     var onListResponse = function (result) {
-        if (result) listError = false;
-        else $scope.listError = true;
+        $scope.bookmarkList = result;
     }
 
 
