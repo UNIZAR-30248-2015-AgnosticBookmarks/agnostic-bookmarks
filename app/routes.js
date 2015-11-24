@@ -29,12 +29,6 @@ apiRoutes.get('/', function(req, res) {
 
 // Users endpoint
 apiRoutes.route('/users')
-    // Get a list with all the users
-    //.get(function(req, res){
-        //User.find({}, function(err, users){
-            //res.json(users);
-        //});
-    //})
     // Add a new user
     .post(function(req, res){
         new User({
@@ -48,6 +42,7 @@ apiRoutes.route('/users')
 
 // Auth endpoint
 apiRoutes.route('/auth')
+    // Check the credentials of a user
     .get(authMiddleware, authRouter, function(req, res){
         res.json(req.params.user);
     });
