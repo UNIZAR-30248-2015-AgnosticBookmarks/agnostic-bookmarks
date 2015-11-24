@@ -39,7 +39,7 @@ module.service('BookmarkService', function ($http, $location) {
         //    });
 
                 //$scope.bookmarkList = response.dataFind;
-                $scopeL.bookmarkList = [
+                $scope.bookmarkList = [
                     {
                         "name" : "Google ES",
                         "link" : "http://www.google.es"

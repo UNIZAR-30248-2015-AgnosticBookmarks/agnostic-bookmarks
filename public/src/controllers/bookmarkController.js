@@ -1,9 +1,9 @@
 
 var app = angular.module('AgnosticBookmarks');
-app.controller('bookmarkCtrl', function($scopeL, $state, BookmarkService) {
-    $scopeL.listError = false;
-    $scopeL.bookmarkList = [];
-    $scopeL.getBmList = function() {
+app.controller('bookmarkCtrl', function($scope, $state, BookmarkService) {
+    $scope.listError = false;
+    $scope.bookmarkList = [];
+    $scope.getBmList = function() {
 
         //BookmarkService.getList($scope.user.name, onListResponse);
         BookmarkService.getList("cielito", onListResponse);
