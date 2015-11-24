@@ -1,13 +1,5 @@
 <p>
-    Welcome home! <p>{{ user }}</p>
+    Welcome home! {{ user }}<
     <a ui-sref="access">Log out</a>
 
 </p>
-
-<div>
-    <button ng-click="getBmList()"> Show my bookmarks</button>
-    <p ng-if="listError">ERROR</p><br><br>
-    <ul >
-        <li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }} </li>
-    </ul>
-</div>
