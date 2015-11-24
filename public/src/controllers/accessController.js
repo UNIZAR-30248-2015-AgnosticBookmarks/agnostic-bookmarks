@@ -4,6 +4,7 @@ app.controller('accessCtrl', function($scope, $state, UserService) {
     $scope.loginError = false;
     $scope.regError = false;
     $scope.listError = false;
+    $scope.pruebaParaMarcos = "42";
     $scope.bookmarkList = [];
     $scope.enter = function() {
 		$scope.loginError = false;

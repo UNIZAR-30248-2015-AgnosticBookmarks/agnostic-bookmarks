@@ -14,8 +14,8 @@ app.controller('bookmarkCtrl', function($scope, $state, BookMarkService) {
 
     $scope.getBmList = function() {
 
-        BookmarkService.getList($scope.user.name, onListResponse);
-        //BookMarkService.getList("cielito", onListResponse);
+        //BookMarkService.getList($scope.user.name, onListResponse);
+        BookMarkService.getList("mock", onListResponse);
     };
 
 
