@@ -3,18 +3,29 @@
     <a ui-sref="home">Go home!</a>
 </p>
 
-<form name="login_form" ng-submit="login" role="form">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" ng-model="ctrl.username">
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" ng-model="ctrl.password">
-    </div>
-    <div class="form-actions">
-        <button type="submit">Login</button>
-    </div>
+<div>
+    <form novalidate>
+        User:<br>
+        <input type="text" ng-model="user.name"><br>
+        Pass:<br>
+        <input type="password" ng-model="user.password">
+        <br><br>
+        <button ng-click="enter()">Enter</button>
+    </form>
+    <p ng-if="loginError">User doesn't exist or has another password</p>
+    <p ng-if="loginError"> {{ user }}</p>
+</div>
+
+<div>
+    <form novalidate>
+        User:<br>
+        <input type="text" ng-model="user.name"><br>
+        Pass:<br>
+        <input type="password" ng-model="user.password">
+        <br><br>
+        <button ng-click="register()">Register</button>
+    </form>
+    <p ng-if="regError">Not registered correctly</p>
+</div>
 
 
-</form>

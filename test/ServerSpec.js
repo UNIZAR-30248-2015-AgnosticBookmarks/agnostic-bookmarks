@@ -25,10 +25,13 @@ describe("Web server", function() {
         // Replace console.log with a mock that won't do anything, so our
         // test will look clean and pretty
         spyOn(console, "log");
-        // Start the server, either requiring its module or calling
-        // server.start() if it had ben required before
+        // Start the server
         if (server == null) server = require('../index.js');
-        else server.start();
+        try {
+            server.start();
+        } catch(err) {
+            if (err.message != "Trying to open unclosed connection.") throw err
+        }
     });
     // After all server related tests, close the server
     afterEach(function() {

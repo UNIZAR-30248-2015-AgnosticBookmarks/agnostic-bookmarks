@@ -1,4 +1,43 @@
 <p>
     Welcome home!
     <a ui-sref="access">Log out</a>
+
 </p>
+
+<div>
+    <div>
+        <form novalidate>
+            User:<br>
+            <input type="text" ng-model="bookmarkToAdd.name"><br>
+            Link:<br>
+            <input type="text" ng-model="bookmarkToAdd.link"><br>
+            Description:<br>
+            <input type="text" ng-model="bookmarkToAdd.description"><br>
+            <br><br>
+            <button ng-click="addBm()">Add bookmark!</button><br><br>
+        </form>
+        <p ng-if="addError">Not added properly</p>
+    </div>
+    <button ng-click="getBmList()"> Show my bookmarks</button>
+    <p ng-if="addError">ERROR ADDING BOOKMARK</p><br><br>
+
+    <!-- SECOND IMPL -->
+    <table>
+        <td>NAME</td>
+        <td>LINK</td>
+        <td>DESCRIPTION</td>
+        <!--<td>LABELS</td>-->
+        <tr ng-repeat="bookmark in bookmarkList">
+            <td>{{ bookmark.name }}</td>
+            <td>{{ bookmark.link }}</td>
+            <td>{{ bookmark.description }}</td>
+            <!--<td>{{ bookmark.labels }}</td>-->
+        </tr>
+    </table>
+
+    <!-- FIRST IMPL -->
+    <!--<ul >-->
+        <!--<li>NAME      LINK</li>-->
+        <!--<li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }}  </li>-->
+    <!--</ul>-->
+</div>
