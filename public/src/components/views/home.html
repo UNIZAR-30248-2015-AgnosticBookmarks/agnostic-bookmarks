@@ -7,8 +7,24 @@
 <div>
     <button ng-click="getBmList()"> Show my bookmarks</button>
     <p ng-if="listError">ERROR</p><br><br>
-    <ul >
-        <li>NAME      LINK</li>
-        <li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }}  </li>
-    </ul>
+
+    <!-- SECOND IMPL -->
+    <table>
+        <td>NAME</td>
+        <td>LINK</td>
+        <td>DESCRIPTION</td>
+        <!--<td>LABELS</td>-->
+        <tr ng-repeat="bookmark in bookmarkList">
+            <td>{{ bookmark.name }}</td>
+            <td>{{ bookmark.link }}</td>
+            <td>{{ bookmark.description }}</td>
+            <!--<td>{{ bookmark.labels }}</td>-->
+        </tr>
+    </table>
+
+    <!-- FIRST IMPL -->
+    <!--<ul >-->
+        <!--<li>NAME      LINK</li>-->
+        <!--<li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }}  </li>-->
+    <!--</ul>-->
 </div>
