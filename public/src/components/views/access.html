@@ -13,6 +13,7 @@
         <button ng-click="enter()">Enter</button>
     </form>
     <p ng-if="loginError">User doesn't exist or has another password</p>
+    <p ng-if="loginError"> {{ user }}</p>
 </div>
 
 <div>
