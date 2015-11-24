@@ -8,7 +8,7 @@ module.service('BookMarkService', function ($http, $location) {
     function addBookmark(bookmark, callback) {
         var bm = {name: bookmark.name, username: bookmark.username, link: bookmark.link, description: bookmark.description};
         $http.post(
-            "http://192.168.1.4:3000/api/addBookmark/",
+            "http://localhost:3000/api/addBookmark/",
             JSON.stringify(bm),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
@@ -22,7 +22,7 @@ module.service('BookMarkService', function ($http, $location) {
         var credentials = {username: user};
         var bookmarkList = [{}];
         $http.get(
-            "http://192.168.1.4:3000/api/userBookmarks/",
+            "http://localhost:3000/api/userBookmarks/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
