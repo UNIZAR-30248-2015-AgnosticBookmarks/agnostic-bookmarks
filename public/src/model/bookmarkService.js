@@ -5,7 +5,8 @@ module.service('BookmarkService', function ($http, $location) {
     return {
         getList: getList,
         addBookmark: addBookmark,
-        deleteBookmark: deleteBookmark
+        deleteBookmark: deleteBookmark,
+        updateBookmark: updateBookmark
     }
 
     function addBookmark(bookmark, user, callback) {
@@ -67,6 +68,31 @@ module.service('BookmarkService', function ($http, $location) {
             console.log(response);
             callback(response.data);
         });
+
+    function updateBookmark(id, bookmark, user, callback) {
+        var _bookmark = {
+            bookmarkId : id,
+            name: bookmark.name,
+            url: bookmark.link,
+            description: bookmark.description
+        };
+        $http.patch(
+            "http://localhost:3000/api/bookmarks/" + id,
+            JSON.stringify(_bookmark),
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'username': user.username,
+                    'password': user.password
+                }
+            }
+        ).then(function onSuccess(response) {
+                console.log(response);
+                callback(null, response.data);
+            }, function onError(response) {
+                console.log(response);
+                callback(response.data);
+            });
     }
 
 });
