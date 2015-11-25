@@ -5,16 +5,24 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.bookmarkList = [];
     $scope.bookmarkToAdd = {};
 
+    $scope.sortCriteriaOptions = [
+        { name: 'Date', value: 'date' },
+        { name: 'Name', value: 'name' }
+    ];
+    $scope.sortCriteria = $scope.sortCriteriaOptions[0].value;
+    $scope.changeSortCriteria = function() {
+        getBookmarkList($scope.sortCriteria);
+    }
+    
     $scope.addBm = function() {
         $scope.addError = false;
         BookmarkService.addBookmark($scope.bookmarkToAdd, UserService.getUserData(), onAddResponse);
-        getBookmarkList();
+        getBookmarkList($scope.sortCriteria);
     };
 
-
-    getBookmarkList = function() {
-        //BookMarkService.getList($scope.user.name, onListResponse);
-        BookmarkService.getList(UserService.getUserData(), onListResponse);
+    getBookmarkList = function(sortCriteria) {
+        var params = { sortBy: sortCriteria }
+        BookmarkService.getList(UserService.getUserData(), params, onListResponse);
     };
 
     $scope.logout = function() {
@@ -39,5 +47,5 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     }
 
     // Load bookmark list on every page reload
-    getBookmarkList();
+    getBookmarkList($scope.sortCriteria);
 });
