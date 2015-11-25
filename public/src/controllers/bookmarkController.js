@@ -1,34 +1,40 @@
 
 var app = angular.module('AgnosticBookmarks');
-app.controller('bookmarkCtrl', function($scope, $rootScope, $state, BookMarkService) {
+app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService, UserService) {
     $scope.addError = false;
     $scope.bookmarkList = [];
+    $scope.bookmarkToAdd = {};
     $scope.addBm = function() {
         $scope.addError = false;
         //BookmarkService.getList($scope.user.name, onListResponse);
-        $scope.bookmarkToAdd.username = $rootScope.user;
+        //$scope.bookmarkToAdd.username = $rootScope.user;
         //$scope.bookmarkToAdd.username = "alberto";
-        BookMarkService.addBookmark($scope.bookmarkToAdd, onAddResponse);
+        BookmarkService.addBookmark($scope.bookmarkToAdd, UserService.getUserData(), onAddResponse);
     };
 
 
     $scope.getBmList = function() {
 
         //BookMarkService.getList($scope.user.name, onListResponse);
-        BookMarkService.getList("mock", onListResponse);
+        console.log("Full list, nigga!");
+        BookmarkService.getList(UserService.getUserData(), onListResponse);
     };
 
 
-    var onAddResponse = function (result) {
-        if(result) {
-            $scope.addError = false;
-        } else {
+    var onAddResponse = function (error, result) {
+        if (error) {
             $scope.addError = true;
+        } else {
+            $scope.addError = false;
         }
 
     }
-    var onListResponse = function (result) {
-        $scope.bookmarkList = result;
+    var onListResponse = function (error, result) {
+        if (error) console.err(error);
+        else {
+            console.log(result);
+            $scope.bookmarkList = result;
+        }
     }
 
 
