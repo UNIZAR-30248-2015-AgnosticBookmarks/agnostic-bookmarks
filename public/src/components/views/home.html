@@ -7,9 +7,9 @@
 <div>
     <div class="col-sm-3">
         <br>
-        <div class="alert alert-success" ng-if="addError">
+        <!--<div class="alert alert-success" ng-if="addError">
             <strong>Alert!</strong> Not added properly</p>
-        </div>
+        </div>-->
         <div ng-if="addError" class="alert alert-success" ng-if="addError">
             <strong>Alert!</strong> Problem adding bookmark</p>
         </div>
@@ -26,17 +26,14 @@
                 <label for="description">Description:</label>
                 <input type="text" ng-model="bookmarkToAdd.description" id="description" class="form-control">
             </div>
-
             <button ng-click="addBm()" class="btn btn-default">Add bookmark!</button>
         </form>
-        <p ng-if="addError">Not added properly</p>
         <br>
         <button ng-click="getBmList()" class="btn btn-default"> Show my bookmarks</button>
         <br>
     </div>
 
-
-    <!-- SECOND IMPL -->
+    <!-- Table of bookmarks -->
     <div class="col-sm-9">
         <div class="container">
             <h2>My bookmarks</h2>
@@ -49,20 +46,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="bookmark in bookmarkList">
-                    <td>{{ bookmark.name }}</td>
-                    <td>{{ bookmark.link }}</td>
-                    <td>{{ bookmark.description }}</td>
-                    <!--<td>{{ bookmark.labels }}</td>-->
-                </tr>
+                    <tr ng-repeat="bookmark in bookmarkList">
+                        <td>{{ bookmark.name }}</td>
+                        <td>{{ bookmark.link }}</td>
+                        <td>{{ bookmark.description }}</td>
+                        <!--<td>{{ bookmark.labels }}</td>-->
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <!-- FIRST IMPL -->
-    <!--<ul >-->
-        <!--<li>NAME      LINK</li>-->
-        <!--<li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }}  </li>-->
-    <!--</ul>-->
 </div>
