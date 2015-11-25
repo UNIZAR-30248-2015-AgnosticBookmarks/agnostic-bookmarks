@@ -1,6 +1,10 @@
 <p>
-    Welcome home! {{ yomamen }}
+    Welcome home! {{ user }}
     <a ui-sref="access">Log out</a>
+    <script>
+        docuemnt.write($scope.regError);
+        docuemnt.write($scope.user);
+    </script>
 
 </p>
 

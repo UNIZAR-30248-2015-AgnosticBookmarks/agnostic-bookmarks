@@ -3,6 +3,7 @@ var app = angular.module('AgnosticBookmarks');
 app.controller('accessCtrl', function($scope, $state, UserService) {
     $scope.loginError = false;
     $scope.regError = false;
+    $scope.createBoomarkError = false;
     $scope.enter = function() {
 		$scope.loginError = false;
         $scope.registerError = false;

@@ -23,7 +23,7 @@ module.service('UserService', function ($http, $location) {
     // ESTO FUNCIONA
     function register(user, pass, callback) {
         //callback(true);
-        var credentials = {username: user, password: pass};
+        var credentials = {username: user, password: pass, success: false};
         $http.post(
             "http://localhost:3000/api/users/",
             JSON.stringify(credentials),
