@@ -3,38 +3,62 @@
     <a ui-sref="access">Log out</a>
 
 </p>
+
 <p> {{ pruebaParaMarcos }}</p>
 
 <div>
     <div>
-        <form novalidate>
-            User:<br>
-            <input type="text" ng-model="bookmarkToAdd.name"><br>
-            Link:<br>
-            <input type="text" ng-model="bookmarkToAdd.link"><br>
-            Description:<br>
-            <input type="text" ng-model="bookmarkToAdd.description"><br>
-            <br><br>
-            <button ng-click="addBm()">Add bookmark!</button><br><br>
-        </form>
-        <p ng-if="addError">Not added properly</p>
-    </div>
-    <button ng-click="getBmList()"> Show my bookmarks</button>
-    <p ng-if="addError">ERROR ADDING BOOKMARK</p><br><br>
+        <br>
+        <div class="alert alert-success" ng-if="addError">
+            <strong>Alert!</strong> Not added properly</p>
+        </div>
+        <form novalidate role="form">
+            <div class="form-group">
+                <label for="user">User:</label>
+                <input type="text" ng-model="bookmarkToAdd.name" id="user" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="link">Link:</label>
+                <input type="text" ng-model="bookmarkToAdd.link" id="link" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" ng-model="bookmarkToAdd.description" id="description" class="form-control">
+            </div>
 
-    <!-- SECOND IMPL -->
-    <table>
-        <td>NAME</td>
-        <td>LINK</td>
-        <td>DESCRIPTION</td>
-        <!--<td>LABELS</td>-->
-        <tr ng-repeat="bookmark in bookmarkList">
-            <td>{{ bookmark.name }}</td>
-            <td>{{ bookmark.link }}</td>
-            <td>{{ bookmark.description }}</td>
-            <!--<td>{{ bookmark.labels }}</td>-->
-        </tr>
-    </table>
+            <button ng-click="addBm()" type="submit" class="btn btn-default">Add bookmark!</button>
+        </form>
+    </div>
+
+    <!--<br>
+    <button ng-click="getBmList()" type="submit" class="btn btn-default">Show my bookmarks</button>
+    <br>
+
+    <div class="alert alert-success" ng-if="addError">
+        <strong>Alert!</strong> Problem adding bookmark</p>
+    </div>
+    <br>-->
+
+    <div class="container">
+        <h2>My bookmarks</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Link</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="bookmark in bookmarkList">
+                <td>{{ bookmark.name }}</td>
+                <td>{{ bookmark.link }}</td>
+                <td>{{ bookmark.description }}</td>
+                <!--<td>{{ bookmark.labels }}</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <!-- FIRST IMPL -->
     <!--<ul >-->
