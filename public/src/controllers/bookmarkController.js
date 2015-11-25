@@ -2,12 +2,20 @@
 var app = angular.module('AgnosticBookmarks');
 app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService, UserService) {
     $scope.addError = false;
+    $scope.delError = false;
     $scope.bookmarkList = [];
     $scope.bookmarkToAdd = {};
 
     $scope.addBm = function() {
         $scope.addError = false;
         BookmarkService.addBookmark($scope.bookmarkToAdd, UserService.getUserData(), onAddResponse);
+        getBookmarkList();
+    };
+
+    $scope.delBm = function(id) {
+        $scope.delError = false;
+        var myId = $scope.bookmarkList[id]._id;
+        BookmarkService.deleteBookmark(myId, UserService.getUserData(), onDelResponse);
         getBookmarkList();
     };
 
@@ -27,6 +35,14 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
             $scope.addError = true;
         } else {
             $scope.addError = false;
+        }
+
+    }
+    var onDelResponse = function (error, result) {
+        if (error) {
+            $scope.delError = true;
+        } else {
+            $scope.delError = false;
         }
 
     }

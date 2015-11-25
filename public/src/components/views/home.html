@@ -28,7 +28,7 @@
     </div>
 
     <!-- Table of bookmarks -->
-    <div class="col-sm-9">
+    <div class="col-sm-8">
         <div class="container">
             <h2>My bookmarks</h2>
             <table class="table">
@@ -40,10 +40,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="bookmark in bookmarkList">
+                    <tr ng-repeat="bookmark in bookmarkList" >
                         <td>{{ bookmark.name }}</td>
                         <td>{{ bookmark.url }}</td>
                         <td>{{ bookmark.description }}</td>
+                        <td>
+                            <button ng-click="" class="btn btn-default">Modify</button>
+                            <button ng-click="delBm($index)" class="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
