@@ -1,22 +1,28 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // DEFINE SCHEMA
-
-Label = new mongoose.Schema({
-    name : String
+BookmarkSchema = new mongoose.Schema({
+    name  : { type: String, required: true },
+    owner : { type: ObjectId, ref: 'User', required: true },
+    url   : { type: String, required: true },
+    description : String
 });
 
-BookMarkSchema = new mongoose.Schema({
-    name : { type: String, unique: true, required: true },
-    username: { type: String, required: true },
-    link: { type: String, required: true },
-    labels: [Label],
-    description: String
+// Check that the user does not own another bookmark pointing the same URL
+// before saving the object
+BookmarkSchema.pre('save', function(next) {
+    var self = this;
+    mongoose.models['Bookmark']
+        .count({ owner: this.owner, url: this.url }, function(err, count) {
+            if (err) throw err;
+            if (count > 0) {
+                self.invalidate('url', 'URL is already in use');
+                next(new Error("URL is already in use"));
+            } else {
+                next();
+            }
+        });
 });
 
-//Check if username and link already exists in collection BookMark
-BookMarkSchema.methods.exists = function(username, link, callback) {
-    callback(BookMark.count({username: username, link: link})>0);
-}
-
-module.exports = mongoose.model('BookMark', BookMarkSchema);
+module.exports = mongoose.model('Bookmark', BookmarkSchema);
