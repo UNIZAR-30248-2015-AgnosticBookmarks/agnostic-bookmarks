@@ -37,9 +37,13 @@ app.service('UserService', function ($http, $location) {
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
-                callback(false, response);
+                userData = {
+                    username: user,
+                    password: pass
+                }
+                callback(true,response);
             }, function onError(response) {
-                callback(true, response);
+                callback(false,response);
             });
     }
 

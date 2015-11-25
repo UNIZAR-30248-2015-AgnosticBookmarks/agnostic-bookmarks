@@ -7,12 +7,12 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
     $rootScope.user = "";
     $scope.enter = function() {
 		$scope.loginError = false;
-        $scope.registerError = false;
+        $scope.regError = false;
         UserService.authenticate($scope.user.name, $scope.user.password, onEnterResponse);
         //$scope.user = {name:pepe, password:"locolo"};
     };
     $scope.register = function() {
-		$scope.registerError = false;
+		$scope.regError = false;
         $scope.loginError = false;
         UserService.register($scope.user.name, $scope.user.password, onRegisterResponse);
     };
