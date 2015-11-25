@@ -3,12 +3,13 @@
 //  application.
 // =============================================================================
 
-var express = require('express');
-var auth    = require('./auth-middleware');
-var User    = require('./user-model');
+var express  = require('express');
+var auth     = require('./auth-middleware');
+var User     = require('./user-model');
+var Bookmark = require('./bookmark-model');
 
 var authMiddleware = auth.basicMiddleware;
-var authRouter     = auth.basicMiddleware;
+var authRouter     = auth.routesHandler;
 
 /* API ROUTES */
 // -----------------------------------------------------------------------------
@@ -30,11 +31,11 @@ apiRoutes.get('/', function(req, res) {
 // Users endpoint
 apiRoutes.route('/users')
     // Add a new user
-    .post(function(req, res){
+    .post(function(req, res) {
         new User({
             username: req.body.username,
             password: req.body.password
-        }).save(function(err, data){
+        }).save(function(err, data) {
             if (err) res.status(500).send(err);
             else res.json(data);
         });
@@ -43,8 +44,86 @@ apiRoutes.route('/users')
 // Auth endpoint
 apiRoutes.route('/auth')
     // Check the credentials of a user
-    .get(authMiddleware, authRouter, function(req, res){
+    .get(authMiddleware, authRouter, function(req, res) {
         res.json(req.params.user);
+    });
+
+// Bookmarks endpoints
+apiRoutes.route('/bookmarks')
+    // Get the whole bookmarks collection of a user
+    .get(authMiddleware, authRouter, function(req, res) {
+        Bookmark.find({ owner: req.params.user }, function(err, data) {
+            if (err) res.status(500).send(err);
+            else res.json(data);
+        });
+    })
+    // Add a bookmark to a user's collection
+    .post(authMiddleware, authRouter, function(req, res) {
+        new Bookmark({
+            name: req.body.name,
+            owner: req.params.user,
+            url: req.body.url,
+            description: req.body.description
+        }).save(function(err, data) {
+            if (err && err.name == 'ValidationError') res.status(409).send(err);
+            else if (err) res.status(500).send(err);
+            else res.json(data);
+        });
+    })
+
+apiRoutes.route('/bookmarks/:bookmarkId')
+    // Get single bookmark
+    .get(authMiddleware, authRouter, function(req, res) {
+        Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
+            if (err) res.status(500).send(err);
+            else if (bookmark == null) res.status(404).send("Not found");
+            else bookmark.verifyOwnership(req.params.user,
+                    function(err, accessGranted) {
+                if (err) res.status(500).send(err); // Should never enter
+                else if (!accessGranted) res.status(401).send("Not authorized");
+                else res.json(bookmark);
+            });
+        });
+    })
+    // Update single bookmark
+    .patch(authMiddleware, authRouter, function(req, res) {
+        res.status(501).send("Not implemented yet");
+        // TODO: Fix url validation for this to work properly
+        //Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
+            //if (err) res.status(500).send(err);
+            //else if (bookmark == null) res.status(404).send("Not found");
+            //else bookmark.verifyOwnership(req.params.user,
+                    //function(err, accessGranted) {
+                //if (err) res.status(500).send(err); // Should never enter
+                //else if (!accessGranted) res.status(401).send("Not authorized");
+                //else {
+                    //if (req.body.name) bookmark.name = req.body.name;
+                    //if (req.body.url) bookmark.url = req.body.url;
+                    //if (req.body.description)
+                        //bookmark.description = req.body.description;
+                    //bookmark.save(function(err, data) {
+                       //if (err) res.status(500).send(err);
+                       //else res.json(bookmark);
+                    //});;
+                //}
+            //});
+        //})
+    })
+    // Remove single  bookmark
+    .delete(authMiddleware, authRouter, function(req, res) {
+        Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
+            if (err) res.status(500).send(err);
+            else if (bookmark == null) res.status(404).send("Not found");
+            else bookmark.verifyOwnership(req.params.user,
+                    function(err, accessGranted) {
+                if (err) res.status(500).send(err); // Should never enter
+                else if (!accessGranted) res.status(401).send("Not authorized");
+                else bookmark.remove(function(err, data) {
+                    if (err) res.status(500).send(err);
+                    else res.json(bookmark);
+                });;
+            });
+        })
     });
 
 /* GLOBAL ROUTES */

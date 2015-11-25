@@ -18,13 +18,14 @@ BookmarkSchema.pre('validate', function(next) {
     mongoose.models['Bookmark']
         .count({ owner: this.owner, url: this.url }, function(err, count) {
             if (err) throw err;
-            if (count > 0) {
-                self.invalidate('url', 'URL is already in use');
-                next();
-            } else {
-                next();
-            }
+            if (count > 0) self.invalidate('url', 'URL is already in use');
+            next();
         });
 });
+
+// Check if a userId corresponds with the owner of the bookmark
+BookmarkSchema.methods.verifyOwnership = function(userId, callback) {
+    callback(null, this.owner.equals(userId));
+}
 
 module.exports = mongoose.model('Bookmark', BookmarkSchema);
