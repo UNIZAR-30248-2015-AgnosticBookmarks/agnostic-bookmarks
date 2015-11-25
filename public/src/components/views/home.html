@@ -7,7 +7,7 @@
 <div>
     <div class="col-sm-3">
         <br>
-        <div ng-if="addError" class="alert alert-error" ng-if="addError">
+        <div ng-if="addError" class="alert alert-danger" ng-if="addError">
             <p><strong>Alert!</strong> Problem adding bookmark</p>
         </div>
         <form novalidate role="form">
@@ -31,6 +31,17 @@
     <div class="col-sm-8">
         <div class="container">
             <h2>My bookmarks</h2>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="control-label">Sort by </label>
+                    <select class="form-control input-sm" ng-model="sortCriteria"
+                        ng-options="criteria.value as criteria.name for criteria in sortCriteriaOptions">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button ng-click="changeSortCriteria()" class="btn btn-sm btn-default">Go!</button>
+                </div>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
@@ -51,6 +62,16 @@
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pager">
+                    <!--<li class="previous" ng-class="{'disabled':bookmarksPage == 0}">-->
+                    <li class="previous" ng-if="bookmarksPage != 0">
+                        <a href="" ng-click="retrievePrevPage()">
+                            <span aria-hidden="true">&larr;</span> Older</a></li>
+                    <li class="next"><a href="" ng-click="retrieveNextPage()">
+                        Newer <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>

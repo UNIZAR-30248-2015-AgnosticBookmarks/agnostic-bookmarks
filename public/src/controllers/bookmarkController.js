@@ -6,10 +6,30 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.bookmarkList = [];
     $scope.bookmarkToAdd = {};
 
+    $scope.bookmarksPage = 0;
+    $scope.retrieveNextPage = function() {
+        $scope.bookmarksPage++;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+    $scope.retrievePrevPage = function() {
+        $scope.bookmarksPage--;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+
+    $scope.sortCriteriaOptions = [
+        { name: 'Date', value: 'date' },
+        { name: 'Name', value: 'name' }
+    ];
+    $scope.sortCriteria = $scope.sortCriteriaOptions[0].value;
+    $scope.changeSortCriteria = function() {
+        $scope.bookmarksPage = 0;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+
     $scope.addBm = function() {
         $scope.addError = false;
         BookmarkService.addBookmark($scope.bookmarkToAdd, UserService.getUserData(), onAddResponse);
-        getBookmarkList();
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
     };
 
     $scope.delBm = function(id) {
@@ -29,6 +49,11 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         UserService.logOut();
         $state.go('access');
     }
+
+    var getBookmarkList = function(sortCriteria, offset) {
+        var params = { sortBy: sortCriteria, offset: offset }
+        BookmarkService.getList(UserService.getUserData(), params, onListResponse);
+    };
 
     var onAddResponse = function (error, result) {
         if (error) {
@@ -55,5 +80,5 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     }
 
     // Load bookmark list on every page reload
-    getBookmarkList();
+    getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
 });
