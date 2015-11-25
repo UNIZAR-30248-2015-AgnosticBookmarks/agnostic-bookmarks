@@ -5,10 +5,13 @@
 </p>
 
 <div>
-    <div>
+    <div class="col-sm-3">
         <br>
         <div class="alert alert-success" ng-if="addError">
             <strong>Alert!</strong> Not added properly</p>
+        </div>
+        <div ng-if="addError" class="alert alert-success" ng-if="addError">
+            <strong>Alert!</strong> Problem adding bookmark</p>
         </div>
         <form novalidate role="form">
             <div class="form-group">
@@ -24,26 +27,38 @@
                 <input type="text" ng-model="bookmarkToAdd.description" id="description" class="form-control">
             </div>
 
-            <button ng-click="addBm()" type="submit" class="btn btn-default">Add bookmark!</button>
+            <button ng-click="addBm()" class="btn btn-default">Add bookmark!</button>
         </form>
         <p ng-if="addError">Not added properly</p>
+        <br>
+        <button ng-click="getBmList()" class="btn btn-default"> Show my bookmarks</button>
+        <br>
     </div>
-    <button ng-click="getBmList()"> Show my bookmarks</button>
-    <p ng-if="addError">ERROR ADDING BOOKMARK</p><br><br>
+
 
     <!-- SECOND IMPL -->
-    <table>
-        <td>NAME</td>
-        <td>LINK</td>
-        <td>DESCRIPTION</td>
-        <!--<td>LABELS</td>-->
-        <tr ng-repeat="bookmark in bookmarkList">
-            <td>{{ bookmark.name }}</td>
-            <td>{{ bookmark.link }}</td>
-            <td>{{ bookmark.description }}</td>
-            <!--<td>{{ bookmark.labels }}</td>-->
-        </tr>
-    </table>
+    <div class="col-sm-9">
+        <div class="container">
+            <h2>My bookmarks</h2>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Link</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="bookmark in bookmarkList">
+                    <td>{{ bookmark.name }}</td>
+                    <td>{{ bookmark.link }}</td>
+                    <td>{{ bookmark.description }}</td>
+                    <!--<td>{{ bookmark.labels }}</td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!-- FIRST IMPL -->
     <!--<ul >-->

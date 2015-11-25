@@ -3,29 +3,45 @@
     <a ui-sref="home">Go home!</a>
 </p>
 
-<div>
-    <form novalidate>
-        User:<br>
-        <input type="text" ng-model="user.name"><br>
-        Pass:<br>
-        <input type="password" ng-model="user.password">
-        <br><br>
-        <button ng-click="enter()">Enter</button>
-    </form>
-    <p ng-if="loginError">User doesn't exist or has another password</p>
-    <p ng-if="loginError"> {{ user }}</p>
+<div class="col-sm-3">
+    <div class="well">
+        <form novalidate role="form">
+            <h3>Login</h3>
+            <div class="form-group">
+                <label for="log.user">User:</label>
+                <input type="text" ng-model="user.name" class="form-control" id="log.user">
+            </div>
+            <div class="form-group">
+                <label for="log.password">Pass:</label>
+                <input type="password" ng-model="user.password" class="form-control" id="log.password">
+            </div>
+            <button ng-click="enter()" type="submit" class="btn btn-default">Enter</button>
+        </form>
+        <br>
+        <div ng-if="loginError" class="alert alert-success" ng-if="addError">
+            <strong>Alert!</strong> User doesn't exist or has another password</p>
+        </div>
+    </div>
 </div>
 
-<div>
-    <form novalidate>
-        User:<br>
-        <input type="text" ng-model="user.name"><br>
-        Pass:<br>
-        <input type="password" ng-model="user.password">
-        <br><br>
-        <button ng-click="register()">Register</button>
-    </form>
-    <p ng-if="regError">Not registered correctly</p>
+<div class="col-sm-3">
+    <div class="well">
+        <form novalidate>
+            <h3>Register</h3>
+            <div class="form-group">
+                <label for="reg.user">User:</label>
+                <input type="text" ng-model="user.name" class="form-control" id="reg.user">
+            </div>
+            <div class="form-group">
+                <label for="reg.password">Pass:</label>
+                <input type="password" ng-model="user.password" class="form-control" id="reg.password">
+            </div>
+            <button ng-click="register()" type="submit" class="btn btn-default">Register</button>
+        </form>
+        <br>
+        <div ng-if="regError" class="alert alert-success" ng-if="addError">
+            <strong>Alert!</strong> Not registered correctly</p>
+        </div>
+    </div>
 </div>
-
 
