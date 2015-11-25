@@ -26,12 +26,12 @@ module.service('BookmarkService', function ($http, $location) {
                 }
             }
         ).then(function onSuccess(response) {
-                console.log(response);
-                callback(null, response.data);
-            }, function onError(response) {
-                console.log(response);
-                callback(response.data);
-            });
+            console.log(response);
+            callback(null, response.data);
+        }, function onError(response) {
+            console.log(response);
+            callback(response.data);
+        });
     }
 
     function getList(user, params, callback) {
@@ -48,7 +48,6 @@ module.service('BookmarkService', function ($http, $location) {
         }, function onError(response) {
             callback(response.data);
         });
-
     }
 
     function deleteBookmark(id, user, callback) {
@@ -68,6 +67,7 @@ module.service('BookmarkService', function ($http, $location) {
             console.log(response);
             callback(response.data);
         });
+    }
 
     function updateBookmark(id, bookmark, user, callback) {
         var _bookmark = {

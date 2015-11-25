@@ -17,9 +17,10 @@ BookmarkSchema = new mongoose.Schema({
 BookmarkSchema.pre('validate', function(next) {
     var self = this;
     mongoose.models['Bookmark']
-        .count({ owner: this.owner, url: this.url }, function(err, count) {
+        .findOne({ owner: this.owner, url: this.url }, function(err, data) {
             if (err) throw err;
-            if (count > 0) self.invalidate('url', 'URL is already in use');
+            if (data && !self._id.equals(data._id))
+                self.invalidate('url', 'URL is already in use');
             next();
         });
 });

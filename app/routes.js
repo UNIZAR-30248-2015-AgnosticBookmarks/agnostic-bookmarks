@@ -109,27 +109,25 @@ apiRoutes.route('/bookmarks/:bookmarkId')
     })
     // Update single bookmark
     .patch(authMiddleware, authRouter, function(req, res) {
-        res.status(501).send("Not implemented yet");
-        // TODO: Fix url validation for this to work properly
-        //Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
-            //if (err) res.status(500).send(err);
-            //else if (bookmark == null) res.status(404).send("Not found");
-            //else bookmark.verifyOwnership(req.params.user,
-                    //function(err, accessGranted) {
-                //if (err) res.status(500).send(err); // Should never enter
-                //else if (!accessGranted) res.status(401).send("Not authorized");
-                //else {
-                    //if (req.body.name) bookmark.name = req.body.name;
-                    //if (req.body.url) bookmark.url = req.body.url;
-                    //if (req.body.description)
-                        //bookmark.description = req.body.description;
-                    //bookmark.save(function(err, data) {
-                       //if (err) res.status(500).send(err);
-                       //else res.json(bookmark);
-                    //});;
-                //}
-            //});
-        //})
+        Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
+            if (err) res.status(500).send(err);
+            else if (bookmark == null) res.status(404).send("Not found");
+            else bookmark.verifyOwnership(req.params.user,
+                    function(err, accessGranted) {
+                if (err) res.status(500).send(err); // Should never enter
+                else if (!accessGranted) res.status(401).send("Not authorized");
+                else {
+                    if (req.body.name) bookmark.name = req.body.name;
+                    if (req.body.url) bookmark.url = req.body.url;
+                    if (req.body.description)
+                        bookmark.description = req.body.description;
+                    bookmark.save(function(err, data) {
+                       if (err) res.status(500).send(err);
+                       else res.json(bookmark);
+                    });;
+                }
+            });
+        });
     })
     // Remove single  bookmark
     .delete(authMiddleware, authRouter, function(req, res) {
