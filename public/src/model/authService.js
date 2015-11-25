@@ -9,7 +9,6 @@ module.service('UserService', function ($http, $location) {
     function authenticate(user, pass, callback) {
         var credentials = {username: user, password: pass};
         $http.post(
-            //192.168.1.4
             "http://localhost:3000/api/auth/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
@@ -34,22 +33,6 @@ module.service('UserService', function ($http, $location) {
                 callback(false);
             });
     }
-
-    function newBookmark(id, title, link, callback){
-        var credentials = {id: id, title: user, link: pass, tags:""};
-        $http.post(
-            "http://localhost:3000/api/createBookmark/",
-            JSON.stringify(credentials),
-            {headers: {'Content-Type': 'application/json'}}
-        ).then(function onSuccess(response) {
-                callback(true);
-            }, function onError(response) {
-                callback(false);
-            });
-        callback(true);
-
-    }
-
 
 
 });

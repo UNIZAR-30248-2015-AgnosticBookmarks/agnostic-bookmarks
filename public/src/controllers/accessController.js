@@ -1,9 +1,10 @@
 
 var app = angular.module('AgnosticBookmarks');
-app.controller('accessCtrl', function($scope, $state, UserService) {
+app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
     $scope.loginError = false;
     $scope.regError = false;
-    $scope.createBoomarkError = false;
+    $scope.bookmarkList = [];
+    $rootScope.user = "";
     $scope.enter = function() {
 		$scope.loginError = false;
         $scope.registerError = false;
@@ -20,17 +21,18 @@ app.controller('accessCtrl', function($scope, $state, UserService) {
     };
 
     var onEnterResponse = function (result) {
-        if (result) $state.go('home');
+        if (result) {
+            $rootScope.user = $scope.user.name;
+            $state.go('home');
+        }
         else $scope.loginError = true;
     }
     var onRegisterResponse = function (result) {
-        if (result){
+        if (result) {
+            $rootScope.user = $scope.user.name;
             $state.go('home');
         }
-        else $scope.regError = true;
-    }
-    var onCreateBookmarkResponse = function (result) {
-        if (result) $state.go('home');
+
         else $scope.regError = true;
     }
 

@@ -1,5 +1,6 @@
 <p>
-    Welcome home! {{ user }}
+
+    Welcome home!
     <a ui-sref="access">Log out</a>
     <script>
         docuemnt.write($scope.regError);
@@ -8,23 +9,52 @@
 
 </p>
 
-<form role="form">
-    <p ng-if="createBookmarkError">Sorry but it has a problem</p><br>
-    <div class="form-group">
-        <label for="title">Title:</label>
-        <input ng-model="bm.title" type="text" class="form-control" id="title">
+
+<div>
+    <div>
+        <br>
+        <div class="alert alert-success" ng-if="addError">
+            <strong>Alert!</strong> Not added properly</p>
+        </div>
+        <form novalidate role="form">
+            <div class="form-group">
+                <label for="user">User:</label>
+                <input type="text" ng-model="bookmarkToAdd.name" id="user" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="link">Link:</label>
+                <input type="text" ng-model="bookmarkToAdd.link" id="link" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" ng-model="bookmarkToAdd.description" id="description" class="form-control">
+            </div>
+
+            <button ng-click="addBm()" type="submit" class="btn btn-default">Add bookmark!</button>
+        </form>
+        <p ng-if="addError">Not added properly</p>
     </div>
-    <div class="form-group">
-        <label for="link">Link:</label>
-        <input ng-model="bm.link" type="text" class="form-control" id="link">
-    </div>
-    <!--<div class="form-group">
-        <label for="tags">Tags:</label>
-        <input ng-model="bm.tags" type="text" class="form-control" id="tags">
-    </div>-->
-    <button ng-click="createBookmark()" type="submit" class="btn btn-default">Create new bookmark</button>
-</form>
+    <button ng-click="getBmList()"> Show my bookmarks</button>
+    <p ng-if="addError">ERROR ADDING BOOKMARK</p><br><br>
 
+    <!-- SECOND IMPL -->
+    <table>
+        <td>NAME</td>
+        <td>LINK</td>
+        <td>DESCRIPTION</td>
+        <!--<td>LABELS</td>-->
+        <tr ng-repeat="bookmark in bookmarkList">
+            <td>{{ bookmark.name }}</td>
+            <td>{{ bookmark.link }}</td>
+            <td>{{ bookmark.description }}</td>
+            <!--<td>{{ bookmark.labels }}</td>-->
+        </tr>
+    </table>
 
-
+    <!-- FIRST IMPL -->
+    <!--<ul >-->
+        <!--<li>NAME      LINK</li>-->
+        <!--<li ng-repeat="bookmark in bookmarkList"> {{ bookmark.name }} {{ bookmark.link }}  </li>-->
+    <!--</ul>-->
+</div>
 
