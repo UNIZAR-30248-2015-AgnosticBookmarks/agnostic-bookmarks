@@ -6,8 +6,8 @@ app.controller('bookmarkCtrl', function($scope, $rootScope, $state, BookMarkServ
     $scope.addBm = function() {
         $scope.addError = false;
         //BookmarkService.getList($scope.user.name, onListResponse);
-        //$scope.bookmarkToAdd.username = $scope.user.username;
-        $scope.bookmarkToAdd.username = "alberto";
+        $scope.bookmarkToAdd.username = $rootScope.user;
+        //$scope.bookmarkToAdd.username = "alberto";
         BookMarkService.addBookmark($scope.bookmarkToAdd, onAddResponse);
     };
 
@@ -22,7 +22,9 @@ app.controller('bookmarkCtrl', function($scope, $rootScope, $state, BookMarkServ
     var onAddResponse = function (result) {
         if(result) {
             $scope.addError = false;
-        } else $scope.addError = true;
+        } else {
+            $scope.addError = true;
+        }
 
     }
     var onListResponse = function (result) {
