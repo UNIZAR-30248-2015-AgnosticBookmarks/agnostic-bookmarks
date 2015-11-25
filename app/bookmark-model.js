@@ -20,11 +20,6 @@ BookmarkSchema.pre('validate', function(next) {
             if (err) throw err;
             if (count > 0) {
                 self.invalidate('url', 'URL is already in use');
-                //next(new Error("URL is already in use"));
-                //var error = new ValidationError(this);
-                //error.errors.url = new ValidatorError('url',
-                    //'URL is already in use', notvalid, this.url);
-                //next(error);
                 next();
             } else {
                 next();
