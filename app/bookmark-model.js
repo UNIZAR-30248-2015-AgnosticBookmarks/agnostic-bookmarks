@@ -8,7 +8,8 @@ BookmarkSchema = new mongoose.Schema({
     name  : { type: String, required: true },
     owner : { type: ObjectId, ref: 'User', required: true },
     url   : { type: String, required: true },
-    description : String
+    description : String,
+    created_at  : { type: Date, required: true, default: Date.now }
 });
 
 // Check that the user does not own another bookmark pointing the same URL
