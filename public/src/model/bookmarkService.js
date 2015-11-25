@@ -51,13 +51,8 @@ module.service('BookmarkService', function ($http, $location) {
     }
 
     function deleteBookmark(id, user, callback) {
-        var _bookmark = {
-            bookmarkId : id,
-            user: user.id
-        };
         $http.delete(
             "http://localhost:3000/api/bookmarks/" + id,
-            JSON.stringify(_bookmark),
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -66,36 +61,12 @@ module.service('BookmarkService', function ($http, $location) {
                 }
             }
         ).then(function onSuccess(response) {
-                console.log(response);
-                callback(null, response.data);
-            }, function onError(response) {
-                console.log(response);
-                callback(response.data);
-            });
-    }
-
-    function deleteBookmark(id, user, callback) {
-        var _bookmark = {
-            bookmarkId : id,
-            user: user.id
-        };
-        $http.delete(
-            "http://localhost:3000/api/bookmarks/" + id,
-            JSON.stringify(_bookmark),
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
-                }
-            }
-        ).then(function onSuccess(response) {
-                console.log(response);
-                callback(null, response.data);
-            }, function onError(response) {
-                console.log(response);
-                callback(response.data);
-            });
+            console.log(response);
+            callback(null, response.data);
+        }, function onError(response) {
+            console.log(response);
+            callback(response.data);
+        });
     }
 
 });
