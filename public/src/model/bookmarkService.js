@@ -46,5 +46,4 @@ module.service('BookmarkService', function ($http, $location) {
 
     }
 
-
 });

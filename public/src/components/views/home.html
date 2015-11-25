@@ -7,10 +7,7 @@
 <div>
     <div class="col-sm-3">
         <br>
-        <!--<div class="alert alert-success" ng-if="addError">
-            <strong>Alert!</strong> Not added properly</p>
-        </div>-->
-        <div ng-if="addError" class="alert alert-success" ng-if="addError">
+        <div ng-if="addError" class="alert alert-error" ng-if="addError">
             <p><strong>Alert!</strong> Problem adding bookmark</p>
         </div>
         <form novalidate role="form">
@@ -28,9 +25,6 @@
             </div>
             <button ng-click="addBm()" class="btn btn-default">Add bookmark!</button>
         </form>
-        <br>
-        <button ng-click="getBmList()" class="btn btn-default"> Show my bookmarks</button>
-        <br>
     </div>
 
     <!-- Table of bookmarks -->

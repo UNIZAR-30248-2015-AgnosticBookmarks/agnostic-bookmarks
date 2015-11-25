@@ -4,16 +4,15 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.addError = false;
     $scope.bookmarkList = [];
     $scope.bookmarkToAdd = {};
+
     $scope.addBm = function() {
         $scope.addError = false;
-        //BookmarkService.getList($scope.user.name, onListResponse);
-        //$scope.bookmarkToAdd.username = $rootScope.user;
-        //$scope.bookmarkToAdd.username = "alberto";
         BookmarkService.addBookmark($scope.bookmarkToAdd, UserService.getUserData(), onAddResponse);
+        getBookmarkList();
     };
 
 
-    $scope.getBmList = function() {
+    getBookmarkList = function() {
         //BookMarkService.getList($scope.user.name, onListResponse);
         BookmarkService.getList(UserService.getUserData(), onListResponse);
     };
@@ -22,7 +21,6 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         UserService.logOut();
         $state.go('access');
     }
-
 
     var onAddResponse = function (error, result) {
         if (error) {
@@ -40,6 +38,6 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         }
     }
 
-
-
+    // Load bookmark list on every page reload
+    getBookmarkList();
 });
