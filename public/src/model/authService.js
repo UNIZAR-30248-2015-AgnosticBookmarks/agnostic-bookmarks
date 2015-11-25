@@ -13,7 +13,7 @@ app.service('UserService', function ($http, $location) {
 
     function authenticate(user, pass, callback) {
         $http.get(
-            "http://192.168.1.4:3000/api/auth/",
+            "http://localhost:3000/api/auth/",
             { headers: {
                 'username': user,
                 'password': pass
@@ -32,7 +32,7 @@ app.service('UserService', function ($http, $location) {
     function register(user, pass, callback) {
         var credentials = {username: user, password: pass};
         $http.post(
-            "http://192.168.1.4:3000/api/users/",
+            "http://localhost:3000/api/users/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
