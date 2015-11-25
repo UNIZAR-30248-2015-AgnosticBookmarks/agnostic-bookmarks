@@ -1,9 +1,9 @@
 // =============================================================================
 //  This file defines the middlewares that will authenticate the user. This
-//  middlewares add a param 'user' to the request. If the user authenticates
-//  successfully, user param will contain user data, otherwise user param will
-//  be null. This param will be available for the middleware that comes after
-//  this.
+//  middlewares add a param 'user' to the request, which contains the MongoDB
+//  '_id' field of the user if the user authenticates successfully. Otherwise,
+//  user param will be null. This param will be available for the middleware
+//  that comes after this.
 // =============================================================================
 
 /* DEPENDENCIES */
@@ -31,7 +31,7 @@ var basicAuthMiddleware = function(req, res, next) {
         else user.verifyPassword(password, function(err, match) { // User found
             if (err) req.params.internalError = err; // Query error
             else if (!match) req.params.user = null; // Password doesn't match
-            else  req.params.user = user; // User found and password match
+            else  req.params.user = user._id; // User found and password match
             next();
         });
     });
