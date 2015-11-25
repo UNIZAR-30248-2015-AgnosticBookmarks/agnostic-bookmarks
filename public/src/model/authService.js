@@ -8,7 +8,8 @@ app.service('UserService', function ($http, $location) {
         authenticate: authenticate,
         logOut: logOut,
         getUserData: getUserData,
-        register: register
+        register: register,
+        getSessionState: getSessionState
     }
 
     function authenticate(user, pass, callback) {
@@ -48,6 +49,11 @@ app.service('UserService', function ($http, $location) {
 
     function logOut() {
         userData = null;
+    }
+
+    function getSessionState() {
+        if (userData == null) return 'disconnected';
+        else return 'connected'
     }
 
 });

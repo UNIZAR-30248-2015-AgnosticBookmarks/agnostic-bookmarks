@@ -10,17 +10,30 @@
 var module = angular.module('AgnosticBookmarks', ['ui.router']);
 
 module.config(function($stateProvider, $urlRouterProvider) {
+
+    function checkLoggedIn(UserService, state) {
+        var sessionState = UserService.getSessionState();
+        if (sessionState === 'disconnected') state.go('access');
+    }
+
+    function checkNotLoggedIn(UserService, state) {
+        var sessionState = UserService.getSessionState();
+        if (sessionState === 'connected') state.go('home');
+    }
+
     $stateProvider
         .state('home', {
             url: '/home',
             templateUrl: 'components/views/home.html',
-            controller: 'homeCtrl'
+            controller: 'homeCtrl',
+            onEnter: ['UserService', '$state', checkLoggedIn]
 
         })
         .state('access', {
             url: '/access',
             templateUrl: 'components/views/access.html',
-            controller: 'accessCtrl'
+            controller: 'accessCtrl',
+            onEnter: ['UserService', '$state', checkNotLoggedIn]
         })
 
     $urlRouterProvider.otherwise('/access');
