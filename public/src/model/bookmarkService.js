@@ -33,7 +33,7 @@ module.service('BookmarkService', function ($http, $location) {
             });
     }
 
-    function getList(user, callback) {
+    function getList(user, params, callback) {
         $http.get(
             "http://localhost:3000/api/bookmarks/", {
             headers: {
