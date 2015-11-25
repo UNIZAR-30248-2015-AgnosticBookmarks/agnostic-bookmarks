@@ -8,7 +8,7 @@ module.service('UserService', function ($http, $location) {
     function authenticate(user, pass, callback) {
         var credentials = {username: user, password: pass};
         $http.post(
-            "http://192.168.1.4:3000/api/auth/",
+            "http://localhost:3000/api/auth/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
@@ -21,7 +21,7 @@ module.service('UserService', function ($http, $location) {
         //callback(true);
         var credentials = {username: user, password: pass};
         $http.post(
-            "http://192.168.1.4:3000/api/users/",
+            "http://localhost:3000/api/users/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
