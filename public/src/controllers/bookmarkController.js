@@ -3,6 +3,7 @@ var app = angular.module('AgnosticBookmarks');
 app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService, UserService) {
     $scope.addError = false;
     $scope.delError = false;
+    $scope.updateError = false;
     $scope.bookmarkList = [];
     $scope.bookmarkToAdd = {};
 
@@ -39,6 +40,13 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         getBookmarkList();
     };
 
+    $scope.updateBm = function(id) {
+        $scope.updateError = false;
+        var myId = $scope.bookmarkList[id]._id;
+        BookmarkService.updateBookmark(myId, bookmarkToUpdate, UserService.getUserData(), onUpdateResponse);
+        getBookmarkList();
+    };
+
 
     getBookmarkList = function() {
         //BookMarkService.getList($scope.user.name, onListResponse);
@@ -68,6 +76,14 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
             $scope.delError = true;
         } else {
             $scope.delError = false;
+        }
+
+    }
+    var onUpdateResponse = function (error, result) {
+        if (error) {
+            $scope.updateError = true;
+        } else {
+            $scope.updateError = false;
         }
 
     }

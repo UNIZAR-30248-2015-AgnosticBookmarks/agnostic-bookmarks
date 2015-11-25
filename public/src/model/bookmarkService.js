@@ -5,7 +5,8 @@ module.service('BookmarkService', function ($http, $location) {
     return {
         getList: getList,
         addBookmark: addBookmark,
-        deleteBookmark: deleteBookmark
+        deleteBookmark: deleteBookmark,
+        updateBookmark: updateBookmark
     }
 
     function addBookmark(bookmark, user, callback) {
@@ -74,12 +75,14 @@ module.service('BookmarkService', function ($http, $location) {
             });
     }
 
-    function deleteBookmark(id, user, callback) {
+    function updateBookmark(id, bookmark, user, callback) {
         var _bookmark = {
             bookmarkId : id,
-            user: user.id
+            name: bookmark.name,
+            url: bookmark.link,
+            description: bookmark.description
         };
-        $http.delete(
+        $http.patch(
             "http://localhost:3000/api/bookmarks/" + id,
             JSON.stringify(_bookmark),
             {
