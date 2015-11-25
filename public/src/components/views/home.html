@@ -11,7 +11,7 @@
             <strong>Alert!</strong> Not added properly</p>
         </div>-->
         <div ng-if="addError" class="alert alert-success" ng-if="addError">
-            <strong>Alert!</strong> Problem adding bookmark</p>
+            <p><strong>Alert!</strong> Problem adding bookmark</p>
         </div>
         <form novalidate role="form">
             <div class="form-group">
@@ -41,16 +41,15 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Link</th>
+                    <th>URL</th>
                     <th>Description</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="bookmark in bookmarkList">
                         <td>{{ bookmark.name }}</td>
-                        <td>{{ bookmark.link }}</td>
+                        <td>{{ bookmark.url }}</td>
                         <td>{{ bookmark.description }}</td>
-                        <!--<td>{{ bookmark.labels }}</td>-->
                     </tr>
                 </tbody>
             </table>

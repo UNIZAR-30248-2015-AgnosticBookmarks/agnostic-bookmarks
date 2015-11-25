@@ -16,7 +16,6 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.getBmList = function() {
 
         //BookMarkService.getList($scope.user.name, onListResponse);
-        console.log("Full list, nigga!");
         BookmarkService.getList(UserService.getUserData(), onListResponse);
     };
 

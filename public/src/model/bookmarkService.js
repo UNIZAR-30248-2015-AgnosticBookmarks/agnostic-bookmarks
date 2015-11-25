@@ -14,7 +14,7 @@ module.service('BookmarkService', function ($http, $location) {
             description: bookmark.description
         };
         $http.post(
-            "http://localhost:3000/api/bookmarks/",
+            "http://192.168.1.4:3000/api/bookmarks/",
             JSON.stringify(_bookmark),
             { headers: {
                 'Content-Type': 'application/json',
@@ -23,25 +23,25 @@ module.service('BookmarkService', function ($http, $location) {
             }}
         ).then(function onSuccess(response) {
             console.log(response);
-            callback(null, response);
+            callback(null, response.data);
         }, function onError(response) {
             console.log(response);
-            callback(response);
+            callback(response.data);
         });
     }
 
     function getList(user, callback) {
         $http.get(
-            "http://localhost:3000/api/bookmarks/",
+            "http://192.168.1.4:3000/api/bookmarks/",
             { headers: {
                 'Content-Type': 'application/json',
                 'username': user.username,
                 'password': user.password
             }}
         ).then(function onSuccess(response) {
-            callback(null, response);
+            callback(null, response.data);
         }, function onError(response) {
-            callback(response);
+            callback(response.data);
         });
 
     }
