@@ -14,10 +14,14 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
 
 
     $scope.getBmList = function() {
-
         //BookMarkService.getList($scope.user.name, onListResponse);
         BookmarkService.getList(UserService.getUserData(), onListResponse);
     };
+
+    $scope.logout = function() {
+        UserService.logOut();
+        $state.go('access');
+    }
 
 
     var onAddResponse = function (error, result) {
