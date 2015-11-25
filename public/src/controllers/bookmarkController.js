@@ -1,6 +1,6 @@
 
 var app = angular.module('AgnosticBookmarks');
-app.controller('bookmarkCtrl', function($scope, $state, BookMarkService) {
+app.controller('bookmarkCtrl', function($scope, $rootScope, $state, BookMarkService) {
     $scope.addError = false;
     $scope.bookmarkList = [];
     $scope.addBm = function() {

@@ -1,10 +1,10 @@
 
 var app = angular.module('AgnosticBookmarks');
-app.controller('accessCtrl', function($scope, $state, UserService) {
+app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
     $scope.loginError = false;
     $scope.regError = false;
     $scope.listError = false;
-    $scope.pruebaParaMarcos = "42";
+    $rootScope.pruebaParaMarcos = "42";
     $scope.bookmarkList = [];
     $scope.enter = function() {
 		$scope.loginError = false;
