@@ -58,6 +58,16 @@
                     </tr>
                 </tbody>
             </table>
+            <nav>
+                <ul class="pager">
+                    <!--<li class="previous" ng-class="{'disabled':bookmarksPage == 0}">-->
+                    <li class="previous" ng-if="bookmarksPage != 0">
+                        <a href="" ng-click="retrievePrevPage()">
+                            <span aria-hidden="true">&larr;</span> Older</a></li>
+                    <li class="next"><a href="" ng-click="retrieveNextPage()">
+                        Newer <span aria-hidden="true">&rarr;</span></a></li>
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
