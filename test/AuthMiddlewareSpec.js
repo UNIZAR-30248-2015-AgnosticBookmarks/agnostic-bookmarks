@@ -18,7 +18,8 @@ describe("Auth middleware", function() {
             goodPass: "secret",
             goodPass: "wrong",
             errorPass: "error",  // Used to force error in query
-            errorMsg: "Error happened!"
+            errorMsg: "Error happened!",
+            dummyId: "123dummy"
         };
 
 
@@ -34,6 +35,7 @@ describe("Auth middleware", function() {
             })
             // Create a mock user
             mockUser = {
+                _id: mockValues.dummyId,
                 username: mockValues.goodName,
                 verifyPassword: verifyPasswordMock
             }
@@ -50,7 +52,7 @@ describe("Auth middleware", function() {
             });
         });
 
-        it("should add internalError to request when userquery generates error", function() {
+        it("should add internalError to request when user query generates error", function() {
             req.headers.username = mockValues.errorName;
             var done = false;
             var timeout = 5000;
@@ -134,7 +136,7 @@ describe("Auth middleware", function() {
                 expect(verifyPasswordMock).toHaveBeenCalled();
                 expect(req.params.internalError).not.toBeDefined();
                 //expect(req.params.user).not.toBeDefined();
-                expect(req.params.user).toBe(mockUser);
+                expect(req.params.user).toBe(mockValues.dummyId);
             });
         });
     });
