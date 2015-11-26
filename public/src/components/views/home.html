@@ -1,35 +1,65 @@
+<!-- ADD/EDIT DIALOG -->
+<ng-modal-dialog modal-id="editModal" modal-visible="showEditDialog">
+    <div class="modal-header">
+        <close-dialog-button modal-id="editModal"></close-dialog-button>
+        <h4 class="modal-title">
+            {{ selectedBookmark._id == -1 ? "Add bookmark" : "Edit Bookmark" }}
+        </h4>
+    </div>
+    <div class="modal-body">
+        <form novalidate role="form">
+            <div class="form-group">
+                <label for="user">Name:</label>
+                <input type="text" ng-model="selectedBookmark.name" id="user" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="link">Link:</label>
+                <input type="text" ng-model="selectedBookmark.url" id="link" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" ng-model="selectedBookmark.description" id="description" class="form-control">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="saveBookmark()">Save</button>
+    </div>
+</ng-modal-dialog>
+
+
 <p>
     Welcome home!
     <a href="" ng-click="logout()">Log out</a>
 
 </p>
 
-<div>
-    <div class="col-sm-3">
-        <br>
-        <div ng-if="addError" class="alert alert-danger" ng-if="addError">
-            <p><strong>Alert!</strong> Problem adding bookmark</p>
-        </div>
-        <form novalidate role="form">
-            <div class="form-group">
-                <label for="user">Name:</label>
-                <input type="text" ng-model="bookmarkToAdd.name" id="user" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="link">Link:</label>
-                <input type="text" ng-model="bookmarkToAdd.link" id="link" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <input type="text" ng-model="bookmarkToAdd.description" id="description" class="form-control">
-            </div>
-            <button ng-click="addBm()" class="btn btn-default">Add bookmark!</button>
-        </form>
+<div class="row text-center">
+    <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a>
+</div>
+<div class="row">
+    <div ng-if="addError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem adding bookmark</p>
     </div>
+    <div ng-if="updateError" class="alert alert-danger alert-dismissible" role="alert"ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem updating bookmark</p>
+    </div>
+    <div ng-if="deletingError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem deleting bookmark</p>
+    </div>
+</div>
+<div class="row">
 
     <!-- Table of bookmarks -->
-    <div class="col-sm-8">
-        <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+        <!--<div class="container">-->
             <h2>My bookmarks</h2>
             <div class="form-inline">
                 <div class="form-group">
@@ -48,31 +78,31 @@
                     <th>Name</th>
                     <th>URL</th>
                     <th>Description</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="bookmark in bookmarkList" >
+                    <tr ng-repeat="bookmark in bookmarkList track by $index" >
                         <td>{{ bookmark.name }}</td>
-                        <td>{{ bookmark.url }}</td>
+                        <td><a ng-href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
                         <td>{{ bookmark.description }}</td>
                         <td>
-                            <button ng-click="updateBm($index)" class="btn btn-default">Modify</button>
-                            <!--<button ng-click="updateBm($index)" class="btn btn-default">Modify</button>-->
-                            <button ng-click="delBm($index)" class="btn btn-danger">Delete</button>
+                            <button ng-click="updateBookmark($index)" class="btn btn-default">Modify</button>
+                            <button ng-click="deleteBookmark($index)" class="btn btn-danger">Delete</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
             <nav>
                 <ul class="pager">
-                    <!--<li class="previous" ng-class="{'disabled':bookmarksPage == 0}">-->
                     <li class="previous" ng-if="bookmarksPage != 0">
                         <a href="" ng-click="retrievePrevPage()">
                             <span aria-hidden="true">&larr;</span> Older</a></li>
-                    <li class="next"><a href="" ng-click="retrieveNextPage()">
-                        Newer <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="next" ng-if="bookmarkList.length == 10">
+                        <a href="" ng-click="retrieveNextPage()">
+                            Newer <span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
             </nav>
-        </div>
+        <!--</div>-->
     </div>
 </div>

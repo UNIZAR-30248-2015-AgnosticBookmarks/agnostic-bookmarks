@@ -12,7 +12,7 @@ module.service('BookmarkService', function ($http, $location) {
     function addBookmark(bookmark, user, callback) {
         var _bookmark = {
             name: bookmark.name,
-            url: bookmark.link,
+            url: bookmark.url,
             description: bookmark.description
         };
         $http.post(
@@ -69,15 +69,15 @@ module.service('BookmarkService', function ($http, $location) {
         });
     }
 
-    function updateBookmark(id, bookmark, user, callback) {
+    function updateBookmark(bookmark, user, callback) {
         var _bookmark = {
-            bookmarkId : id,
+            //_id: bookmark._id,
             name: bookmark.name,
-            url: bookmark.link,
+            url: bookmark.url,
             description: bookmark.description
         };
         $http.patch(
-            "http://localhost:3000/api/bookmarks/" + id,
+            "http://localhost:3000/api/bookmarks/" + bookmark._id,
             JSON.stringify(_bookmark),
             {
                 headers: {
