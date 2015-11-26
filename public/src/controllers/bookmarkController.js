@@ -1,0 +1,122 @@
+var app = angular.module('AgnosticBookmarks');
+
+app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService, UserService) {
+
+    // Aux variables for adding/editting bookmarks
+    $scope.showEditDialog = false;
+    $scope.selectedBookmark = { _id: -1 };
+    var selectBookmark = function(bookmark) {
+        var aux = {};
+        aux._id = bookmark._id;
+        aux.name = bookmark.name;
+        aux.url = bookmark.url;
+        aux.description = bookmark.description;
+        $scope.selectedBookmark = aux;
+    }
+
+    /* BOOKMARK LIST MANAGEMENT */
+    $scope.bookmarkList = [];
+    var getBookmarkList = function(sortCriteria, offset) {
+        var params = { sortBy: sortCriteria, offset: offset }
+        BookmarkService.getList(UserService.getUserData(), params,
+            function(error, bookmarks) {
+                if (error) console.log(error);
+                else {
+                    $scope.bookmarkList = bookmarks;
+                }
+            });
+    };
+    /* Sort criteria */
+    $scope.sortCriteriaOptions = [
+        { name: 'Date', value: 'date' },
+        { name: 'Name', value: 'name' }
+    ];
+    $scope.sortCriteria = $scope.sortCriteriaOptions[0].value;
+    $scope.changeSortCriteria = function() {
+        $scope.bookmarksPage = 0;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+    /* Pagination */
+    $scope.bookmarksPage = 0;
+    $scope.retrieveNextPage = function() {
+        $scope.bookmarksPage++;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+    $scope.retrievePrevPage = function() {
+        $scope.bookmarksPage--;
+        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    }
+
+    /* ERROR FLAGS */
+    $scope.addError = false;
+    $scope.deleleteError = false;
+    $scope.updateError = false;
+
+    /* ADD, UPDATE AND DELETE OPERATIONS */
+    $scope.addBookmark = function() {
+        $scope.addError = false;
+        $scope.updateError = false;
+        $scope.deleleteError = false;
+        $scope.selectedBookmark = { _id: -1 };
+        $scope.showEditDialog = true;
+    }
+    $scope.updateBookmark = function(bookmarkIndex) {
+        $scope.addError = false;
+        $scope.updateError = false;
+        $scope.deleleteError = false;
+        $scope.selectedBookmark = angular.copy($scope.bookmarkList[bookmarkIndex]);
+        $scope.showEditDialog = true;
+    }
+    $scope.deleteBookmark = function(bookmarkIndex) {
+        $scope.addError = false;
+        $scope.updateError = false;
+        $scope.deleleteError = false;
+        var myId = $scope.bookmarkList[bookmarkIndex]._id;
+        BookmarkService.deleteBookmark(myId, UserService.getUserData(),
+            function(error, result) {
+                if (error) {
+                    $scope.deleteError = true;
+                } else {
+                    $scope.deleteError = false;
+                    getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+                }
+            });
+    }
+    $scope.saveBookmark = function() {
+        if ($scope.selectedBookmark._id == -1) {
+            $scope.addError = false;
+            BookmarkService.addBookmark(
+                $scope.selectedBookmark,
+                UserService.getUserData(),
+                function(error, result) {
+                    if (error) {
+                        console.log("adderr");
+                        $scope.addError = true;
+                    } else {
+                        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+                    }
+                });
+        } else {
+            $scope.updateError = false;
+            BookmarkService.updateBookmark(
+                $scope.selectedBookmark,
+                UserService.getUserData(),
+                function(error, result) {
+                    if (error) {
+                        $scope.updateError = true;
+                    } else {
+                        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+                    }
+                });
+        }
+    }
+
+    /* NAVIGATION */
+    $scope.logout = function() {
+        UserService.logOut();
+        $state.go('access');
+    }
+
+    // Load bookmark list on every page reload
+    getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+});
