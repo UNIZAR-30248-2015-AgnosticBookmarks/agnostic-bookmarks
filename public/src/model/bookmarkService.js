@@ -16,7 +16,7 @@ module.service('BookmarkService', function ($http, $location) {
             description: bookmark.description
         };
         $http.post(
-            "http://localhost:3000/api/bookmarks/",
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/",
             JSON.stringify(_bookmark),
             {
                 headers: {
@@ -36,7 +36,7 @@ module.service('BookmarkService', function ($http, $location) {
 
     function getList(user, params, callback) {
         $http.get(
-            "http://localhost:3000/api/bookmarks/", {
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/", {
             headers: {
                 'Content-Type': 'application/json',
                 'username': user.username,
@@ -52,7 +52,7 @@ module.service('BookmarkService', function ($http, $location) {
 
     function deleteBookmark(id, user, callback) {
         $http.delete(
-            "http://localhost:3000/api/bookmarks/" + id,
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/" + id,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ module.service('BookmarkService', function ($http, $location) {
             description: bookmark.description
         };
         $http.patch(
-            "http://localhost:3000/api/bookmarks/" + bookmark._id,
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/" + bookmark._id,
             JSON.stringify(_bookmark),
             {
                 headers: {
