@@ -84,7 +84,7 @@
                 <tbody>
                     <tr ng-repeat="bookmark in bookmarkList track by $index" >
                         <td>{{ bookmark.name }}</td>
-                        <td><a ng-href="{{ bookmark.url }}">{{ bookmark.url }}</a></td>
+                        <td><a ng-href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></td>
                         <td>{{ bookmark.description }}</td>
                         <td>
                             <button ng-click="updateBookmark($index)" class="btn btn-default">Modify</button>
@@ -97,10 +97,10 @@
                 <ul class="pager">
                     <li class="previous" ng-if="bookmarksPage != 0">
                         <a href="" ng-click="retrievePrevPage()">
-                            <span aria-hidden="true">&larr;</span> Older</a></li>
+                            <span aria-hidden="true">&larr;</span> Less</a></li>
                     <li class="next" ng-if="bookmarkList.length == 10">
                         <a href="" ng-click="retrieveNextPage()">
-                            Newer <span aria-hidden="true">&rarr;</span></a></li>
+                            More <span aria-hidden="true">&rarr;</span></a></li>
                 </ul>
             </nav>
         <!--</div>-->

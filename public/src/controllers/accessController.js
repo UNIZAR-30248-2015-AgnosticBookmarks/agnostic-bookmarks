@@ -14,7 +14,7 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
     $scope.register = function() {
 		$scope.regError = false;
         $scope.loginError = false;
-        UserService.register($scope.user.name, $scope.user.password, onRegisterResponse);
+        UserService.register($scope.newUser.name, $scope.newUser.password, onRegisterResponse);
     };
 
     var onEnterResponse = function (result) {
@@ -26,7 +26,7 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
     }
     var onRegisterResponse = function (result) {
         if (result) {
-            $rootScope.user = $scope.user.name;
+            $rootScope.user = $scope.newUser.name;
             $state.go('home');
         }
 

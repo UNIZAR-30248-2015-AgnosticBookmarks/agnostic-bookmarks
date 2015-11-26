@@ -2,7 +2,7 @@
     Welcome to the access section!
 </p>
 
-<div class="col-sm-3">
+<div class="col-sm-4 col-sm-offset-2">
     <div class="well">
         <form novalidate role="form">
             <h3>Login</h3>
@@ -23,17 +23,17 @@
     </div>
 </div>
 
-<div class="col-sm-3">
+<div class="col-sm-4">
     <div class="well">
         <form novalidate>
             <h3>Register</h3>
             <div class="form-group">
                 <label for="reg.user">User:</label>
-                <input type="text" ng-model="user.name" class="form-control" id="reg.user">
+                <input type="text" ng-model="newUser.name" class="form-control" id="reg.user">
             </div>
             <div class="form-group">
                 <label for="reg.password">Pass:</label>
-                <input type="password" ng-model="user.password" class="form-control" id="reg.password">
+                <input type="password" ng-model="newUser.password" class="form-control" id="reg.password">
             </div>
             <button ng-click="register()" type="submit" class="btn btn-default">Register</button>
         </form>
