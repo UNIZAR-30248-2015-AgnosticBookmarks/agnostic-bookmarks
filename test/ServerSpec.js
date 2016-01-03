@@ -90,7 +90,11 @@ describe("RESTful API", function() {
     beforeEach(function() {
         spyOn(console, "log");
         if (server == null) server = require('../index.js');
-        else server.start();
+        try {
+            server.start();
+        } catch(err) {
+            if (err.message != "Trying to open unclosed connection.") throw err
+        }
     });
     afterEach(function() {
         server.close();  // After all server related tests, close the server
