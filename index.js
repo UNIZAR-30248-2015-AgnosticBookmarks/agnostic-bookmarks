@@ -40,18 +40,20 @@ app.use(routes);
 /* DEFINE STARTUP AND SHUTDOWN FUNCTIONS */
 // -----------------------------------------------------------------------------
 var server;
-function start() {
+function start(cb) {
     mongoose.connect(config.database);  // Connect to database through mongoose
     server = app.listen(port, function() {  // Start server activity
         console.log("Something beautiful is happening on port " + port);
+        if (cb) cb();
     });
 }
-function close() {
+function close(cb) {
     mongoose.connection.close(function() {
         console.log('Terminating mongoose connection');
     });
     console.log('Shutting down the server');
     server.close();
+    if (cb) cb();
 };
 
 module.exports = {
