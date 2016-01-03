@@ -49,11 +49,12 @@ function start(cb) {
 }
 function close(cb) {
     mongoose.connection.close(function() {
-        console.log('Terminating mongoose connection');
+        console.log('Terminated mongoose connection');
+        server.close(function() {
+            console.log('Shutting down the server');
+            if (cb) cb();
+        });
     });
-    console.log('Shutting down the server');
-    server.close();
-    if (cb) cb();
 };
 
 module.exports = {
