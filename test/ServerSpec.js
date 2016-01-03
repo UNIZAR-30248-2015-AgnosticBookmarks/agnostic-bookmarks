@@ -11,8 +11,9 @@
 // =============================================================================
 
 process.env.NODE_ENV = 'test';  // Set environment to testing
+process.env.PORT = '3000';  // Set environment to testing
 var request = require('request');
-var baseURL = 'http://localhost:3000/';
+var baseURL = 'http://localhost:' + process.env.PORT + '/';
 
 // Since the first time this is imported it will launch the server, we make
 // this variable global to ensure it is only imported once

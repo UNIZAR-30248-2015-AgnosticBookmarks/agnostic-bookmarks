@@ -153,7 +153,6 @@ apiRoutes.route('/bookmarks/:bookmarkId')
 var routes = express.Router();
 routes.use('/api', apiRoutes);
 routes.get('*', function(req, res) {
-    console.log(__dirname);
     res.sendFile('index.html', {'root': 'public/dist'});
 });
 
