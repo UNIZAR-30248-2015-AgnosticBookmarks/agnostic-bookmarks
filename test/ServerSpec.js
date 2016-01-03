@@ -35,11 +35,16 @@ describe("Web server", function() {
         }
     });
     // After all server related tests, close the server
-    afterEach(function(done) {
-        server.close(function() {
-            console.log('connection terminated');
-            done();
-        });
+    afterEach(function() {
+        var done = false;
+        runs(function() {
+            server.close(function() {
+                done = true;
+            });
+        })
+        waitsFor(function() {
+            return done;
+        }, "closing server", timeout);
     });
 
     // GET petitions to the root of the webapp
