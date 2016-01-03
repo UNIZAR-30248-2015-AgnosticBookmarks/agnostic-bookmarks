@@ -37,6 +37,7 @@ describe("Web server", function() {
     // After all server related tests, close the server
     afterEach(function() {
         var done = false;
+        var timeout = 1000;
         runs(function() {
             server.close(function() {
                 done = true;
