@@ -6,12 +6,9 @@
   "scripts": {
     "build": "gulp",
     "pretest": "npm run build",
-    "_test-backend": "./node_modules/jasmine-node/bin/jasmine-node test --captureExceptions",
-    "test-backend": "npm run _test-backend",
     "test": "npm run test:backend && npm run test:frontend && istanbul report --root ./coverage lcov json",
     "test:frontend": "karma start karma.conf.js",
     "test:backend": "istanbul cover -i index.js -i app/**/*.js --dir ./coverage/backend ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions",
-    "test:bckp": "./node_modules/.bin/gulp && istanbul --include-all-sources cover \"./node_modules/jasmine-node/bin/jasmine-node test --captureExceptions && ./node_modules/karma/bin/karma start karma.conf.js\" -x gulpfile.js -x public/dist/**/*"
   },
   "repository": {
     "type": "git",
@@ -37,7 +34,6 @@
     "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-inject": "^3.0.0",
-    "gulp-jasmine-node": "^1.0.3",
     "gulp-minify-css": "^1.2.1",
     "gulp-minify-html": "^1.0.4",
     "gulp-rename": "^1.2.2",
