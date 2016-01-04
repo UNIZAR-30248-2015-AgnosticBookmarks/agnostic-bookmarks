@@ -8,7 +8,7 @@
     "pretest": "npm run build",
     "test": "npm run test:backend && npm run test:frontend && istanbul report --root ./coverage lcov json",
     "test:frontend": "karma start karma.conf.js",
-    "test:backend": "istanbul cover -i index.js -i app/**/*.js --dir ./coverage/backend ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions",
+    "test:backend": "istanbul cover -i index.js -i app/**/*.js --dir ./coverage/backend ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions"
   },
   "repository": {
     "type": "git",
