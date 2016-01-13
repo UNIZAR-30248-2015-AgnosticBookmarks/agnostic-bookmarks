@@ -17,7 +17,20 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
         $scope.errorMessage = "";
         $scope.regError = false;
         $scope.loginError = false;
-        UserService.register($scope.newUser.name, $scope.newUser.password, onRegisterResponse);
+        if(($scope.newUser.password.length > 8 )&& $scope.newUser.password == $scope.newUser.repPassword) {
+            UserService.register($scope.newUser.name, $scope.newUser.password, onRegisterResponse);
+        } else {
+            $scope.regError = true;
+
+            if($scope.newUser.password.length < 8 ) {
+                $scope.errorMessage = ": Password is too short";
+            }else if($scope.newUser.password.length > 20) {
+                $scope.errorMessage = ": Password is too long";
+            } else {
+                $scope.errorMessage = ": Passwords don't match";
+
+            }
+        }
     };
 
     var onEnterResponse = function (result) {
@@ -38,7 +51,7 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
 
         else {
             $scope.regError = true;
-            //$scope.errorMessage = ": "+error.error;
+            $scope.errorMessage = ": "+error.error;
         }
     }
 
