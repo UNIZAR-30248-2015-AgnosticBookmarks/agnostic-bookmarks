@@ -7,7 +7,7 @@
 //        user is still logged in
 // =============================================================================
 
-var module = angular.module('AgnosticBookmarks', ['ui.router']);
+var module = angular.module('AgnosticBookmarks', ['ui.router', 'base64']);
 
 module.config(function($stateProvider, $urlRouterProvider) {
 

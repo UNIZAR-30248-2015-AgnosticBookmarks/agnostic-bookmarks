@@ -54,7 +54,7 @@ apiRoutes.route('/bookmarks')
     .get(authMiddleware, authRouter, function(req, res) {
         var sortCriteria, offset, pageSize;
         var errors = [];
-        
+
         if (req.query.sortBy && req.query.sortBy === 'name') sortCriteria = 'name';
         else if (!req.query.sortBy || req.query.sortBy === 'date') sortCriteria = '-created_at';
         else errors.push({"sortBy": "Wrong 'sortBy' criteria"});
@@ -94,10 +94,10 @@ apiRoutes.route('/bookmarks')
     })
 
 apiRoutes.route('/bookmarks/search')
-    .get(authMiddleware, authRouter, function(req, res) { 
+    .get(authMiddleware, authRouter, function(req, res) {
         var sortCriteria, offset, pageSize, searchQuery;
         var errors = [];
-        
+
         if (req.query.sortBy && req.query.sortBy === 'name') sortCriteria = 'name';
         else if (!req.query.sortBy || req.query.sortBy === 'date') sortCriteria = '-created_at';
         else errors.push({"sortBy": "Wrong 'sortBy' criteria"});
