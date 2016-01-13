@@ -27,7 +27,7 @@
 
 <div class="col-sm-4">
     <div class="well">
-        <form>
+        <form name ="regForm">
             <h3>Register</h3>
             <div class="form-group">
                 <label for="reg.user">User:</label>
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label for="reg.repPassword">Repeat password:</label>
-                <input type="password" ng-model="newUser.repPassword" ng-required="true" class="form-control" id="reg.repPassword" ng-match="reg.Password">
+                <input type="password" ng-model="newUser.repPassword" ng-required="true"  class="form-control" id="reg.repPassword" >
             </div>
             <button ng-click="register()" type="submit" class="btn btn-default">Register</button>
         </form>

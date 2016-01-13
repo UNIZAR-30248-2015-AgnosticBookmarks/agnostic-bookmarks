@@ -11,7 +11,6 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
         $scope.loginError = false;
         $scope.regError = false;
         UserService.authenticate($scope.user.name, $scope.user.password, onEnterResponse);
-        //$scope.user = {name:pepe, password:"locolo"};
     };
     $scope.register = function() {
         $scope.errorMessage = "";
@@ -21,7 +20,6 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
             UserService.register($scope.newUser.name, $scope.newUser.password, onRegisterResponse);
         } else {
             $scope.regError = true;
-
             if($scope.newUser.password.length < 8 ) {
                 $scope.errorMessage = ": Password is too short";
             }else if($scope.newUser.password.length > 20) {
