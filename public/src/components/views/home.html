@@ -41,7 +41,7 @@
                     <span class="input-group-addon" style="{width: auto !important}">{{ tag }}</span>
                     <!-- <span class="input-group-btn"> -->
                         <!-- <a class="btn btn-danger" ng-click="controls.removeTag($index)"><span class="glyphicon glyphicon-remove"></span></a> -->
-                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-remove"></span></a>
                     </span>
                 </div>
             </div>
@@ -54,9 +54,9 @@
 </ng-modal-dialog>
 
 
-<div class="row text-center">
-    <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a>
-</div>
+<!-- <div class="row text-center"> -->
+    <!-- <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a> -->
+<!-- </div> -->
 
 <div class="row">
     <div ng-if="addError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
@@ -132,3 +132,5 @@
         </nav>
     </div>
 </div>
+
+<floating-action-button click-callback="addBookmark()"></floating-action-button>

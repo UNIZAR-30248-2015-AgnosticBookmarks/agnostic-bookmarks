@@ -5,6 +5,7 @@ body {
 }
 #main-container{
     padding-top: 64px;
+    padding-bottom: 64px;
 }
 .normal-text {
     font-size: 12pt;
