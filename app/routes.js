@@ -85,7 +85,8 @@ apiRoutes.route('/bookmarks')
             name: req.body.name,
             owner: req.user,
             url: req.body.url,
-            description: req.body.description
+            description: req.body.description,
+            tags: req.body.tags
         }).save(function(err, data) {
             if (err && err.name == 'ValidationError') {
                 if (err.errors.url != null)
@@ -100,7 +101,7 @@ apiRoutes.route('/bookmarks')
 
 apiRoutes.route('/bookmarks/search')
     .get(authMiddleware, authRouter, function(req, res) {
-        var sortCriteria, offset, pageSize, searchQuery;
+        var sortCriteria, offset, pageSize, searchQuery, tagQuery;
         var errors = [];
 
         if (req.query.sortBy && req.query.sortBy === 'name') sortCriteria = 'name';
@@ -118,24 +119,32 @@ apiRoutes.route('/bookmarks/search')
             errors.push({"pageSize": "'pageSize'  must be lower than 100"});
 
         searchQuery = req.query.search;
-        if (searchQuery == null)
-            errors.push({"searchQuery": "'searchQuery' required"})
+        tagQuery = req.query.tag;
+        if (searchQuery == null && tagQuery == null)
+            errors.push({"required": "'searchQuery' or 'tag' field are required"})
 
         if (errors.length > 0) res.status(400).json({"errors": errors});
-        else Bookmark.find(
-            { $and: [
-                    { owner: req.user },
-                    { $or: [
-                        { name: { $regex: searchQuery, $options: 'i'} },
-                        { description: { $regex: searchQuery, $options: 'i'} }
-                    ]}
-            ]},
-            null,
-            { sort: sortCriteria, skip: (offset*pageSize), limit: pageSize },
-            function(err, data) {
-                if (err) res.status(500).send(err);
-                else res.json(data);
-            });
+        else {
+            // Build query
+            var query = { $and: [ { owner: req.user } ]};
+            if (searchQuery != null) query.$and.push( { $or: [
+                { name: { $regex: searchQuery, $options: 'i'} },
+                { description: { $regex: searchQuery, $options: 'i'} }
+            ]});
+            if (tagQuery != null) {
+                tagQuery = tagQuery.split(",");
+                query.$and.push({ tags: { $all: tagQuery } });
+            }
+            // Execute query
+            Bookmark.find(
+                query,
+                null,
+                { sort: sortCriteria, skip: (offset*pageSize), limit: pageSize },
+                function(err, data) {
+                    if (err) res.status(500).send(err);
+                    else res.json(data);
+                });
+        }
     })
 
 // Search single bookmark by given URL
@@ -184,6 +193,7 @@ apiRoutes.route('/bookmarks/:bookmarkId')
                 else {
                     if (req.body.name) bookmark.name = req.body.name;
                     if (req.body.url) bookmark.url = req.body.url;
+                    if (req.body.tags) bookmark.tags = req.body.tags;
                     if (req.body.description)
                         bookmark.description = req.body.description;
                     bookmark.save(function(err, data) {
@@ -210,6 +220,17 @@ apiRoutes.route('/bookmarks/:bookmarkId')
             });
         })
     });
+
+
+// Get all tags from a single user
+apiRoutes.route('/tags')
+    .get(authMiddleware, authRouter, function(req, res) {
+        Bookmark.distinct( "tags", { owner: req.user }, function(err, data) {
+            if (err) res.status(500).send(err);
+            if (data == null) res.status(404).send("Not found");
+            else res.json(data);
+        });
+    })
 
 
 
