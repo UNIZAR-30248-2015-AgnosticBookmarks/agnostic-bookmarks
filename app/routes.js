@@ -222,6 +222,17 @@ apiRoutes.route('/bookmarks/:bookmarkId')
     });
 
 
+// Get all tags from a single user
+apiRoutes.route('/tags')
+    .get(authMiddleware, authRouter, function(req, res) {
+        Bookmark.distinct( "tags", { owner: req.user }, function(err, data) {
+            if (err) res.status(500).send(err);
+            if (data == null) res.status(404).send("Not found");
+            else res.json(data);
+        });
+    })
+
+
 
 /* GLOBAL ROUTES */
 // -----------------------------------------------------------------------------
