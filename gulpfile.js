@@ -68,7 +68,13 @@ gulp.task("move-html", ["clean-html"], function(){
 
 // BUILD TASKS                                                      BUILD TASKS
 // -----------------------------------------------------------------------------
-gulp.task("build", ["move-html", "move-img", "css", "js"], function(){
+gulp.task("pre-build", ["move-html", "move-img", "css", "js"], function(){
+    // After transform all the files in src, move the files in lib
+    return gulp.src("./public/lib/**/*")
+        .pipe(gulp.dest("./public/dist/lib"));
+});
+gulp.task("build", ["pre-build"], function(){
+    // Last step is inject modified files into HTML and transform it
     var sources = gulp.src(['./public/dist/**/*.js', './dist/**/*.css'], {read: false});
     gulp.src("./public/dist/**/*.html")
         .pipe(inject(sources, {relative: true})).on('error', util.log)

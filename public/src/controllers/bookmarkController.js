@@ -48,18 +48,18 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.bookmarksPage = 0;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     /* Search */
     $scope.search = function() {
         $scope.bookmarksPage = 0;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     $scope.cleanSearch = function() {
         $scope.bookmarksPage = 0;
-        $scope.variables.search = null;
+        $scope.controls.search = null;
         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
     }
 
@@ -69,13 +69,13 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.bookmarksPage++;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     $scope.retrievePrevPage = function() {
         $scope.bookmarksPage--;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
 
     /* ERROR FLAGS */
@@ -89,6 +89,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     /* ADD, UPDATE AND DELETE OPERATIONS */
     $scope.addBookmark = function() {
         $scope.addError = false;
+        $scope.addErrorConflict = false;
         $scope.updateError = false;
         $scope.deleteError = false;
         $scope.selectedBookmark = { _id: -1 };
@@ -96,6 +97,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     }
     $scope.updateBookmark = function(bookmarkIndex) {
         $scope.addError = false;
+        $scope.addErrorConflict = false;
         $scope.updateError = false;
         $scope.deleteError = false;
         $scope.errorMessage = "";
@@ -104,6 +106,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     }
     $scope.deleteBookmark = function(bookmarkIndex) {
         $scope.addError = false;
+        $scope.addErrorConflict = false;
         $scope.updateError = false;
         $scope.deleteError = false;
         $scope.errorMessage = "";
@@ -144,7 +147,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
                 function(error, result) {
                     if (error) {
                         $scope.updateError = true;
-                        $scope.errorMessage = error.error;
+                        $scope.errorMessage = error;
                     } else {
                         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
                     }
