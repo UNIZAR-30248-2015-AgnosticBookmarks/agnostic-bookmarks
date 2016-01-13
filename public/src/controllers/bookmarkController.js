@@ -118,7 +118,6 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
 
     /* ERROR FLAGS */
     $scope.addError = false;
-    $scope.addErrorConflict = false;
     $scope.deleteError = false;
     $scope.updateError = false;
 
@@ -139,6 +138,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.addErrorConflict = false;
         $scope.updateError = false;
         $scope.deleteError = false;
+        $scope.errorMessage = "";
         $scope.selectedBookmark = angular.copy($scope.bookmarkList[bookmarkIndex]);
         $scope.showEditDialog = true;
     }
@@ -147,6 +147,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.addErrorConflict = false;
         $scope.updateError = false;
         $scope.deleteError = false;
+        $scope.errorMessage = "";
         var myId = $scope.bookmarkList[bookmarkIndex]._id;
         BookmarkService.deleteBookmark(myId, UserService.getUserData(),
             function(error, result) {
@@ -162,7 +163,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.saveBookmark = function() {
         if ($scope.selectedBookmark._id == -1) {
             $scope.addError = false;
-            $scope.addErrorConflict = false;
+            $scope.errorMessage = "";
             BookmarkService.addBookmark(
                 $scope.selectedBookmark,
                 UserService.getUserData(),
@@ -177,6 +178,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
                 });
         } else {
             $scope.updateError = false;
+            $scope.errorMessage = "";
             BookmarkService.updateBookmark(
                 $scope.selectedBookmark,
                 UserService.getUserData(),
