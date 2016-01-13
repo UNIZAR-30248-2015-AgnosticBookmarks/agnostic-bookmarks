@@ -75,7 +75,7 @@ gulp.task("pre-build", ["move-html", "move-img", "css", "js"], function(){
 });
 gulp.task("build", ["pre-build"], function(){
     // Last step is inject modified files into HTML and transform it
-    var sources = gulp.src(['./public/dist/**/*.js', './dist/**/*.css'], {read: false});
+    var sources = gulp.src(['./public/dist/**/*.js', './public/dist/**/*.css'], {read: false});
     gulp.src("./public/dist/**/*.html")
         .pipe(inject(sources, {relative: true})).on('error', util.log)
         .pipe(htmlmin({

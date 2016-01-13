@@ -30,7 +30,7 @@
                     <strong ng-if="controls.newTagWarning">
                         This tag doesn't exist yet; it will be created with this bookmark.<br>
                     </strong>
-                    Similar tags: 
+                    Similar tags:
                     <span ng-repeat="tag in controls.availableTags | filter:controls.newTag">
                         {{ tag }}<span ng-if="!$last">, </span>
                     </span>
@@ -53,12 +53,6 @@
     </div>
 </ng-modal-dialog>
 
-
-<p>
-    Welcome home!
-    <a href="" ng-click="logout()">Log out</a>
-
-</p>
 
 <div class="row text-center">
     <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a>

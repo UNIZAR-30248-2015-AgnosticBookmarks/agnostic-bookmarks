@@ -1,7 +1,3 @@
-<p>
-    Welcome to the access section!
-</p>
-
 <div class="col-sm-4 col-sm-offset-2">
     <div class="well">
         <form novalidate role="form">
@@ -14,7 +10,7 @@
                 <label for="log.password">Pass:</label>
                 <input type="password" ng-model="user.password" class="form-control" id="log.password">
             </div>
-            <button ng-click="enter()" type="submit" class="btn btn-default">Enter</button>
+            <button ng-click="enter()" type="submit" class="btn btn-success">Enter</button>
         </form>
         <br>
         <div ng-if="loginError" class="alert alert-danger alert-dismissible" ng-if="addError">
@@ -41,7 +37,7 @@
                 <label for="reg.repPassword">Repeat password:</label>
                 <input type="password" ng-model="newUser.repPassword" ng-required="true"  class="form-control" id="reg.repPassword" >
             </div>
-            <button ng-click="register()" type="submit" class="btn btn-default">Register</button>
+            <button ng-click="register()" type="submit" class="btn btn-success">Register</button>
         </form>
         <br>
         <div ng-if="regError"  class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
