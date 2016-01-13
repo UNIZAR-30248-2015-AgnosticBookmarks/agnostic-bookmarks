@@ -153,6 +153,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
             function(error, result) {
                 if (error) {
                     $scope.deleteError = true;
+                    console.log("adderr5");
                     $scope.errorMessage = error.error;
                 } else {
                     $scope.deleteError = false;
@@ -164,32 +165,46 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         if ($scope.selectedBookmark._id == -1) {
             $scope.addError = false;
             $scope.errorMessage = "";
-            BookmarkService.addBookmark(
-                $scope.selectedBookmark,
-                UserService.getUserData(),
-                function(error, result) {
-                    if (error) {
-                        console.log("adderr");
-                        $scope.addError = true;
-                        $scope.errorMessage = error.error;
-                    } else {
-                        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
-                    }
-                });
+            if($scope.selectedBookmark.url.slice(0,7).localeCompare("http://") || $scope.selectedBookmark.url.slice(0,8).localeCompare("https://"))  {
+              BookmarkService.addBookmark(
+                    $scope.selectedBookmark,
+                    UserService.getUserData(),
+                    function (error, result) {
+                        if (error) {
+                            console.log("adderr4");
+                            $scope.addError = true;
+                            $scope.errorMessage = error.error;
+                        } else {
+                            getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+                        }
+                    });
+            }
+        else {
+                console.log("adderr1");
+                $scope.addError = true;
+                $scope.errorMessage = "This is not a valid URL (URL must start with 'http://' or 'https://')";
+            }
         } else {
             $scope.updateError = false;
             $scope.errorMessage = "";
-            BookmarkService.updateBookmark(
-                $scope.selectedBookmark,
-                UserService.getUserData(),
-                function(error, result) {
-                    if (error) {
-                        $scope.updateError = true;
-                        $scope.errorMessage = error;
-                    } else {
-                        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
-                    }
-                });
+            if($scope.selectedBookmark.url.slice(0,7).localeCompare("http://") || $scope.selectedBookmark.url.slice(0,8).localeCompare("https://"))  {
+                BookmarkService.updateBookmark(
+                    $scope.selectedBookmark,
+                    UserService.getUserData(),
+                    function (error, result) {
+                        if (error) {
+                            $scope.updateError = true;
+                            console.log("adderr3");
+                            $scope.errorMessage = error.error;
+                        } else {
+                            getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+                        }
+                    });
+            } else {
+                console.log("adderr2");
+                $scope.addError = true;
+                $scope.errorMessage = "This is not a valid URL (URL must start with 'http://' or 'https://')";
+            }
         }
     }
 

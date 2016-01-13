@@ -38,7 +38,7 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
         }
         else {
             $scope.loginError = true;
-            $scope.errorMessage = error.error;
+            $scope.errorMessage = error.errors.url.message;
         }
     }
     var onRegisterResponse = function (result) {
@@ -49,7 +49,7 @@ app.controller('accessCtrl', function($scope, $rootScope, $state, UserService) {
 
         else {
             $scope.regError = true;
-            $scope.errorMessage = ": "+error.error;
+            $scope.errorMessage = ": "+error.errors.url.message;
         }
     }
 
