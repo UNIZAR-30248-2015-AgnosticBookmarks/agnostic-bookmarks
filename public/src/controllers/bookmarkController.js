@@ -5,7 +5,24 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     // Aux variables for adding/editting bookmarks
     $scope.showEditDialog = false; //FIXME: this should follow the dot rule
     $scope.selectedBookmark = { _id: -1 };
-    $scope.controls = { search: null };
+    $scope.controls = {
+        search: null,
+        newTag: null,
+        availableTags: [],
+        newTagWarning: false,
+        addTag: function() {
+            if ($scope.selectedBookmark.tags == null)
+                $scope.selectedBookmark.tags = [];
+            if ($scope.selectedBookmark.tags.indexOf(this.newTag) == -1 &&
+                    this.newTag != null)
+                $scope.selectedBookmark.tags.push(this.newTag);
+            this.newTag = null;
+            this.newTagWarning = false;
+        },
+        removeTag: function(index) {
+            $scope.selectedBookmark.tags.splice(index, 1);
+        },
+    };
     var selectBookmark = function(bookmark) {
         var aux = {};
         aux._id = bookmark._id;
@@ -14,6 +31,27 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         aux.description = bookmark.description;
         $scope.selectedBookmark = aux;
     }
+
+    /* TAG LIST MANAGEMENT */
+    var reloadTags = function() {
+        BookmarkService.getTags(UserService.getUserData(), function(err, tags) {
+            if (err) console.log(err);
+            else {
+                console.log(tags);
+                $scope.controls.availableTags = tags;
+            }
+        });
+    }
+    // Variable watchers
+    $scope.$watch('showEditDialog', function() {
+        // Load available tags every time the edit dialog opens up
+        if ($scope.showEditDialog) { reloadTags(); }
+    });
+    $scope.$watch('controls.newTag', function() {
+        // Check if it is a new tag
+        $scope.controls.newTagWarning =
+            $scope.controls.availableTags.indexOf($scope.controls.newTag) == -1;
+    });
 
     /* BOOKMARK LIST MANAGEMENT */
     $scope.bookmarkList = [];
@@ -161,4 +199,5 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
 
     // Load bookmark list on every page reload
     getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+    reloadTags();
 });

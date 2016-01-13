@@ -20,6 +20,31 @@
                 <label for="description">Description:</label>
                 <input type="text" ng-model="selectedBookmark.description" id="description" class="form-control">
             </div>
+            <div class="form-group">
+                <label for="link">New tag:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="New tag" aria-describedby="basic-addon2" ng-model="controls.newTag">
+                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-plus"></span></a>
+                </div>
+                <p class="help-block" ng-if="controls.newTag != null && controls.newTag != ''">
+                    <strong ng-if="controls.newTagWarning">
+                        This tag doesn't exist yet; it will be created with this bookmark.<br>
+                    </strong>
+                    Similar tags: 
+                    <span ng-repeat="tag in controls.availableTags | filter:controls.newTag">
+                        {{ tag }}<span ng-if="!$last">, </span>
+                    </span>
+                </p>
+            </div>
+            <div class="form-group" ng-repeat="tag in selectedBookmark.tags track by $index">
+                <div class="input-group">
+                    <span class="input-group-addon" style="{width: auto !important}">{{ tag }}</span>
+                    <!-- <span class="input-group-btn"> -->
+                        <!-- <a class="btn btn-danger" ng-click="controls.removeTag($index)"><span class="glyphicon glyphicon-remove"></span></a> -->
+                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-plus"></span></a>
+                    </span>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
