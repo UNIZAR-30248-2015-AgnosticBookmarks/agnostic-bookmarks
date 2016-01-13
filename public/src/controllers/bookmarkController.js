@@ -115,7 +115,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
             function(error, result) {
                 if (error) {
                     $scope.deleteError = true;
-                    $scope.errorMessage = error.error;
+                    $scope.errorMessage = error.errors.url.message;
                 } else {
                     $scope.deleteError = false;
                     getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
@@ -126,6 +126,11 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         if ($scope.selectedBookmark._id == -1) {
             $scope.addError = false;
             $scope.errorMessage = "";
+            if($scope.selectedBookmark.url.slice(0,7) != "http://" || $scope.selectedBookmark.url.slice(0,8) != "https://") {
+                console.log("adderr");
+                $scope.addError = true;
+                $scope.errorMessage = "This is not a valid URL (URL must start with 'http://' or 'https://'";
+            }
             BookmarkService.addBookmark(
                 $scope.selectedBookmark,
                 UserService.getUserData(),
@@ -133,7 +138,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
                     if (error) {
                         console.log("adderr");
                         $scope.addError = true;
-                        $scope.errorMessage = error.error;
+                        $scope.errorMessage = error.errors.url.message;
                     } else {
                         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
                     }
@@ -141,13 +146,18 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         } else {
             $scope.updateError = false;
             $scope.errorMessage = "";
+            if($scope.selectedBookmark.url.slice(0,7) != "http://" || $scope.selectedBookmark.url.slice(0,8) != "https://") {
+                console.log("adderr");
+                $scope.addError = true;
+                $scope.errorMessage = "This is not a valid URL (URL must start with 'http://' or 'https://'";
+            }
             BookmarkService.updateBookmark(
                 $scope.selectedBookmark,
                 UserService.getUserData(),
                 function(error, result) {
                     if (error) {
                         $scope.updateError = true;
-                        $scope.errorMessage = error;
+                        $scope.errorMessage = error.errors.url.message;
                     } else {
                         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
                     }
