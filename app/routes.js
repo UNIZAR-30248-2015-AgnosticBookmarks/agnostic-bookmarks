@@ -87,7 +87,12 @@ apiRoutes.route('/bookmarks')
             url: req.body.url,
             description: req.body.description
         }).save(function(err, data) {
-            if (err && err.name == 'ValidationError') res.status(409).send(err);
+            if (err && err.name == 'ValidationError') {
+                if (err.errors.url != null)
+                    res.status(400).send({ error: err.errors.url.message });
+                else if (err.errors.name != null)
+                    res.status(400).send({ error: err.errors.name.message });
+            }
             else if (err) res.status(500).send(err);
             else res.json(data);
         });

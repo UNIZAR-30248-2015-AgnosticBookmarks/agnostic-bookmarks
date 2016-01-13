@@ -114,7 +114,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
             function(error, result) {
                 if (error) {
                     $scope.deleteError = true;
-                    $scope.errorMessage = error.errors.url.message;
+                    $scope.errorMessage = error.error;
                 } else {
                     $scope.deleteError = false;
                     getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
@@ -132,7 +132,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
                     if (error) {
                         console.log("adderr");
                         $scope.addError = true;
-                        $scope.errorMessage = error.errors.url.message;
+                        $scope.errorMessage = error.error;
                     } else {
                         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
                     }
@@ -145,7 +145,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
                 function(error, result) {
                     if (error) {
                         $scope.updateError = true;
-                        $scope.errorMessage = error.errors.url.message;
+                        $scope.errorMessage = error;
                     } else {
                         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
                     }
