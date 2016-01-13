@@ -93,6 +93,46 @@ apiRoutes.route('/bookmarks')
         });
     })
 
+apiRoutes.route('/bookmarks/search')
+    .get(authMiddleware, authRouter, function(req, res) { 
+        var sortCriteria, offset, pageSize, searchQuery;
+        var errors = [];
+        
+        if (req.query.sortBy && req.query.sortBy === 'name') sortCriteria = 'name';
+        else if (!req.query.sortBy || req.query.sortBy === 'date') sortCriteria = '-created_at';
+        else errors.push({"sortBy": "Wrong 'sortBy' criteria"});
+
+        offset = req.query.offset || 0;
+        if (offset < 0)
+            errors.push({"offset": "'offset' must be greater than 0"});
+
+        pageSize = req.query.pageSize || 10;
+        if (pageSize < 0)
+            errors.push({"pageSize": "'pageSize'  must be greater than 0"});
+        else if (pageSize > 100)
+            errors.push({"pageSize": "'pageSize'  must be lower than 100"});
+
+        searchQuery = req.query.search;
+        if (searchQuery == null)
+            errors.push({"searchQuery": "'searchQuery' required"})
+
+        if (errors.length > 0) res.status(400).json({"errors": errors});
+        else Bookmark.find(
+            { $and: [
+                    { owner: req.params.user },
+                    { $or: [
+                        { name: { $regex: searchQuery, $options: 'i'} },
+                        { description: { $regex: searchQuery, $options: 'i'} }
+                    ]}
+            ]},
+            null,
+            { sort: sortCriteria, skip: (offset*pageSize), limit: pageSize },
+            function(err, data) {
+                if (err) res.status(500).send(err);
+                else res.json(data);
+            });
+    })
+
 apiRoutes.route('/bookmarks/:bookmarkId')
     // Get single bookmark
     .get(authMiddleware, authRouter, function(req, res) {
@@ -145,6 +185,8 @@ apiRoutes.route('/bookmarks/:bookmarkId')
             });
         })
     });
+
+
 
 /* GLOBAL ROUTES */
 // -----------------------------------------------------------------------------

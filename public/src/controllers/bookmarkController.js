@@ -3,8 +3,9 @@ var app = angular.module('AgnosticBookmarks');
 app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService, UserService) {
 
     // Aux variables for adding/editting bookmarks
-    $scope.showEditDialog = false;
+    $scope.showEditDialog = false; //FIXME: this should follow the dot rule
     $scope.selectedBookmark = { _id: -1 };
+    $scope.controls = { search: null };
     var selectBookmark = function(bookmark) {
         var aux = {};
         aux._id = bookmark._id;
@@ -16,15 +17,26 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
 
     /* BOOKMARK LIST MANAGEMENT */
     $scope.bookmarkList = [];
-    var getBookmarkList = function(sortCriteria, offset) {
+    var getBookmarkList = function(sortCriteria, offset, search) {
         var params = { sortBy: sortCriteria, offset: offset }
-        BookmarkService.getList(UserService.getUserData(), params,
-            function(error, bookmarks) {
-                if (error) console.log(error);
-                else {
-                    $scope.bookmarkList = bookmarks;
-                }
-            });
+        if (search == null || search === "") {
+            BookmarkService.getList(UserService.getUserData(), params,
+                function(error, bookmarks) {
+                    if (error) console.log(error);
+                    else {
+                        $scope.bookmarkList = bookmarks;
+                    }
+                });
+        } else {
+            params.search = search;
+            BookmarkService.search(UserService.getUserData(), params,
+                function(error, bookmarks) {
+                    if (error) console.log(error);
+                    else {
+                        $scope.bookmarkList = bookmarks;
+                    }
+                });
+        }
     };
     /* Sort criteria */
     $scope.sortCriteriaOptions = [
@@ -34,17 +46,36 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.sortCriteria = $scope.sortCriteriaOptions[0].value;
     $scope.changeSortCriteria = function() {
         $scope.bookmarksPage = 0;
+        getBookmarkList($scope.sortCriteria,
+                        $scope.bookmarksPage,
+                        $scope.variables.search);
+    }
+    /* Search */
+    $scope.search = function() {
+        $scope.bookmarksPage = 0;
+        getBookmarkList($scope.sortCriteria,
+                        $scope.bookmarksPage,
+                        $scope.variables.search);
+    }
+    $scope.cleanSearch = function() {
+        $scope.bookmarksPage = 0;
+        $scope.variables.search = null;
         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
     }
+
     /* Pagination */
     $scope.bookmarksPage = 0;
     $scope.retrieveNextPage = function() {
         $scope.bookmarksPage++;
-        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+        getBookmarkList($scope.sortCriteria,
+                        $scope.bookmarksPage,
+                        $scope.variables.search);
     }
     $scope.retrievePrevPage = function() {
         $scope.bookmarksPage--;
-        getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
+        getBookmarkList($scope.sortCriteria,
+                        $scope.bookmarksPage,
+                        $scope.variables.search);
     }
 
     /* ERROR FLAGS */
