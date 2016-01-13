@@ -39,7 +39,7 @@ describe("Bookmark model", function() {
                 username: 'dummy',
                 password: 'dummy'
             }).save(function(err, data) {
-                if (err) { console.log(err); return; }
+                if (err) { console.log(err); done = true; return; }
                 dummyUser = data;
                 userAdded = true;
             })
@@ -72,10 +72,10 @@ describe("Bookmark model", function() {
             new Bookmark({
                 name: "dummyBookmark",
                 owner: dummyUser._id,
-                url: "www.dummy.com",
+                url: "http://www.dummy.com",
                 description: "Just a dummy bookmark for testing purposes"
             }).save(function (_err, _data) {
-                if (_err) { console.log(_err); return; }
+                if (_err) { console.log(_err); done = true; return; }
                 err = _err;
                 data = _data;
                 done = true;
@@ -87,7 +87,7 @@ describe("Bookmark model", function() {
             expect(data).not.toBeNull();
             expect(data.name).toBe("dummyBookmark");
             expect(data.owner).toBe(dummyUser._id);
-            expect(data.url).toBe("www.dummy.com");
+            expect(data.url).toBe("http://www.dummy.com");
             expect(data.description).toBe("Just a dummy bookmark for testing purposes");
         })
     })
@@ -104,7 +104,7 @@ describe("Bookmark model", function() {
             new Bookmark({
                 name: "dummyBookmark",
                 owner: dummyUser._id,
-                url: "www.dummy.com",
+                url: "http://www.dummy.com",
                 description: "Just a dummy bookmark for testing purposes"
             }).save(function (_err, _data) {
                 if (_err) { console.log(_err); return; }
@@ -130,7 +130,7 @@ describe("Bookmark model", function() {
         waitsFor(function() { return secondBookmark; }, "second bookmark creation", 750);
         // Count bookmarks (should return 1)
         runs(function() {
-            Bookmark.count({ owner: dummyUser._id, url: 'www.dummy.com' },
+            Bookmark.count({ owner: dummyUser._id, url: 'http://www.dummy.com' },
                     function(_err, _count) {
                 if (_err) throw _err;
                 count = _count;
