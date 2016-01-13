@@ -48,18 +48,18 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.bookmarksPage = 0;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     /* Search */
     $scope.search = function() {
         $scope.bookmarksPage = 0;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     $scope.cleanSearch = function() {
         $scope.bookmarksPage = 0;
-        $scope.variables.search = null;
+        $scope.controls.search = null;
         getBookmarkList($scope.sortCriteria, $scope.bookmarksPage);
     }
 
@@ -69,13 +69,13 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         $scope.bookmarksPage++;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
     $scope.retrievePrevPage = function() {
         $scope.bookmarksPage--;
         getBookmarkList($scope.sortCriteria,
                         $scope.bookmarksPage,
-                        $scope.variables.search);
+                        $scope.controls.search);
     }
 
     /* ERROR FLAGS */
