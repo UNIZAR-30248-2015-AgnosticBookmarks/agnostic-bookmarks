@@ -4,9 +4,11 @@
   "description": "Keep your favourite sites across all your devices",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp && istanbul --include-all-sources cover jasmine-node test --captureExceptions",
-    "test-backend": "node_modules/.bin/jasmine-node test",
-    "build": "node_modules/.bin/gulp"
+    "build": "gulp",
+    "pretest": "npm run build",
+    "test": "npm run test:backend && npm run test:frontend && istanbul report --root ./coverage lcov json",
+    "test:frontend": "karma start karma.conf.js",
+    "test:backend": "istanbul cover -i index.js -i app/**/*.js --dir ./coverage/backend ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,7 @@
   },
   "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "method-override": "^2.3.4",
@@ -29,7 +32,7 @@
   },
   "devDependencies": {
     "codecov.io": "^0.1.6",
-    "del": "^1.2.0",
+    "del": "^2.2.0",
     "gulp": "^3.9.0",
     "gulp-inject": "^3.0.0",
     "gulp-minify-css": "^1.2.1",
@@ -40,7 +43,13 @@
     "gulp-util": "^3.0.7",
     "istanbul": "^0.4.0",
     "jasmine": "^2.3.2",
+    "jasmine-core": "^2.4.1",
     "jasmine-node": "^1.14.5",
+    "karma": "^0.13.16",
+    "karma-coverage": "^0.5.3",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.2",
+    "phantomjs": "^1.9.19",
     "request": "^2.65.0"
   }
 }

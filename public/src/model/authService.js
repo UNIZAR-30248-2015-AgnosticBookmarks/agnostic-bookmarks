@@ -1,6 +1,6 @@
 var app = angular.module('AgnosticBookmarks');
 
-app.service('UserService', function ($http, $location) {
+app.service('UserService', function ($http, $location, $base64) {
 
     var userData = null;
 
@@ -14,10 +14,10 @@ app.service('UserService', function ($http, $location) {
 
     function authenticate(user, pass, callback) {
         $http.get(
-            "http://adriemsworkshop.noip.me:8081/bookmarks/api/auth/",
+            "http://localhost:3000/api/auth/",
             { headers: {
-                'username': user,
-                'password': pass
+                'Authorization': 'Basic ' + 
+                    $base64.encode(user + ":" + pass)
             }}
         ).then(function onSuccess(response) {
                 userData = {
@@ -33,7 +33,7 @@ app.service('UserService', function ($http, $location) {
     function register(user, pass, callback) {
         var credentials = {username: user, password: pass};
         $http.post(
-            "http://adriemsworkshop.noip.me:8081/bookmarks/api/users/",
+            "http://localhost:3000/api/users/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
