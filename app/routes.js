@@ -138,6 +138,26 @@ apiRoutes.route('/bookmarks/search')
             });
     })
 
+// Search single bookmark by given URL
+apiRoutes.route('/bookmarks/bookmark')
+    .get(authMiddleware, authRouter, function(req, res) {
+        var url;
+        var errors = [];
+
+        if (req.query.url) url = req.query.url;
+        else errors.push({"url": "Must provide an URL on the query"});
+
+        if (errors.length > 0) res.status(400).json({"errors": errors});
+        else Bookmark.findOne(
+            { owner: req.user, url: url },
+            null,
+            function(err, data) {
+                if (err) res.status(500).send(err);
+                if (data == null) res.status(404).send("Not found");
+                else res.json(data);
+            });
+    })
+
 apiRoutes.route('/bookmarks/:bookmarkId')
     // Get single bookmark
     .get(authMiddleware, authRouter, function(req, res) {
