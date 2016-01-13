@@ -10,6 +10,7 @@ BookmarkSchema = new mongoose.Schema({
     name  : { type: String, required: true },
     owner : { type: ObjectId, ref: 'User', required: true },
     url   : { type: String, required: true },
+    tags  : [String],
     description : String,
     created_at  : { type: Date, required: true, default: Date.now }
 });
