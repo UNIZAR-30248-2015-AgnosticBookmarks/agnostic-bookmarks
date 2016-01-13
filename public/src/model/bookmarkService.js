@@ -7,13 +7,15 @@ module.service('BookmarkService', function ($http, $location, $base64) {
         search: search,
         addBookmark: addBookmark,
         deleteBookmark: deleteBookmark,
-        updateBookmark: updateBookmark
+        updateBookmark: updateBookmark,
+        getTags: getLabels
     }
 
     function addBookmark(bookmark, user, callback) {
         var _bookmark = {
             name: bookmark.name,
             url: bookmark.url,
+            tags: bookmark.tags,
             description: bookmark.description
         };
         $http.post(
@@ -22,7 +24,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + 
+                    'Authorization': 'Basic ' +
                         $base64.encode(user.username + ":" + user.password)
                 }
             }
@@ -40,7 +42,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             "http://localhost:3000/api/bookmarks/", {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + 
+                'Authorization': 'Basic ' +
                     $base64.encode(user.username + ":" + user.password)
             },
             params: params
@@ -56,7 +58,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             "http://localhost:3000/api/bookmarks/search", {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + 
+                'Authorization': 'Basic ' +
                     $base64.encode(user.username + ":" + user.password)
             },
             params: params
@@ -73,7 +75,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + 
+                    'Authorization': 'Basic ' +
                         $base64.encode(user.username + ":" + user.password)
                 }
             }
@@ -99,7 +101,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + 
+                    'Authorization': 'Basic ' +
                         $base64.encode(user.username + ":" + user.password)
                 }
             }
@@ -110,6 +112,21 @@ module.service('BookmarkService', function ($http, $location, $base64) {
                 console.log(response);
                 callback(response.data);
             });
+    }
+
+    function getLabels(user, callback) {
+        $http.get(
+            "http://localhost:3000/api/tags", {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' +
+                    $base64.encode(user.username + ":" + user.password)
+            },
+        }).then(function onSuccess(response) {
+            callback(null, response.data);
+        }, function onError(response) {
+            callback(response.data);
+        });
     }
 
 });
