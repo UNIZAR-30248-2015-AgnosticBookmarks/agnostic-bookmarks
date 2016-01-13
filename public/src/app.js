@@ -1,16 +1,13 @@
 // =============================================================================
 //  This file defines the AngularJS module and the routes for the front-end,
 //  that will be handled by ui-router
-// -----------------------------------------------------------------------------
-//  TODO: Add middleware before 'access' to check if user is already logged in
-//  TODO: Add middleware before each state except for 'access' to check if
-//        user is still logged in
 // =============================================================================
 
 var module = angular.module('AgnosticBookmarks', ['ui.router', 'base64']);
 
-module.config(function($stateProvider, $urlRouterProvider) {
+module.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
+    // Router configuration
     function checkLoggedIn(UserService, state) {
         var sessionState = UserService.getSessionState();
         if (sessionState === 'disconnected') state.go('access');
@@ -37,4 +34,21 @@ module.config(function($stateProvider, $urlRouterProvider) {
         })
 
     $urlRouterProvider.otherwise('/access');
+
+    // 401 Handling //FIXME doesn't working
+    // var interceptor = function($rootScope, $q) {
+        // return {
+            // 'responseError': function(rejection) {
+                // console.log("Intercepted!");
+                // console.log(rejection);
+                // if (rejection.status == 401) {
+                    // console.log("Intercepted 2!");
+                    // // $state.go('access'); return;
+                    // return;
+                // } else return $q.reject(response);
+            // }
+        // }
+    // };
+    // $httpProvider.interceptors.push(interceptor);
+    // $httpProvider.interceptors.push("http401Interceptor");
 })

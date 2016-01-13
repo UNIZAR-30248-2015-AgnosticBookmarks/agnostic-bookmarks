@@ -80,7 +80,7 @@ function routesHandler(req, res, next) {
     }
     else if (req.user == null) {
         res.status(401)
-            .setHeader("WWW-Authenticate", "Basic realm=\"Agnostic Bookmarks\"")
+            .setHeader("WWW-Authenticate", "BasicCustom realm=\"Agnostic Bookmarks\"")
             .send({"message": "Invalid username or password"});
     }
     else {
