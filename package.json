@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/UNIZAR-30248-2015-AgnosticBookmarks/agnostic-bookmarks",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "method-override": "^2.3.4",

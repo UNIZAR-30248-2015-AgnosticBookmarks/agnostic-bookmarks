@@ -1,6 +1,6 @@
 var module = angular.module('AgnosticBookmarks');
 
-module.service('BookmarkService', function ($http, $location) {
+module.service('BookmarkService', function ($http, $location, $base64) {
 
     return {
         getList: getList,
@@ -22,8 +22,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' + 
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
@@ -40,8 +40,8 @@ module.service('BookmarkService', function ($http, $location) {
             "http://localhost:3000/api/bookmarks/", {
             headers: {
                 'Content-Type': 'application/json',
-                'username': user.username,
-                'password': user.password
+                'Authorization': 'Basic ' + 
+                    $base64.encode(user.username + ":" + user.password)
             },
             params: params
         }).then(function onSuccess(response) {
@@ -56,8 +56,8 @@ module.service('BookmarkService', function ($http, $location) {
             "http://localhost:3000/api/bookmarks/search", {
             headers: {
                 'Content-Type': 'application/json',
-                'username': user.username,
-                'password': user.password
+                'Authorization': 'Basic ' + 
+                    $base64.encode(user.username + ":" + user.password)
             },
             params: params
         }).then(function onSuccess(response) {
@@ -73,8 +73,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' + 
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
@@ -99,8 +99,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' + 
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
