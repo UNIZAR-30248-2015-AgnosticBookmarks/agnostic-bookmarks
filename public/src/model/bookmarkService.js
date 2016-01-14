@@ -19,7 +19,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             description: bookmark.description
         };
         $http.post(
-            "http://localhost:3000/api/bookmarks/",
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/",
             JSON.stringify(_bookmark),
             {
                 headers: {
@@ -39,7 +39,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
 
     function getList(user, params, callback) {
         $http.get(
-            "http://localhost:3000/api/bookmarks/", {
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/", {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' +
@@ -55,7 +55,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
 
     function search(user, params, callback) {
         $http.get(
-            "http://localhost:3000/api/bookmarks/search", {
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/search", {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' +
@@ -71,7 +71,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
 
     function deleteBookmark(id, user, callback) {
         $http.delete(
-            "http://localhost:3000/api/bookmarks/" + id,
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/" + id,
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
             description: bookmark.description
         };
         $http.patch(
-            "http://localhost:3000/api/bookmarks/" + bookmark._id,
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/" + bookmark._id,
             JSON.stringify(_bookmark),
             {
                 headers: {
@@ -116,7 +116,7 @@ module.service('BookmarkService', function ($http, $location, $base64) {
 
     function getLabels(user, callback) {
         $http.get(
-            "http://localhost:3000/api/tags", {
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/tags", {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' +

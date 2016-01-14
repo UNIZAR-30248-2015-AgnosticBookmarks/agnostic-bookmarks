@@ -14,7 +14,7 @@ app.service('UserService', function ($http, $location, $base64) {
 
     function authenticate(user, pass, callback) {
         $http.get(
-            "http://localhost:3000/api/auth/",
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/auth/",
             { headers: {
                 'Authorization': 'Basic ' + 
                     $base64.encode(user + ":" + pass)
@@ -33,7 +33,7 @@ app.service('UserService', function ($http, $location, $base64) {
     function register(user, pass, callback) {
         var credentials = {username: user, password: pass};
         $http.post(
-            "http://localhost:3000/api/users/",
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/users/",
             JSON.stringify(credentials),
             {headers: {'Content-Type': 'application/json'}}
         ).then(function onSuccess(response) {
