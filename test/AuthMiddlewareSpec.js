@@ -63,7 +63,7 @@ describe("Auth middleware", function() {
             })
             waitsFor(function() { return done; }, "database response", timeout);
             runs(function() {
-                expect(req.params.user).not.toBeDefined();
+                expect(req.user).not.toBeDefined();
                 expect(req.params.internalError).toBe(mockValues.errorMsg);
             });
         });
@@ -79,8 +79,8 @@ describe("Auth middleware", function() {
             waitsFor(function() { return done; }, "database response", timeout);
             runs(function() {
                 expect(req.params.internalError).not.toBeDefined();
-                expect(req.params.user).toBeDefined();
-                expect(req.params.user).toBeNull();
+                expect(req.user).toBeDefined();
+                expect(req.user).toBeNull();
             });
         });
 
@@ -97,7 +97,7 @@ describe("Auth middleware", function() {
             waitsFor(function() { return done; }, "database response", timeout);
             runs(function() {
                 expect(verifyPasswordMock).toHaveBeenCalled();
-                expect(req.params.user).not.toBeDefined();
+                expect(req.user).not.toBeDefined();
                 expect(req.params.internalError).toBe(mockValues.errorMsg);
             });
         });
@@ -116,8 +116,8 @@ describe("Auth middleware", function() {
             runs(function() {
                 expect(verifyPasswordMock).toHaveBeenCalled();
                 expect(req.params.internalError).not.toBeDefined();
-                expect(req.params.user).toBeDefined();
-                expect(req.params.user).toBeNull();
+                expect(req.user).toBeDefined();
+                expect(req.user).toBeNull();
             });
         });
 
@@ -135,8 +135,8 @@ describe("Auth middleware", function() {
             runs(function() {
                 expect(verifyPasswordMock).toHaveBeenCalled();
                 expect(req.params.internalError).not.toBeDefined();
-                //expect(req.params.user).not.toBeDefined();
-                expect(req.params.user).toBe(mockValues.dummyId);
+                //expect(req.user).not.toBeDefined();
+                expect(req.user).toBe(mockValues.dummyId);
             });
         });
     });

@@ -26,7 +26,7 @@ gulp.task("move-img", function(){
 // CSS TASKS                                                          CSS TASKS
 // -----------------------------------------------------------------------------
 gulp.task('clean-css', function (cb) {
-    del(['./public/dist/**/*.css'], cb);
+    del(['./public/dist/**/*.css']).then(function(){ cb(); });
 });
 
 gulp.task('css', ['clean-css'],function(){
@@ -41,13 +41,13 @@ gulp.task('css', ['clean-css'],function(){
 // JAVASCRIPT TASKS                                            JAVASCRIPT TASKS
 // -----------------------------------------------------------------------------
 gulp.task('clean-js', function (cb) {
-    del(["./public/dist/**/*.js"], cb);
+    del(['./public/dist/**/*.js']).then(function(){ cb(); });
 });
 
 gulp.task("js", ["clean-js"],function(){
     return gulp.src("./public/src/**/*.js")
         .pipe(maps.init()).on('error', util.log)
-        //.pipe(uglify({mangle: false})).on('error', util.log)
+        .pipe(uglify({mangle: false})).on('error', util.log)
         .pipe(rename({
             extname: ".min.js"
         })).on('error', util.log)
@@ -58,7 +58,7 @@ gulp.task("js", ["clean-js"],function(){
 // HTML TASKS                                                        HTML TASKS
 // -----------------------------------------------------------------------------
 gulp.task("clean-html", function(cb) {
-    del(['./public/dist/**/*.html'], cb);
+    del(['./public/dist/**/*.html']).then(function(){ cb(); });
 });
 
 gulp.task("move-html", ["clean-html"], function(){
@@ -68,18 +68,24 @@ gulp.task("move-html", ["clean-html"], function(){
 
 // BUILD TASKS                                                      BUILD TASKS
 // -----------------------------------------------------------------------------
-gulp.task("build", ["move-html", "move-img", "css", "js"], function(){
-    var sources = gulp.src(['./public/dist/**/*.js', './dist/**/*.css'], {read: false});
+gulp.task("pre-build", ["move-html", "move-img", "css", "js"], function(){
+    // After transform all the files in src, move the files in lib
+    return gulp.src("./public/lib/**/*")
+        .pipe(gulp.dest("./public/dist/lib"));
+});
+gulp.task("build", ["pre-build"], function(){
+    // Last step is inject modified files into HTML and transform it
+    var sources = gulp.src(['./public/dist/**/*.js', './public/dist/**/*.css'], {read: false});
     gulp.src("./public/dist/**/*.html")
         .pipe(inject(sources, {relative: true})).on('error', util.log)
-        //.pipe(htmlmin({
-            //empty: true,
-            //cdata: false,
-            //comments: false,
-            //conditionals: false,
-            //spare: false,
-            //quotes: false,
-            //loose: true
-        //})).on('error', util.log)
+        .pipe(htmlmin({
+            empty: true,
+            cdata: false,
+            comments: false,
+            conditionals: false,
+            spare: false,
+            quotes: false,
+            loose: true
+        })).on('error', util.log)
         .pipe(gulp.dest("./public/dist"));
 });

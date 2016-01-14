@@ -20,6 +20,31 @@
                 <label for="description">Description:</label>
                 <input type="text" ng-model="selectedBookmark.description" id="description" class="form-control">
             </div>
+            <div class="form-group">
+                <label for="link">New tag:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="New tag" aria-describedby="basic-addon2" ng-model="controls.newTag">
+                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-plus"></span></a>
+                </div>
+                <p class="help-block" ng-if="controls.newTag != null && controls.newTag != ''">
+                    <strong ng-if="controls.newTagWarning">
+                        This tag doesn't exist yet; it will be created with this bookmark.<br>
+                    </strong>
+                    Similar tags:
+                    <span ng-repeat="tag in controls.availableTags | filter:controls.newTag">
+                        {{ tag }}<span ng-if="!$last">, </span>
+                    </span>
+                </p>
+            </div>
+            <div class="form-group" ng-repeat="tag in selectedBookmark.tags track by $index">
+                <div class="input-group">
+                    <span class="input-group-addon" style="{width: auto !important}">{{ tag }}</span>
+                    <!-- <span class="input-group-btn"> -->
+                        <!-- <a class="btn btn-danger" ng-click="controls.removeTag($index)"><span class="glyphicon glyphicon-remove"></span></a> -->
+                    <a class="input-group-addon normal-text" ng-click="controls.removeTag(controls.newTag)"><span class="glyphicon glyphicon-remove"></span></a>
+                    </span>
+                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
@@ -29,80 +54,83 @@
 </ng-modal-dialog>
 
 
-<p>
-    Welcome home!
-    <a href="" ng-click="logout()">Log out</a>
+<!-- <div class="row text-center"> -->
+    <!-- <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a> -->
+<!-- </div> -->
 
-</p>
-
-<div class="row text-center">
-    <a href="" class="btn btn-lg btn-default" ng-click="addBookmark()">Create new bookmark</a>
-</div>
 <div class="row">
-    <div ng-if="addError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <p><strong>Alert!</strong> Problem adding bookmark</p>
-    </div>
-    <div ng-if="updateError" class="alert alert-danger alert-dismissible" role="alert"ng-if="addError">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <p><strong>Alert!</strong> Problem updating bookmark</p>
-    </div>
-    <div ng-if="deletingError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span></button>
-        <p><strong>Alert!</strong> Problem deleting bookmark</p>
-    </div>
 </div>
 <div class="row">
 
     <!-- Table of bookmarks -->
     <div class="col-md-10 col-md-offset-1">
-        <!--<div class="container">-->
-            <h2>My bookmarks</h2>
-            <div class="form-inline">
-                <div class="form-group">
-                    <label class="control-label">Sort by </label>
-                    <select class="form-control input-sm" ng-model="sortCriteria"
-                        ng-options="criteria.value as criteria.name for criteria in sortCriteriaOptions">
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button ng-click="changeSortCriteria()" class="btn btn-sm btn-default">Go!</button>
-                </div>
+    <div ng-if="addError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem adding bookmark: {{ errorMessage }}</p>
+    </div>
+    <div ng-if="updateError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem updating bookmark: {{ errorMessage }}</p>
+    </div>
+    <div ng-if="deletingError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <p><strong>Alert!</strong> Problem deleting bookmark: {{ errorMessage }}</p>
+    </div>
+        <h2>My bookmarks</h2>
+        <div class="form-inline">
+            <div class="form-group">
+                <label class="control-label">Sort by </label>
+                <select class="form-control input-sm" ng-model="sortCriteria"
+                    ng-options="criteria.value as criteria.name for criteria in sortCriteriaOptions">
+                </select>
             </div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>URL</th>
-                    <th>Description</th>
-                    <th></th>
+            <div class="form-group">
+                <button ng-click="changeSortCriteria()" class="btn btn-sm btn-default">Go!</button>
+            </div>
+            <!-- <div class="form-group pull-right" ng-if="variables.search != null"> -->
+                <!-- <button ng-click="cleanSearch()" class="btn btn-sm btn-default">Clear search</button> -->
+            <!-- </div> -->
+            <div class="form-group pull-right"><div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" aria-describedby="basic-addon2" ng-model="controls.search">
+                <a class="input-group-addon normal-text" id="search-button" ng-click="search()"><span class="glyphicon glyphicon-search"></span></a>
+            </div></div>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bookmark in bookmarkList track by $index" >
+                    <td>{{ bookmark.name }}</td>
+                    <td><a ng-href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></td>
+                    <td>{{ bookmark.description }}</td>
+                    <td>
+                        <button ng-click="updateBookmark($index)" class="btn btn-default">Modify</button>
+                        <button ng-click="deleteBookmark($index)" class="btn btn-danger">Delete</button>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="bookmark in bookmarkList track by $index" >
-                        <td>{{ bookmark.name }}</td>
-                        <td><a ng-href="{{ bookmark.url }}" target="_blank">{{ bookmark.url }}</a></td>
-                        <td>{{ bookmark.description }}</td>
-                        <td>
-                            <button ng-click="updateBookmark($index)" class="btn btn-default">Modify</button>
-                            <button ng-click="deleteBookmark($index)" class="btn btn-danger">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <nav>
-                <ul class="pager">
-                    <li class="previous" ng-if="bookmarksPage != 0">
-                        <a href="" ng-click="retrievePrevPage()">
-                            <span aria-hidden="true">&larr;</span> Less</a></li>
-                    <li class="next" ng-if="bookmarkList.length == 10">
-                        <a href="" ng-click="retrieveNextPage()">
-                            More <span aria-hidden="true">&rarr;</span></a></li>
-                </ul>
-            </nav>
-        <!--</div>-->
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pager">
+                <li class="previous" ng-if="bookmarksPage != 0">
+                    <a href="" ng-click="retrievePrevPage()">
+                        <span aria-hidden="true">&larr;</span> Less</a></li>
+                <li class="next" ng-if="bookmarkList.length == 10">
+                    <a href="" ng-click="retrieveNextPage()">
+                        More <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </nav>
     </div>
 </div>
+
+<floating-action-button click-callback="addBookmark()"></floating-action-button>
