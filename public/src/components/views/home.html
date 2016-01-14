@@ -41,7 +41,7 @@
                     <span class="input-group-addon" style="{width: auto !important}">{{ tag }}</span>
                     <!-- <span class="input-group-btn"> -->
                         <!-- <a class="btn btn-danger" ng-click="controls.removeTag($index)"><span class="glyphicon glyphicon-remove"></span></a> -->
-                    <a class="input-group-addon normal-text" ng-click="controls.addTag(controls.newTag)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a class="input-group-addon normal-text" ng-click="controls.removeTag(controls.newTag)"><span class="glyphicon glyphicon-remove"></span></a>
                     </span>
                 </div>
             </div>
@@ -59,6 +59,11 @@
 <!-- </div> -->
 
 <div class="row">
+</div>
+<div class="row">
+
+    <!-- Table of bookmarks -->
+    <div class="col-md-10 col-md-offset-1">
     <div ng-if="addError" class="alert alert-danger alert-dismissible" role="alert" ng-if="addError">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span></button>
@@ -74,11 +79,6 @@
             <span aria-hidden="true">&times;</span></button>
         <p><strong>Alert!</strong> Problem deleting bookmark: {{ errorMessage }}</p>
     </div>
-</div>
-<div class="row">
-
-    <!-- Table of bookmarks -->
-    <div class="col-md-10 col-md-offset-1">
         <h2>My bookmarks</h2>
         <div class="form-inline">
             <div class="form-group">

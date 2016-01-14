@@ -46,6 +46,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
     $scope.$watch('showEditDialog', function() {
         // Load available tags every time the edit dialog opens up
         if ($scope.showEditDialog) { reloadTags(); }
+        else { controls.newTag = null; }
     });
     $scope.$watch('controls.newTag', function() {
         // Check if it is a new tag
@@ -165,7 +166,7 @@ app.controller('homeCtrl', function($scope, $rootScope, $state, BookmarkService,
         if ($scope.selectedBookmark._id == -1) {
             $scope.addError = false;
             $scope.errorMessage = "";
-            if($scope.selectedBookmark.url.slice(0,7).localeCompare("http://") || $scope.selectedBookmark.url.slice(0,8).localeCompare("https://"))  {
+            if($scope.selectedBookmark.url != null && ($scope.selectedBookmark.url.slice(0,7).localeCompare("http://") || $scope.selectedBookmark.url.slice(0,8).localeCompare("https://")))  {
               BookmarkService.addBookmark(
                     $scope.selectedBookmark,
                     UserService.getUserData(),
