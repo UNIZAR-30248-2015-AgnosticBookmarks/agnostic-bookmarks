@@ -1,18 +1,21 @@
 var module = angular.module('AgnosticBookmarks');
 
-module.service('BookmarkService', function ($http, $location) {
+module.service('BookmarkService', function ($http, $location, $base64) {
 
     return {
         getList: getList,
+        search: search,
         addBookmark: addBookmark,
         deleteBookmark: deleteBookmark,
-        updateBookmark: updateBookmark
+        updateBookmark: updateBookmark,
+        getTags: getLabels
     }
 
     function addBookmark(bookmark, user, callback) {
         var _bookmark = {
             name: bookmark.name,
             url: bookmark.url,
+            tags: bookmark.tags,
             description: bookmark.description
         };
         $http.post(
@@ -21,8 +24,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' +
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
@@ -39,8 +42,24 @@ module.service('BookmarkService', function ($http, $location) {
             "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/", {
             headers: {
                 'Content-Type': 'application/json',
-                'username': user.username,
-                'password': user.password
+                'Authorization': 'Basic ' +
+                    $base64.encode(user.username + ":" + user.password)
+            },
+            params: params
+        }).then(function onSuccess(response) {
+            callback(null, response.data);
+        }, function onError(response) {
+            callback(response.data);
+        });
+    }
+
+    function search(user, params, callback) {
+        $http.get(
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/bookmarks/search", {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' +
+                    $base64.encode(user.username + ":" + user.password)
             },
             params: params
         }).then(function onSuccess(response) {
@@ -56,8 +75,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' +
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
@@ -82,8 +101,8 @@ module.service('BookmarkService', function ($http, $location) {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'username': user.username,
-                    'password': user.password
+                    'Authorization': 'Basic ' +
+                        $base64.encode(user.username + ":" + user.password)
                 }
             }
         ).then(function onSuccess(response) {
@@ -93,6 +112,21 @@ module.service('BookmarkService', function ($http, $location) {
                 console.log(response);
                 callback(response.data);
             });
+    }
+
+    function getLabels(user, callback) {
+        $http.get(
+            "http://adriemsworkshop.noip.me:8081/bookmarks/api/tags", {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' +
+                    $base64.encode(user.username + ":" + user.password)
+            },
+        }).then(function onSuccess(response) {
+            callback(null, response.data);
+        }, function onError(response) {
+            callback(response.data);
+        });
     }
 
 });

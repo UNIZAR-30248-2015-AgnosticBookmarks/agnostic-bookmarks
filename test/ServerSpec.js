@@ -11,8 +11,9 @@
 // =============================================================================
 
 process.env.NODE_ENV = 'test';  // Set environment to testing
+process.env.PORT = '3000';  // Set environment to testing
 var request = require('request');
-var baseURL = 'http://localhost:3000/';
+var baseURL = 'http://localhost:' + process.env.PORT + '/';
 
 // Since the first time this is imported it will launch the server, we make
 // this variable global to ensure it is only imported once
@@ -35,7 +36,16 @@ describe("Web server", function() {
     });
     // After all server related tests, close the server
     afterEach(function() {
-        server.close();
+        var done = false;
+        var timeout = 1000;
+        runs(function() {
+            server.close(function() {
+                done = true;
+            });
+        })
+        waitsFor(function() {
+            return done;
+        }, "closing server", timeout);
     });
 
     // GET petitions to the root of the webapp
@@ -86,7 +96,11 @@ describe("RESTful API", function() {
     beforeEach(function() {
         spyOn(console, "log");
         if (server == null) server = require('../index.js');
-        else server.start();
+        try {
+            server.start();
+        } catch(err) {
+            if (err.message != "Trying to open unclosed connection.") throw err
+        }
     });
     afterEach(function() {
         server.close();  // After all server related tests, close the server

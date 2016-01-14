@@ -3,11 +3,14 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var ValidationError = mongoose.Error.ValidationError;
 var ValidatorError  = mongoose.Error.ValidatorError;
 
+var urlValidator = new RegExp('^https?:\/\/', 'i');
+
 // DEFINE SCHEMA
 BookmarkSchema = new mongoose.Schema({
     name  : { type: String, required: true },
     owner : { type: ObjectId, ref: 'User', required: true },
     url   : { type: String, required: true },
+    tags  : [String],
     description : String,
     created_at  : { type: Date, required: true, default: Date.now }
 });
@@ -16,6 +19,7 @@ BookmarkSchema = new mongoose.Schema({
 // before saving the object
 BookmarkSchema.pre('validate', function(next) {
     var self = this;
+    if (!urlValidator.test(self.url)) self.invalidate('url', 'invalid URL');
     mongoose.models['Bookmark']
         .findOne({ owner: this.owner, url: this.url }, function(err, data) {
             if (err) throw err;

@@ -23,8 +23,10 @@ var port = process.env.PORT || 3000;  // Read PORT from environment or use 3000
 
 /* Middleware setup (order does matter) */
 app.use(express.static(__dirname + '/public/dist')); // Set frontend files' path
-// If we are not testing, set log level to 'dev'
-if (process.env.NODE_ENV != 'test') { app.use(morgan('dev')); }
+// Log request if not testing
+app.use(morgan('dev', {
+    skip: function() { return process.env.NODE_ENV === 'test'; }
+}));
 // Middleware that will allow us to decode request parameteres
 app.use(parser.json());
 app.use(parser.urlencoded({'extended': 'false'}));
@@ -38,18 +40,21 @@ app.use(routes);
 /* DEFINE STARTUP AND SHUTDOWN FUNCTIONS */
 // -----------------------------------------------------------------------------
 var server;
-function start() {
+function start(cb) {
     mongoose.connect(config.database);  // Connect to database through mongoose
     server = app.listen(port, function() {  // Start server activity
         console.log("Something beautiful is happening on port " + port);
+        if (cb) cb();
     });
 }
-function close() {
+function close(cb) {
     mongoose.connection.close(function() {
-        console.log('Terminating mongoose connection');
+        console.log('Terminated mongoose connection');
+        server.close(function() {
+            console.log('Shutting down the server');
+            if (cb) cb();
+        });
     });
-    console.log('Shutting down the server');
-    server.close();
 };
 
 module.exports = {

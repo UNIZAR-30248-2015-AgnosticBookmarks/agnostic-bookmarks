@@ -12,7 +12,7 @@ before_install:
   - mv .travis/config.js app/config.js
 after_success:
   # Sync with codecov
-  - cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js
+  - cat ./coverage/coverage-final.json | ./node_modules/codecov.io/bin/codecov.io.js
   # Deploy on production
   - eval "$(ssh-agent -s)"  # Start ssh agent
   - chmod 600 .travis/travis_rsa

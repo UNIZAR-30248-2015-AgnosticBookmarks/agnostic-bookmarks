@@ -1,0 +1,26 @@
+#fab-wrapper {
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+
+#fab-wrapper .container {
+    padding: 0;
+}
+
+#floating-action-button {
+    position: relative;
+    line-height: 1;
+    top: -16px;
+    left: -24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    font-size: 25pt;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 1px 5px #777;
+    -moz-box-shadow: 0 1px 5px #777;
+    box-shadow: 0 1px 5px #777;
+}

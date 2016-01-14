@@ -1,6 +1,6 @@
 var app = angular.module('AgnosticBookmarks');
 
-app.service('UserService', function ($http, $location) {
+app.service('UserService', function ($http, $location, $base64) {
 
     var userData = null;
 
@@ -16,8 +16,8 @@ app.service('UserService', function ($http, $location) {
         $http.get(
             "http://adriemsworkshop.noip.me:8081/bookmarks/api/auth/",
             { headers: {
-                'username': user,
-                'password': pass
+                'Authorization': 'Basic ' + 
+                    $base64.encode(user + ":" + pass)
             }}
         ).then(function onSuccess(response) {
                 userData = {
