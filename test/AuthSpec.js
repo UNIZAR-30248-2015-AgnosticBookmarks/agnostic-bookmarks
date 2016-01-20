@@ -49,7 +49,7 @@ describe("POST /api/auth", function(){
                 userAdded = true;
             })
         });
-        waitsFor(function() { return userAdded; }, "dummyUser creation", 750);
+        waitsFor(function() { return userAdded; }, "dummyUser creation", 1500);
 
     });
 
@@ -75,7 +75,7 @@ describe("POST /api/auth", function(){
 
     it("should return 200 when username and password match", function() {
         var result = {};
-        var timeout = 750;
+        var timeout = 1500;
         var done = false;
         runs(function() {
             request.get({
@@ -97,7 +97,7 @@ describe("POST /api/auth", function(){
 
     it("should return 401 when username doesn't match password", function() {
         var result = {};
-        var timeout = 750;
+        var timeout = 1500;
         var done = false;
         runs(function() {
             request.get({url:baseURL, body:"{username: nouser, password:nopass}"},

@@ -54,7 +54,7 @@ describe("Web server", function() {
         it("should return status code of 200", function(){
             var result = {};   // It will store the results of the async request
             var done = false;  // It will be true when the request is done
-            var timeout = 750; // Timeout in millisecs for the request to be done
+            var timeout = 1500; // Timeout in millisecs for the request to be done
 
             // FIRST STEP: execute async request that will set the flag done
             // once its finished
@@ -112,7 +112,7 @@ describe("RESTful API", function() {
         it("should return status code of 200", function(){
             var result = {};   // It will store the results of the async request
             var done = false;  // It will be true when the request is done
-            var timeout = 750; // Timeout in millisecs for the request to be done
+            var timeout = 1500; // Timeout in millisecs for the request to be done
 
             runs(function() {
                 request.get(baseURL + "api/", function(error, response, body) {

@@ -91,7 +91,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "user creation", 750);
+        waitsFor(function() { return done; }, "user creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -106,7 +106,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "database user check", 750);
+        waitsFor(function() { return done; }, "database user check", 1500);
         var passMatch = false;
         runs(function() {
             // Check response
@@ -120,7 +120,7 @@ describe("POST /api/bookmarks", function() {
                 }
             });
         });
-        waitsFor(function() { return done; }, "check database info", 750);
+        waitsFor(function() { return done; }, "check database info", 1500);
         runs(function() {
             // Check response
             done = false;
@@ -146,7 +146,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "user creation", 750);
+        waitsFor(function() { return done; }, "user creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -172,7 +172,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "user creation", 750);
+        waitsFor(function() { return done; }, "user creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -194,7 +194,7 @@ describe("POST /api/bookmarks", function() {
                 console.log(originalUser);
             })
         });
-        waitsFor(function() { return done; }, "first user creation", 750);
+        waitsFor(function() { return done; }, "first user creation", 1500);
         runs(function() {
             done = false;
             request.post({
@@ -212,7 +212,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "second user creation", 750);
+        waitsFor(function() { return done; }, "second user creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -226,7 +226,7 @@ describe("POST /api/bookmarks", function() {
                     done = true;
                 });
         });
-        waitsFor(function() { return done; }, "database bookmark check", 750);
+        waitsFor(function() { return done; }, "database bookmark check", 1500);
         runs(function() {
             // Check response
             console.log(originalUser);

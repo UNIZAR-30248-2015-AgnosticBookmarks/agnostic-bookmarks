@@ -168,7 +168,7 @@ describe("GET /api/bookmarks/search", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -205,7 +205,7 @@ describe("GET /api/bookmarks/search", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -244,7 +244,7 @@ describe("GET /api/bookmarks/search", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -276,7 +276,7 @@ describe("GET /api/bookmarks/search", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -300,7 +300,7 @@ describe("GET /api/bookmarks/search", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response

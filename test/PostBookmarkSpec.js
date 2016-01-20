@@ -93,7 +93,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -123,7 +123,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -153,7 +153,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -173,7 +173,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "database bookmark check", 750);
+        waitsFor(function() { return done; }, "database bookmark check", 1500);
         runs(function() {
             // Check response
             expect(error).toBeNull();
@@ -209,7 +209,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -234,7 +234,7 @@ describe("POST /api/bookmarks", function() {
                 originalBookmark = data;
             })
         })
-        waitsFor(function() { return done; }, "first bookmark creation", 750);
+        waitsFor(function() { return done; }, "first bookmark creation", 1500);
         runs(function() {
             done = false;
             request.post({
@@ -254,7 +254,7 @@ describe("POST /api/bookmarks", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "second bookmark creation", 750);
+        waitsFor(function() { return done; }, "second bookmark creation", 1500);
         runs(function() {
             done = false;
             // Check response
@@ -268,7 +268,7 @@ describe("POST /api/bookmarks", function() {
                     done = true;
                 });
         });
-        waitsFor(function() { return done; }, "database bookmark check", 750);
+        waitsFor(function() { return done; }, "database bookmark check", 1500);
         runs(function() {
             // Check response
             expect(error).toBeNull();
