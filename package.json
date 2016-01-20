@@ -6,8 +6,8 @@
   "scripts": {
     "build": "gulp",
     "pretest": "npm run build",
-    "test": "istanbul cover --include-all-sources -x public/dist/** -x public/lib/** -x public/test/** -x coverage/** -x gulpfile.js -x karma.conf.js ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions",
-    "test-bckp1": "npm run test:backend && npm run test:frontend && istanbul report --root ./coverage lcov json",
+    "test": "npm run test:backend && npm run test:frontend && istanbul report --root ./coverage lcov json",
+    "test-bckp1": "istanbul cover --include-all-sources -x public/dist/** -x public/lib/** -x public/test/** -x coverage/** -x gulpfile.js -x karma.conf.js ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions",
     "test:frontend": "karma start karma.conf.js",
     "test:backend": "istanbul cover -i index.js -i app/**/*.js --dir ./coverage/backend ./node_modules/jasmine-node/bin/jasmine-node test -- --captureExceptions"
   },
