@@ -121,7 +121,7 @@ apiRoutes.route('/bookmarks/search')
         searchQuery = req.query.search;
         tagQuery = req.query.tag;
         if (searchQuery == null && tagQuery == null)
-            errors.push({"required": "'searchQuery' or 'tag' field are required"})
+            errors.push({"required": "'search' or 'tag' field are required"})
 
         if (errors.length > 0) res.status(400).json({"errors": errors});
         else {
