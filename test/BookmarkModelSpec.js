@@ -44,7 +44,7 @@ describe("Bookmark model", function() {
                 userAdded = true;
             })
         });
-        waitsFor(function() { return userAdded; }, "dummy user creation", 750);
+        waitsFor(function() { return userAdded; }, "dummy user creation", 1500);
     });
 
     afterEach(function() {
@@ -81,7 +81,7 @@ describe("Bookmark model", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
+        waitsFor(function() { return done; }, "bookmark creation", 1500);
         runs(function() {
             expect(err).toBeNull();
             expect(data).not.toBeNull();
@@ -113,7 +113,7 @@ describe("Bookmark model", function() {
                 firstBookmark = true;
             });
         });
-        waitsFor(function() { return firstBookmark; }, "first bookmark creation", 750);
+        waitsFor(function() { return firstBookmark; }, "first bookmark creation", 1500);
         // Create second bookmark (should return error)
         runs(function() {
             new Bookmark({
@@ -127,7 +127,7 @@ describe("Bookmark model", function() {
                 secondBookmark = true;
             });
         });
-        waitsFor(function() { return secondBookmark; }, "second bookmark creation", 750);
+        waitsFor(function() { return secondBookmark; }, "second bookmark creation", 1500);
         // Count bookmarks (should return 1)
         runs(function() {
             Bookmark.count({ owner: dummyUser._id, url: 'http://www.dummy.com' },
@@ -137,7 +137,7 @@ describe("Bookmark model", function() {
                 done = true;
             });
         });
-        waitsFor(function() { return done; }, "bookmark count", 750);
+        waitsFor(function() { return done; }, "bookmark count", 1500);
         // Assert
         runs(function() {
             expect(err).not.toBeNull();

@@ -59,7 +59,8 @@ function close(cb) {
 
 module.exports = {
     start: start,
-    close: close
+    close: close,
+    database: mongoose
 }
 
 /* SERVER START */

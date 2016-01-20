@@ -17,6 +17,8 @@ module.exports = function(config) {
     files: [
         "http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js",
         "http://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js",
+        "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-mocks.js",
+        // "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-mocks.js",
         "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js",
         "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js",
         'public/src/**/*.js',
