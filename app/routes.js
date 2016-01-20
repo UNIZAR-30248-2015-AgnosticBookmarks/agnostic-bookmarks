@@ -36,8 +36,11 @@ apiRoutes.route('/users')
             username: req.body.username,
             password: req.body.password
         }).save(function(err, data) {
-            if (err) res.status(500).send(err);
-            else res.json(data);
+            if (err) res.status(400).send(err);
+            else {
+                data.password = undefined;
+                res.json(data);
+            }
         });
     });
 
@@ -154,7 +157,7 @@ apiRoutes.route('/bookmarks/bookmark')
         var errors = [];
 
         if (req.query.url) url = req.query.url;
-        else errors.push({"url": "Must provide an URL on the query"});
+        else errors.push({"url": "Must provide an URL to the query"});
 
         if (errors.length > 0) res.status(400).json({"errors": errors});
         else Bookmark.findOne(
@@ -171,7 +174,7 @@ apiRoutes.route('/bookmarks/:bookmarkId')
     // Get single bookmark
     .get(authMiddleware, authRouter, function(req, res) {
         Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
-            if (err) res.status(500).send(err);
+            if (err) res.status(404).send(err);
             else if (bookmark == null) res.status(404).send("Not found");
             else bookmark.verifyOwnership(req.user,
                     function(err, accessGranted) {
@@ -184,7 +187,7 @@ apiRoutes.route('/bookmarks/:bookmarkId')
     // Update single bookmark
     .patch(authMiddleware, authRouter, function(req, res) {
         Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
-            if (err) res.status(500).send(err);
+            if (err) res.status(404).send(err);
             else if (bookmark == null) res.status(404).send("Not found");
             else bookmark.verifyOwnership(req.user,
                     function(err, accessGranted) {
@@ -197,7 +200,7 @@ apiRoutes.route('/bookmarks/:bookmarkId')
                     if (req.body.description)
                         bookmark.description = req.body.description;
                     bookmark.save(function(err, data) {
-                       if (err) res.status(500).send(err);
+                       if (err) res.status(400).send(err);
                        else res.json(bookmark);
                     });;
                 }
@@ -207,7 +210,7 @@ apiRoutes.route('/bookmarks/:bookmarkId')
     // Remove single  bookmark
     .delete(authMiddleware, authRouter, function(req, res) {
         Bookmark.findById(req.params.bookmarkId, function(err, bookmark) {
-            if (err) res.status(500).send(err);
+            if (err) res.status(404).send(err);
             else if (bookmark == null) res.status(404).send("Not found");
             else bookmark.verifyOwnership(req.user,
                     function(err, accessGranted) {

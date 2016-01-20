@@ -1,5 +1,5 @@
 // =============================================================================
-//  This file defines unit tests for the endpoint /api/bookmarks/search. These
+//  This file defines unit tests for the endpoint /api/bookmarks. These
 //  tests connect to an actual database, so be sure to specify a testing
 //  database if you are running them on an environment with important data.
 // -----------------------------------------------------------------------------
@@ -16,16 +16,13 @@ var server;
 var config   = require('../app/config');
 var Bookmark = require('../app/bookmark-model');
 var User     = require('../app/user-model');
-var baseURL  = 'http://localhost:' + process.env.PORT + '/api/bookmarks/search';
+var baseURL  = 'http://localhost:' + process.env.PORT + '/api/bookmarks/bookmark';
 
-describe("GET /api/bookmarks/search", function() {
+describe("GET /api/bookmarks/bookmark", function() {
 
     var dummyUser1 = {};
     var dummyUser2 = {};
-    var aaaBookmark = {};
-    var bbbBookmark = {};
-    var xxxBookmark = {};
-    var aaa2Bookmark = {};
+    var searchedBookmark = {};
 
     beforeEach(function() {
         // Launch server
@@ -69,67 +66,40 @@ describe("GET /api/bookmarks/search", function() {
         });
         waitsFor(function() { return userAdded2; }, "dummyUser2 creation", 1500);
 
-        // Add some bokomarks
-        var done = false;
+        // Add 15 bokomarks to dummyUser1
+        var left = 0;
+        var max = 2;
         runs(function addBookmark1() {
             new Bookmark({
-                url: "http://dummyAAA.com",
-                name: "AAA",
+                url: "http://dummy" + left + ".com",
+                name: "Dummy Bookmark " + left,
                 owner: dummyUser1._id,
-                tags: ["tag1", "tag2"]
             }).save(function(error, data) {
                 if (error) console.log(error);
-                aaaBookmark = data;
-                done = true;
+                if (left == 0) searchedBookmark = data;
+                left++;
+                if (left < max) addBookmark1();
             })
         })
-        waitsFor(function() { return done; }, "User1's bookmarks creation", 2000);
+        waitsFor(function() { return left >= max; }, "User1's bookmarks creation", 2000);
 
-        done = false;
-        runs(function addBookmark1() {
+        // Add 15 bokomarks to dummyUser2
+        left = 0;
+        max = 2;
+        runs(function addBookmark2() {
             new Bookmark({
-                url: "http://dummyBBB.com",
-                name: "BBB",
-                owner: dummyUser1._id,
-                description: "AAA",
-            }).save(function(error, data) {
-                if (error) console.log(error);
-                bbbBookmark = data;
-                done = true;
-            })
-        })
-        waitsFor(function() { return done; }, "User1's bookmarks creation", 2000);
-
-        done = false;
-        runs(function addBookmark1() {
-            new Bookmark({
-                url: "http://dummyXXX.com",
-                name: "XXX",
-                owner: dummyUser1._id,
-                description: "XXX",
-                tags: ["tag1", "tag3"]
-            }).save(function(error, data) {
-                if (error) console.log(error);
-                xxxBookmark = data;
-                done = true;
-           })
-        })
-        waitsFor(function() { return done; }, "User1's bookmarks creation", 2000);
-
-        done = false;
-        runs(function addBookmark1() {
-            new Bookmark({
-                url: "http://dummyAAA.com",
-                name: "AAA",
+                url: "http://dummy" + left + ".com",
+                name: "Dummy Bookmark " + left,
                 owner: dummyUser2._id,
-                tags: ["tag1", "tag2"]
             }).save(function(error, data) {
                 if (error) console.log(error);
-                aaa2Bookmark = data;
-                done = true;
+                left++;
+                if (left < max) addBookmark2();
             })
         })
-        waitsFor(function() { return done; }, "User1's bookmarks creation", 2000);
+        waitsFor(function() { return left >= max; }, "User1's bookmarks creation", 2000);
+
+
     });
 
     afterEach(function() {
@@ -152,15 +122,15 @@ describe("GET /api/bookmarks/search", function() {
         }, "closing server", timeout);
     })
 
-    it('should get bookmarks "AAA" and "BBB"', function() {
+    it('should get a bookmark with URL http://dummy0.com from user1', function() {
         var done = false;
         var error, response, result;
         runs(function() {
             request.get({
                 url: baseURL,
-                qs: { search: 'AA', sortBy: 'name' },
+                qs: { url: 'http://dummy0.com' },
                 auth: { username: "dummy1", password: "dummy1" },
-                json: true,
+                json: true
             }, function(_error, _response, _body) {
                 error = _error;
                 response = _response;
@@ -173,102 +143,22 @@ describe("GET /api/bookmarks/search", function() {
             done = false;
             // Check response
             expect(response.statusCode).toBe(200);
-            expect(result.length).toBe(2);
-            expect(result[0]._id).toEqual(aaaBookmark._id.toString());
-            expect(result[0].owner).toBe(dummyUser1._id.toString());
-            expect(result[0].name).toBe(aaaBookmark.name);
-            expect(result[0].description).not.toBeDefined();
-            expect(result[0].tags.length).toBe(2);
-            expect(result[0].tags).toContain("tag1");
-            expect(result[0].tags).toContain("tag2");
-            expect(result[1]._id).toEqual(bbbBookmark._id.toString());
-            expect(result[1].owner).toBe(dummyUser1._id.toString());
-            expect(result[1].name).toBe(bbbBookmark.name);
-            expect(result[1].description).toBe(bbbBookmark.description)
-            expect(result[1].tags.length).toBe(0);
+            expect(result._id).toEqual(searchedBookmark._id.toString());
+            expect(result.owner).toBe(dummyUser1._id.toString());
+            expect(result.name).toBe(searchedBookmark.name);
+            expect(result.description).not.toBeDefined();
+            expect(result.tags.length).toBe(0);
         });
     })
 
-    it('should get bookmarks "AAA" and "XXX"', function() {
+    it('should return status code of 400 if no URL is provided', function() {
         var done = false;
         var error, response, result;
         runs(function() {
             request.get({
                 url: baseURL,
-                qs: { tag: 'tag1', sortBy: 'name' },
                 auth: { username: "dummy1", password: "dummy1" },
-                json: true,
-            }, function(_error, _response, _body) {
-                error = _error;
-                response = _response;
-                result = _body;
-                done = true;
-            });
-        });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
-        runs(function() {
-            done = false;
-            // Check response
-            expect(response.statusCode).toBe(200);
-            expect(result.length).toBe(2);
-            expect(result[0]._id).toEqual(aaaBookmark._id.toString());
-            expect(result[0].owner).toBe(dummyUser1._id.toString());
-            expect(result[0].name).toBe(aaaBookmark.name);
-            expect(result[0].description).not.toBeDefined();
-            expect(result[0].tags.length).toBe(2);
-            expect(result[0].tags).toContain("tag1");
-            expect(result[0].tags).toContain("tag2");
-            expect(result[1]._id).toEqual(xxxBookmark._id.toString());
-            expect(result[1].owner).toBe(dummyUser1._id.toString());
-            expect(result[1].name).toBe(xxxBookmark.name);
-            expect(result[1].description).toBe(xxxBookmark.description)
-            expect(result[1].tags.length).toBe(2);
-            expect(result[1].tags).toContain("tag1");
-            expect(result[1].tags).toContain("tag3");
-        });
-    })
-
-    it('should only get bookmark "AAA"', function() {
-        var done = false;
-        var error, response, result;
-        runs(function() {
-            request.get({
-                url: baseURL,
-                qs: { tag: 'tag1,tag2', sortBy: 'name' },
-                auth: { username: "dummy1", password: "dummy1" },
-                json: true,
-            }, function(_error, _response, _body) {
-                error = _error;
-                response = _response;
-                result = _body;
-                done = true;
-            });
-        });
-        waitsFor(function() { return done; }, "bookmark creation", 750);
-        runs(function() {
-            done = false;
-            // Check response
-            expect(response.statusCode).toBe(200);
-            expect(result.length).toBe(1);
-            expect(result[0]._id).toEqual(aaaBookmark._id.toString());
-            expect(result[0].owner).toBe(dummyUser1._id.toString());
-            expect(result[0].name).toBe(aaaBookmark.name);
-            expect(result[0].description).not.toBeDefined();
-            expect(result[0].tags.length).toBe(2);
-            expect(result[0].tags).toContain("tag1");
-            expect(result[0].tags).toContain("tag2");
-        });
-    })
-
-    it('should return error if no searh or tag fields are provided', function() {
-        var done = false;
-        var error, response, result;
-        runs(function() {
-            request.get({
-                url: baseURL,
-                qs: { sortBy: 'name' },
-                auth: { username: "dummy1", password: "dummy1" },
-                json: true,
+                json: true
             }, function(_error, _response, _body) {
                 error = _error;
                 response = _response;
@@ -281,18 +171,19 @@ describe("GET /api/bookmarks/search", function() {
             done = false;
             // Check response
             expect(response.statusCode).toBe(400);
-            expect(result.errors[0]).toEqual({required: "'search' or 'tag' field are required"});
+            expect(result.errors.length).toBe(1);
+            expect(result.errors[0]).toEqual({ url: "Must provide an URL to the query" })
         });
     })
 
-    it('should return error if no auth info is provided', function() {
+    it('should return unauthorized if no auth data is provided', function() {
         var done = false;
         var error, response, result;
         runs(function() {
             request.get({
                 url: baseURL,
-                qs: { search: "aaa", sortBy: 'name' },
-                json: true,
+                qs: { url: 'http://dummy0.com' },
+                json: true
             }, function(_error, _response, _body) {
                 error = _error;
                 response = _response;
@@ -305,6 +196,31 @@ describe("GET /api/bookmarks/search", function() {
             done = false;
             // Check response
             expect(response.statusCode).toBe(401);
+        });
+    })
+
+    it('should return not found if inexistent URL is provided', function() {
+        var done = false;
+        var error, response, result;
+        runs(function() {
+            request.get({
+                url: baseURL,
+                qs: { url: 'http://inexistent.com' },
+                auth: { username: "dummy1", password: "dummy1" },
+                json: true
+            }, function(_error, _response, _body) {
+                error = _error;
+                response = _response;
+                result = _body;
+                done = true;
+            });
+        });
+        waitsFor(function() { return done; }, "bookmark creation", 750);
+        runs(function() {
+            done = false;
+            // Check response
+            expect(response.statusCode).toBe(404);
+            expect(result).toBe("Not found");
         });
     })
 });
