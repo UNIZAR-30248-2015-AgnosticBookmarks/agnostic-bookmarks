@@ -55,7 +55,7 @@ describe("GET /api/bookmarks", function() {
                 userAdded1 = true;
             })
         });
-        waitsFor(function() { return userAdded1; }, "dummyUser1 creation", 750);
+        waitsFor(function() { return userAdded1; }, "dummyUser1 creation", 1500);
 
         // Add another dummy user
         dummyUser2 = { username: 'dummy2', password: 'dummy2' };
@@ -67,7 +67,7 @@ describe("GET /api/bookmarks", function() {
                 userAdded2 = true;
             })
         });
-        waitsFor(function() { return userAdded2; }, "dummyUser2 creation", 750);
+        waitsFor(function() { return userAdded2; }, "dummyUser2 creation", 1500);
 
         // Add 15 bokomarks to dummyUser1
         var left = 0;

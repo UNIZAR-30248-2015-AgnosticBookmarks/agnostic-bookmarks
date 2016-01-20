@@ -50,7 +50,7 @@ describe("POST /api/bookmarks", function() {
                 userAdded = true;
             })
         });
-        waitsFor(function() { return userAdded; }, "dummy user creation", 750);
+        waitsFor(function() { return userAdded; }, "dummy user creation", 1500);
     });
 
     afterEach(function() {
